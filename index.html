@@ -1,0 +1,381 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to MindAid Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f5f7fa; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .auth-container, .main-app { padding: 20px; }
+        .auth-container { background: #fff; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        .main-app { display: none; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header img { width: 50px; height: 50px; }
+        .nav-item { cursor: pointer; padding: 10px; background: #e2e8f0; border-radius: 5px; margin: 5px; }
+        .nav-item.active { background: #ff6f91; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .chat-container { height: 400px; overflow-y: auto; background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+        .message { margin: 10px 0; padding: 10px; border-radius: 10px; }
+        .user-message { background: #ff6f91; color: white; text-align: right; margin-left: 20%; }
+        .bot-message { background: #e2e8f0; color: #333; margin-right: 20%; }
+        .message-time { font-size: 0.8em; color: #777; margin-left: 10px; }
+        .quick-reply { background: #ff6f91; color: white; padding: 8px 15px; margin: 5px; border-radius: 20px; border: none; cursor: pointer; }
+        .quick-reply:hover { background: #ff3b68; }
+        .typing-indicator { display: flex; align-items: center; }
+        .typing-dot { width: 8px; height: 8px; background: #ff6f91; border-radius: 50%; margin: 0 2px; animation: bounce 1.2s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+        .emoji-burst { position: absolute; font-size: 1.5em; animation: burst 1s forwards; }
+        @keyframes burst { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-50px); } }
+        .mood-btn { padding: 10px; margin: 5px; border-radius: 5px; cursor: pointer; }
+        .mood-btn.selected { background: #ff6f91; color: white; }
+        .action-item { display: flex; align-items: center; padding: 10px; background: #fff; border-radius: 5px; margin: 5px 0; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        .action-check { width: 20px; height: 20px; margin-right: 10px; }
+        .action-check.checked { background: #ff6f91; }
+        .resources-card { background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 10px 0; }
+        .crisis-alert { background: #ffe4e1; color: #e53e3e; padding: 10px; border-radius: 5px; margin: 10px 0; }
+        .partner-toggle { display: flex; align-items: center; margin: 10px 0; }
+        .partner-toggle label { margin-right: 10px; }
+        .share-day-btn { background: #ff6f91; color: white; padding: 8px 15px; border-radius: 20px; border: none; cursor: pointer; margin: 10px 0; }
+        .share-day-btn:hover { background: #ff3b68; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="auth-container" class="auth-container">
+            <div id="login-form">
+                <h2 class="text-2xl font-bold text-center mb-4">Login</h2>
+                <input id="login-email" type="email" placeholder="Email" class="w-full p-2 mb-2 border rounded">
+                <input id="login-password" type="password" placeholder="Password" class="w-full p-2 mb-2 border rounded">
+                <button id="login-btn" class="w-full bg-pink-500 text-white p-2 rounded hover:bg-pink-600">Login</button>
+                <p class="text-center mt-2">Don't have an account? <a id="toggle-to-register" href="#" class="text-pink-500">Register</a></p>
+            </div>
+            <div id="register-form" style="display: none;">
+                <h2 class="text-2xl font-bold text-center mb-4">Register</h2>
+                <input id="register-email" type="email" placeholder="Email" class="w-full p-2 mb-2 border rounded">
+                <input id="register-password" type="password" placeholder="Password" class="w-full p-2 mb-2 border rounded">
+                <input id="confirm-password" type="password" placeholder="Confirm Password" class="w-full p-2 mb-2 border rounded">
+                <button id="register-btn" class="w-full bg-pink-500 text-white p-2 rounded hover:bg-pink-600">Register</button>
+                <p class="text-center mt-2">Already have an account? <a id="toggle-to-login" href="#" class="text-pink-500">Login</a></p>
+            </div>
+        </div>
+
+        <div id="main-app" class="main-app">
+            <div class="header">
+                <img src="https://via.placeholder.com/50" alt="MindAid Logo">
+                <h1 class="text-3xl font-bold text-pink-500">MindAid Pro</h1>
+                <p class="text-gray-600">Mental Health First Aid Assistant</p>
+                <button id="logout-btn" class="mt-2 bg-pink-500 text-white p-2 rounded hover:bg-pink-600">Logout</button>
+            </div>
+
+            <div class="flex justify-center mb-4">
+                <select id="language-selector" class="p-2 border rounded">
+                    <option value="english">English</option>
+                    <option value="hinglish">Hinglish</option>
+                    <option value="tanglish">Tanglish</option>
+                </select>
+            </div>
+
+            <div class="partner-toggle">
+                <label for="partner-mode">Partner Mode:</label>
+                <input type="checkbox" id="partner-mode">
+            </div>
+
+            <div class="flex flex-wrap justify-center mb-4">
+                <div class="nav-item active" data-tab="chat">Chat Support</div>
+                <div class="nav-item" data-tab="mood">Mood Tracker</div>
+                <div class="nav-item" data-tab="resources">Resources</div>
+                <div class="nav-item" data-tab="action">Action Plan</div>
+                <div class="nav-item" data-tab="emergency">Emergency</div>
+                <div class="nav-item" data-tab="feedback">Feedback</div>
+            </div>
+
+            <div id="chat-tab" class="tab-content active">
+                <h2 class="text-xl font-semibold mb-2">Mental Health Support</h2>
+                <p class="text-gray-600 mb-4">"You are stronger than you know, and every step counts! 🌟"</p>
+                <p class="mb-4">Chat with MindAid to get immediate support, coping strategies, and resources tailored to your needs.</p>
+                <div id="chat-messages" class="chat-container">
+                    <div id="initial-message" class="bot-message"></div>
+                </div>
+                <button id="share-day-btn" class="share-day-btn">Share Your Day</button>
+                <div id="quick-replies" class="flex flex-wrap justify-center mt-2"></div>
+                <div class="mt-4 flex">
+                    <input id="user-input" type="text" placeholder="Type your message..." class="flex-grow p-2 border rounded-l">
+                    <button id="send-btn" class="bg-pink-500 text-white p-2 rounded-r hover:bg-pink-600">Send</button>
+                </div>
+            </div>
+
+            <div id="mood-tab" class="tab-content">
+                <h2 class="text-xl font-semibold mb-2">Mood Tracker</h2>
+                <p class="text-gray-600 mb-4">"Every day is a new opportunity to nurture your inner peace! 🌈"</p>
+                <p class="mb-4">Track your emotional well-being over time to identify patterns and triggers.</p>
+                <div class="flex flex-wrap justify-center mb-4">
+                    <button class="mood-btn" data-mood="excellent">Excellent</button>
+                    <button class="mood-btn" data-mood="good">Good</button>
+                    <button class="mood-btn" data-mood="neutral">Neutral</button>
+                    <button class="mood-btn" data-mood="poor">Poor</button>
+                    <button class="mood-btn" data-mood="terrible">Terrible</button>
+                </div>
+                <div class="mt-4">
+                    <canvas id="mood-chart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+
+            <div id="resources-tab" class="tab-content">
+                <h2 class="text-xl font-semibold mb-2">Mental Health Resources</h2>
+                <p class="text-gray-600 mb-4">"You are never alone in your journey! 🤝"</p>
+                <p class="mb-4">Access curated resources, tools, and professional support options.</p>
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-2">Crisis Support</h3>
+                    <div class="resources-card">
+                        <div class="flex items-center mb-2">
+                            <img src="https://via.placeholder.com/40" alt="Helpline Icon" class="mr-2">
+                            <div>
+                                <h4 class="font-semibold">Vandrevala Foundation</h4>
+                                <p>24/7 mental health helpline</p>
+                                <p><strong>Call 9999666555</strong></p>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <img src="https://via.placeholder.com/40" alt="Helpline Icon" class="mr-2">
+                            <div>
+                                <h4 class="font-semibold">AASRA Suicide Prevention</h4>
+                                <p>24/7 crisis support</p>
+                                <p><strong>Call +91-9820466726</strong></p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/40" alt="Helpline Icon" class="mr-2">
+                            <div>
+                                <h4 class="font-semibold">iCall Helpline</h4>
+                                <p>Psychological support by TISS</p>
+                                <p><strong>Call +91-9152987821</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-2">Self-Help Resources</h3>
+                    <div class="resources-card">
+                        <div class="flex items-center mb-2">
+                            <img src="https://via.placeholder.com/40" alt="Resource Icon" class="mr-2">
+                            <div>
+                                <h4 class="font-semibold">CBT Thought Diary</h4>
+                                <p>Track thoughts and challenge cognitive distortions</p>
+                                <a href="#" class="text-pink-500">Download Template</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <img src="https://via.placeholder.com/40" alt="Resource Icon" class="mr-2">
+                            <div>
+                                <h4 class="font-semibold">Guided Meditations</h4>
+                                <p>Mindfulness and relaxation exercises</p>
+                                <a href="#" class="text-pink-500">Listen Now</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/40" alt="Resource Icon" class="mr-2">
+                            <div>
+                                <h4 class="font-semibold">Mental Health Webinars</h4>
+                                <p>Free educational sessions from experts</p>
+                                <a href="#" class="text-pink-500">View Schedule</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-2">Professional Help</h3>
+                    <div class="resources-card">
+                        <div class="flex items-center mb-2">
+                            <img src="https://via.placeholder.com/40" alt="Resource Icon" class="mr-2">
+                            <div>
+                                <h4 class="font-semibold">Therapist Directory</h4>
+                                <p>Find licensed professionals near you</p>
+                                <a href="#" class="text-pink-500">Search Now</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <img src="https://via.placeholder.com/40" alt="Resource Icon" class="mr-2">
+                            <div>
+                                <h4 class="font-semibold">Online Therapy</h4>
+                                <p>Connect with therapists remotely</p>
+                                <a href="#" class="text-pink-500">Get Started</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/40" alt="Resource Icon" class="mr-2">
+                            <div>
+                                <h4 class="font-semibold">Support Groups</h4>
+                                <p>Connect with others facing similar challenges</p>
+                                <a href="#" class="text-pink-500">Find Groups</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="action-tab" class="tab-content">
+                <h2 class="text-xl font-semibold mb-2">Personalized Action Plan</h2>
+                <p class="text-gray-600 mb-4">"Small steps today lead to big victories tomorrow! 🚀"</p>
+                <p class="mb-4">Your step-by-step plan to improve mental wellness based on our conversations.</p>
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-2">This Week's Goals</h3>
+                    <div class="action-item">
+                        <input type="checkbox" class="action-check">
+                        <div>
+                            <h4 class="font-semibold">Practice deep breathing</h4>
+                            <p>5 minutes of mindful breathing each morning</p>
+                        </div>
+                    </div>
+                    <div class="action-item">
+                        <input type="checkbox" class="action-check">
+                        <div>
+                            <h4 class="font-semibold">Connect with a friend</h4>
+                            <p>Reach out to someone you trust this week</p>
+                        </div>
+                    </div>
+                    <div class="action-item">
+                        <input type="checkbox" class="action-check">
+                        <div>
+                            <h4 class="font-semibold">Physical activity</h4>
+                            <p>20 minutes of movement at least 3 times this week</p>
+                        </div>
+                    </div>
+                    <div class="action-item">
+                        <input type="checkbox" class="action-check">
+                        <div>
+                            <h4 class="font-semibold">Gratitude journal</h4>
+                            <p>Write down 3 things you're grateful for each evening</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-2">Recommended Resources</h3>
+                    <div class="resources-card">
+                        <div class="flex items-center mb-2">
+                            <img src="https://via.placeholder.com/40" alt="Resource Icon" class="mr-2">
+                            <div>
+                                <h4 class="font-semibold">"Feeling Good" by Dr. David Burns</h4>
+                                <p>Cognitive behavioral therapy techniques for depression</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/40" alt="Resource Icon" class="mr-2">
+                            <div>
+                                <h4 class="font-semibold">Anxiety Relief Meditation</h4>
+                                <p>15-minute guided session for immediate calm</p>
+                                <a href="#" class="text-pink-500">Listen Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="emergency-tab" class="tab-content">
+                <h2 class="text-xl font-semibold mb-2">Emergency Support</h2>
+                <p class="text-gray-600 mb-4">"You are enough, and help is always available! 💖"</p>
+                <p class="mb-4">Immediate resources and contacts for crisis situations.</p>
+                <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+                    <strong>If you're in immediate danger:</strong><br>
+                    Call 112 or go to your nearest emergency room
+                </div>
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-2">Emergency Contacts</h3>
+                    <div class="resources-card">
+                        <div class="mb-2">
+                            <h4 class="font-semibold">Vandrevala Foundation</h4>
+                            <p>Call 9999666555</p>
+                            <a href="vandrevalafoundation.com" class="text-pink-500">vandrevalafoundation.com</a>
+                        </div>
+                        <div class="mb-2">
+                            <h4 class="font-semibold">AASRA Suicide Prevention</h4>
+                            <p>Call +91-9820466726</p>
+                            <a href="aasra.info" class="text-pink-500">aasra.info</a>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">iCall Helpline</h4>
+                            <p>Call +91-9152987821</p>
+                            <a href="icallhelpline.org" class="text-pink-500">icallhelpline.org</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-2">Additional Resources</h3>
+                    <div class="resources-card">
+                        <div class="mb-2">
+                            <h4 class="font-semibold">Sangath</h4>
+                            <p>Mental health support services</p>
+                            <a href="sangath.in" class="text-pink-500">sangath.in</a>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Mpower Helpline</h4>
+                            <p>Call 1800-120-820050</p>
+                            <a href="mpower.org.in" class="text-pink-500">mpower.org.in</a>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500"><strong>Important:</strong> MindAid is not a substitute for professional mental health care. In crisis situations, please contact emergency services or a crisis hotline immediately.</p>
+            </div>
+
+            <div id="feedback-tab" class="tab-content">
+                <h2 class="text-xl font-semibold mb-2">Feedback</h2>
+                <p class="text-gray-600 mb-4">"Your feedback helps us grow and serve you better! 📝"</p>
+                <p class="mb-4">We value your input to improve MindAid Pro. Please share your thoughts below.</p>
+                <textarea id="feedback-text" class="w-full p-2 border rounded mb-2" rows="4" placeholder="Your feedback..."></textarea>
+                <button id="feedback-btn" class="bg-pink-500 text-white p-2 rounded hover:bg-pink-600">Submit Feedback</button>
+            </div>
+        </div>
+
+        <footer class="mt-8 text-center text-gray-500">
+            <p>MindAid Pro - Mental Health First Aid Assistant | This is a demonstration project only</p>
+            <p class="text-sm">Note: Conversations are not stored or monitored. In real crisis situations, please contact professionals immediately.</p>
+        </footer>
+    </div>
+    <script src="mindAidChatbot.js"></script>
+</body>
+</html>
