@@ -11,7 +11,6 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         body {
             background: linear-gradient(135deg, #6b7280, #a855f7, #ec4899);
@@ -51,35 +50,40 @@
             height: 100%;
             z-index: -1;
         }
+        .scrollable::-webkit-scrollbar {
+            width: 8px;
+        }
+        .scrollable::-webkit-scrollbar-thumb {
+            background-color: #ec4899;
+            border-radius: 4px;
+        }
+        .scrollable::-webkit-scrollbar-track {
+            background-color: #1f2937;
+        }
     </style>
 </head>
 <body class="text-white flex flex-col min-h-screen font-sans">
     <div id="particles-js"></div>
-    <!-- Motivational Quote -->
-    <div id="motivational-quote" class="text-center text-lg italic p-4 bg-black bg-opacity-50 rounded-lg mx-auto max-w-2xl mt-4">
-        "You are stronger than you know!"
-    </div>
-
     <!-- Authentication Container -->
     <div id="auth-container" class="container mx-auto p-6 flex items-center justify-center min-h-screen">
         <div class="bg-white bg-opacity-10 backdrop-blur-lg p-8 rounded-lg shadow-lg w-full max-w-md">
             <!-- Login Form -->
-            <form id="login-form" class="space-y-4" role="form" aria-labelledby="login-heading">
+            <div id="login-form" class="space-y-4" role="form" aria-labelledby="login-heading">
                 <h2 id="login-heading" class="text-2xl font-bold text-center">Welcome Back! 🌟</h2>
                 <input type="email" id="login-email" placeholder="Email" required aria-required="true" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400">
                 <input type="password" id="login-password" placeholder="Password" required aria-required="true" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400">
                 <button type="button" id="login-btn" class="w-full bg-pink-500 text-white p-2 rounded btn-pulse hover:bg-pink-600" aria-label="Log in">Log In 🚀</button>
                 <p class="text-center">No account? <a href="#" id="toggle-to-register" class="text-pink-400 hover:underline" aria-label="Switch to register form">Register</a></p>
-            </form>
+            </div>
             <!-- Register Form -->
-            <form id="register-form" class="space-y-4 hidden" role="form" aria-labelledby="register-heading">
+            <div id="register-form" class="space-y-4 hidden" role="form" aria-labelledby="register-heading">
                 <h2 id="register-heading" class="text-2xl font-bold text-center">Join the Vibe! 🎉</h2>
                 <input type="email" id="register-email" placeholder="Email" required aria-required="true" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400">
                 <input type="password" id="register-password" placeholder="Password" required aria-required="true" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400">
                 <input type="password" id="confirm-password" placeholder="Confirm Password" required aria-required="true" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400">
                 <button type="button" id="register-btn" class="w-full bg-pink-500 text-white p-2 rounded btn-pulse hover:bg-pink-600" aria-label="Register">Register 🌈</button>
                 <p class="text-center">Already in? <a href="#" id="toggle-to-login" class="text-pink-400 hover:underline" aria-label="Switch to login form">Log In</a></p>
-            </form>
+            </div>
         </div>
     </div>
     <!-- Main Application -->
@@ -91,12 +95,16 @@
                 <button id="logout-btn" aria-label="Log out" class="p-2 rounded btn-pulse bg-gray-800 bg-opacity-50 hover:bg-gray-700"><i class='bx bx-log-out'></i></button>
             </div>
         </header>
+        <!-- Motivational Quote -->
+        <div id="motivational-quote" class="text-center text-lg italic p-4 bg-black bg-opacity-50 rounded-lg mx-auto max-w-2xl mb-6">
+            "You are stronger than you know!"
+        </div>
         <!-- Navigation -->
         <nav class="bg-black bg-opacity-50 backdrop-blur-lg p-4 rounded-lg shadow mb-6" role="navigation" aria-label="Main navigation">
             <div class="flex flex-wrap gap-4">
-                <details class="group">
+                <details class="group" open>
                     <summary class="cursor-pointer flex items-center text-pink-400"><i class='bx bx-chat mr-2'></i> Chat</summary>
-                    <a href="#" class="nav-item pl-6 py-1 block text-white hover:bg-pink-500 hover:bg-opacity-50 rounded" data-tab="chat-tab">AI Chat 😄</a>
+                    <a href="#" class="nav-item pl-6 py-1 block text-white hover:bg-pink-500 hover:bg-opacity-50 rounded active" data-tab="chat-tab">AI Chat 😄</a>
                 </details>
                 <details class="group">
                     <summary class="cursor-pointer flex items-center text-pink-400"><i class='bx bx-heart mr-2'></i> Tracking</summary>
@@ -133,17 +141,22 @@
         <!-- Tab Content -->
         <section id="chat-tab" class="tab-content bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Chat interface">
             <h2 class="text-2xl font-semibold mb-4">AI Chat 😄</h2>
-            <div id="quick-replies" class="flex flex-wrap gap-2 mb-4" role="group" aria-label="Quick reply options"></div>
-            <div id="chat-messages" class="h-96 overflow-y-auto mb-4 p-4 bg-gray-800 bg-opacity-50 rounded" role="log" aria-live="polite"></div>
+            <div id="quick-replies" class="flex flex-wrap gap-2 mb-4" role="group" aria-label="Quick reply options">
+                <button class="quick-reply p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="happy">I'm feeling happy! 😄</button>
+                <button class="quick-reply p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="sad">I'm feeling sad 😢</button>
+                <button class="quick-reply p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="anxious">I'm anxious 😰</button>
+                <button class="quick-reply p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="angry">I'm angry 😣</button>
+                <button class="quick-reply p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="stressed">I'm stressed 😓</button>
+                <button class="quick-reply p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="lonely">I'm lonely 😔</button>
+                <button class="quick-reply p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="overwhelmed">I'm overwhelmed 😥</button>
+                <button class="quick-reply p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="grateful">I'm grateful 🙏</button>
+            </div>
+            <div id="chat-messages" class="h-96 overflow-y-auto mb-4 p-4 bg-gray-800 bg-opacity-50 rounded scrollable" role="log" aria-live="polite"></div>
             <div class="flex space-x-2">
                 <input type="text" id="user-input" placeholder="Type your vibe..." aria-label="Message input" class="flex-grow p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400">
                 <button id="send-btn" aria-label="Send message" class="p-2 bg-pink-500 text-white rounded btn-pulse hover:bg-pink-600"><i class='bx bx-send'></i></button>
-                <button id="voice-btn" aria-label="Toggle voice input" class="p-2 bg-gray-800 bg-opacity-50 rounded btn-pulse hover:bg-gray-700"><i class='bx bx-microphone'></i></button>
             </div>
-            <div class="flex justify-between mt-2">
-                <button id="export-chat" class="p-2 bg-gray-800 bg-opacity-50 rounded btn-pulse hover:bg-gray-700">Export Chat 📥</button>
-                <p id="sentiment-status" class="text-sm">Neutral</p>
-            </div>
+            <button id="export-chat" class="mt-2 p-2 bg-gray-800 bg-opacity-50 rounded btn-pulse hover:bg-gray-700">Export Chat 📥</button>
         </section>
         <section id="mood-tab" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Mood tracking">
             <h2 class="text-2xl font-semibold mb-4">Track Your Mood 🌈</h2>
@@ -156,6 +169,91 @@
             </div>
             <canvas id="mood-chart" class="w-full h-64" aria-label="Mood trend chart"></canvas>
             <button id="export-mood" class="mt-4 p-2 bg-gray-800 bg-opacity-50 rounded btn-pulse hover:bg-gray-700">Export Mood Report 📊</button>
+        </section>
+        <section id="journal-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Journaling">
+            <h2 class="text-2xl font-semibold mb-4">Daily Journal ✍️</h2>
+            <p id="journal-prompt" class="mb-4" aria-live="polite">What’s on your mind today? 🤔</p>
+            <textarea id="journal-entry" placeholder="Pour your thoughts here..." aria-label="Journal entry" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400 h-32"></textarea>
+            <button id="save-journal" class="mt-4 p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Save journal entry">Save 📝</button>
+            <div id="journal-history" class="mt-4 space-y-2 scrollable max-h-64 overflow-y-auto"></div>
+        </section>
+        <section id="gratitude-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Gratitude log">
+            <h2 class="text-2xl font-semibold mb-4">Gratitude Log 🙏</h2>
+            <input type="text" id="gratitude-1" placeholder="Something I’m grateful for..." aria-label="First gratitude item" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400 mb-2">
+            <input type="text" id="gratitude-2" placeholder="Another thing I’m grateful for..." aria-label="Second gratitude item" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400 mb-2">
+            <input type="text" id="gratitude-3" placeholder="One more thing..." aria-label="Third gratitude item" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400 mb-2">
+            <button id="gratitude-log" class="p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Save gratitude log">Save Gratitude ✨</button>
+            <div id="gratitude-history" class="mt-4 space-y-2 scrollable max-h-64 overflow-y-auto"></div>
+        </section>
+        <section id="sleep-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Sleep tracker">
+            <h2 class="text-2xl font-semibold mb-4">Sleep Tracker 🌙</h2>
+            <label for="sleep-hours" class="block mb-1">Hours Slept Last Night</label>
+            <input type="number" id="sleep-hours" min="0" max="24" step="0.5" placeholder="e.g., 7.5" aria-label="Hours slept" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400">
+            <button id="sleep-log" class="mt-4 p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Save sleep log">Save Sleep 😴</button>
+            <p id="sleep-average" class="mt-4" aria-live="polite"></p>
+        </section>
+        <section id="goals-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Goals">
+            <h2 class="text-2xl font-semibold mb-4">Your Goals 🎯</h2>
+            <input type="text" id="new-goal" placeholder="Add a new goal..." aria-label="New goal input" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400 mb-2">
+            <button id="add-goal" class="p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Add new goal">Add Goal ✨</button>
+            <div id="goal-list" class="mt-4 space-y-2 scrollable max-h-64 overflow-y-auto" role="list"></div>
+        </section>
+        <section id="stress-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Stress heatmap">
+            <h2 class="text-2xl font-semibold mb-4">Stress Triggers 📈</h2>
+            <div id="stress-heatmap" class="p-4 bg-gray-800 bg-opacity-50 rounded scrollable max-h-64 overflow-y-auto" aria-live="polite"></div>
+        </section>
+        <section id="meditation-tab" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Guided meditation">
+            <h2 class="text-2xl font-semibold mb-4">Guided Meditation 🧘</h2>
+            <div class="relative pt-1">
+                <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-600">
+                    <div id="meditation-progress-bar" style="width: 0%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500"></div>
+                </div>
+            </div>
+            <p id="meditation-progress" class="text-lg mb-4" aria-live="polite">1:00</p>
+            <button id="play-meditation" class="p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Start 1-minute meditation">Start Meditation 🌟</button>
+        </section>
+        <section id="affirmation-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Daily affirmation">
+            <h2 class="text-2xl font-semibold mb-4">Daily Affirmation ☀️</h2>
+            <p id="affirmation-display" class="text-lg" aria-live="polite"></p>
+            <button id="new-affirmation" class="mt-4 p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Generate new affirmation">New Affirmation ✨</button>
+        </section>
+        <section id="emotion-wheel-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Emotion wheel">
+            <h2 class="text-2xl font-semibold mb-4">Identify Your Emotions 😊</h2>
+            <div id="emotion-wheel" class="flex flex-wrap gap-2" role="radiogroup" aria-label="Select an emotion">
+                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="happy">Happy 😄</button>
+                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="sad">Sad 😢</button>
+                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="anxious">Anxious 😰</button>
+                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="angry">Angry 😣</button>
+                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="stressed">Stressed 😓</button>
+                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="lonely">Lonely 😔</button>
+                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="overwhelmed">Overwhelmed 😥</button>
+                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="grateful">Grateful 🙏</button>
+                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="confused">Confused 😕</button>
+                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="hopeful">Hopeful 🌟</button>
+            </div>
+        </section>
+        <section id="cbt-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="CBT exercise">
+            <h2 class="text-2xl font-semibold mb-4">CBT Thought Reframing 🧠</h2>
+            <p class="mb-4">Identify a negative thought and reframe it positively.</p>
+            <textarea id="cbt-negative" placeholder="Negative thought..." aria-label="Negative thought input" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400 h-24 mb-2"></textarea>
+            <textarea id="cbt-positive" placeholder="Positive reframe..." aria-label="Positive reframe input" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400 h-24 mb-2"></textarea>
+            <button id="cbt-exercise" class="p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Save CBT exercise">Save Exercise 🚀</button>
+        </section>
+        <section id="mindfulness-game-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Mindfulness game">
+            <h2 class="text-2xl font-semibold mb-4">Mindfulness Game 🎮</h2>
+            <p class="mb-4">Focus on the present moment. Name 5 things you can see right now.</p>
+            <textarea id="mindfulness-input" placeholder="List 5 things you see..." aria-label="Mindfulness game input" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400 h-24"></textarea>
+            <button id="mindfulness-game" class="mt-4 p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Submit mindfulness game">Submit 🕹️</button>
+        </section>
+        <section id="anxiety-timer-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Anxiety grounding timer">
+            <h2 class="text-2xl font-semibold mb-4">Anxiety Grounding ⏱️</h2>
+            <div class="relative pt-1">
+                <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-600">
+                    <div id="anxiety-progress-bar" style="width: 0%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500"></div>
+                </div>
+            </div>
+            <p id="anxiety-timer" class="text-lg mb-4" aria-live="polite">5:00</p>
+            <button id="start-anxiety-timer" class="p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Start 5-minute grounding exercise">Start Timer ⏳</button>
         </section>
         <section id="resources-tab" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Mental health resources">
             <h2 class="text-2xl font-semibold mb-4">Resources 📚</h2>
@@ -211,58 +309,42 @@
                 </article>
             </div>
         </section>
-        <section id="plan-tab" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Action plan">
-            <h2 class="text-2xl font-semibold mb-4">Your Action Plan 🎯</h2>
-            <div id="action-plan" class="space-y-2" role="list">
-                <div class="flex items-center p-2 bg-gray-800 bg-opacity-50 rounded" role="listitem">
-                    <input type="checkbox" class="action-check mr-2" data-action="Practice deep breathing for 5 minutes daily">
-                    <span>Practice deep breathing for 5 minutes daily 🌬️</span>
-                </div>
-                <div class="flex items-center p-2 bg-gray-800 bg-opacity-50 rounded" role="listitem">
-                    <input type="checkbox" class="action-check mr-2" data-action="Write down 3 things you’re grateful for">
-                    <span>Write down 3 things you’re grateful for 🙏</span>
-                </div>
-                <div class="flex items-center p-2 bg-gray-800 bg-opacity-50 rounded" role="listitem">
-                    <input type="checkbox" class="action-check mr-2" data-action="Take a 10-minute walk">
-                    <span>Take a 10-minute walk 🚶</span>
-                </div>
+        <section id="coping-library-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Coping strategies">
+            <h2 class="text-2xl font-semibold mb-4">Coping Strategies 🛠️</h2>
+            <div id="coping-library" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
+                    <p>Try a 4-7-8 breathing exercise: inhale for 4 seconds, hold for 7, exhale for 8. 🌬️</p>
+                </article>
+                <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
+                    <p>Use the 5-4-3-2-1 grounding technique: name 5 things you see, 4 you touch, 3 you hear, 2 you smell, 1 you taste. 👀</p>
+                </article>
+                <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
+                    <p>Take a short walk to clear your mind. 🚶</p>
+                </article>
+                <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
+                    <p>Journal your thoughts to process anxiety. ✍️</p>
+                </article>
+                <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
+                    <p>Visualize a calm, safe place like a beach or forest. 🏖️</p>
+                </article>
             </div>
-            <button id="add-goal" class="mt-4 p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600">Add New Goal ✨</button>
         </section>
         <section id="insights-tab" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Insights">
             <h2 class="text-2xl font-semibold mb-4">Your Insights 💡</h2>
             <div id="insights-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
                     <h3 class="font-semibold">Mood Trend</h3>
-                    <p>Your recent mood is neutral. 😊</p>
-                </article>
-                <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
-                    <h3 class="font-semibold">Stress Patterns</h3>
-                    <p>No stress triggers logged yet. 📉</p>
-                </article>
-                <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
-                    <h3 class="font-semibold">Engagement</h3>
-                    <p>You’ve interacted 0 times. 🚀</p>
+                    <p id="insight-mood"></p>
                 </article>
                 <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
                     <h3 class="font-semibold">Sleep Patterns</h3>
-                    <p>Average sleep: Not logged. 🌙</p>
+                    <p id="insight-sleep"></p>
                 </article>
                 <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
                     <h3 class="font-semibold">Journal Activity</h3>
-                    <p>No journal entries yet. ✍️</p>
+                    <p id="insight-journal"></p>
                 </article>
             </div>
-        </section>
-        <section id="meditation-tab" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Guided meditation">
-            <h2 class="text-2xl font-semibold mb-4">Guided Meditation 🧘</h2>
-            <div class="relative pt-1">
-                <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-600">
-                    <div id="meditation-progress-bar" style="width: 0%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500"></div>
-                </div>
-            </div>
-            <p id="meditation-progress" class="text-lg mb-4" aria-live="polite">1:00</p>
-            <button id="play-meditation" class="p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Start 1-minute meditation">Start Meditation 🌟</button>
         </section>
         <section id="feedback-tab" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Feedback form">
             <h2 class="text-2xl font-semibold mb-4">Share Your Feedback 💬</h2>
@@ -295,93 +377,6 @@
                 <button id="save-settings" class="p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Save settings">Save Settings 💾</button>
             </div>
         </section>
-        <section id="journal-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Journaling">
-            <h2 class="text-2xl font-semibold mb-4">Daily Journal ✍️</h2>
-            <p id="journal-prompt" class="mb-4" aria-live="polite">What’s one thing that made you smile today? 😊</p>
-            <textarea id="journal-entry" placeholder="Pour your thoughts here..." aria-label="Journal entry" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400 h-32"></textarea>
-            <button id="save-journal" class="mt-4 p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Save journal entry">Save 📝</button>
-        </section>
-        <section id="gratitude-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Gratitude log">
-            <h2 class="text-2xl font-semibold mb-4">Gratitude Log 🙏</h2>
-            <input type="text" id="gratitude-1" placeholder="Something I’m grateful for..." aria-label="First gratitude item" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400 mb-2">
-            <input type="text" id="gratitude-2" placeholder="Another thing I’m grateful for..." aria-label="Second gratitude item" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400 mb-2">
-            <input type="text" id="gratitude-3" placeholder="One more thing..." aria-label="Third gratitude item" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400 mb-2">
-            <button id="gratitude-log" class="p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Save gratitude log">Save Gratitude ✨</button>
-        </section>
-        <section id="sleep-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Sleep tracker">
-            <h2 class="text-2xl font-semibold mb-4">Sleep Tracker 🌙</h2>
-            <label for="sleep-hours" class="block mb-1">Hours Slept Last Night</label>
-            <input type="number" id="sleep-hours" min="0" max="24" step="0.5" placeholder="e.g., 7.5" aria-label="Hours slept" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white placeholder-gray-400">
-            <button id="sleep-log" class="mt-4 p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Save sleep log">Save Sleep 😴</button>
-        </section>
-        <section id="goals-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Goals">
-            <h2 class="text-2xl font-semibold mb-4">Your Goals 🎯</h2>
-            <div id="goal-list" class="space-y-2" role="list">
-                <div class="p-2 bg-gray-800 bg-opacity-50 rounded" role="listitem">Practice mindfulness daily 🧘</div>
-                <div class="p-2 bg-gray-800 bg-opacity-50 rounded" role="listitem">Connect with a friend weekly 👥</div>
-            </div>
-        </section>
-        <section id="stress-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Stress heatmap">
-            <h2 class="text-2xl font-semibold mb-4">Stress Triggers 📈</h2>
-            <div id="stress-heatmap" class="p-4 bg-gray-800 bg-opacity-50 rounded" aria-live="polite">No stress triggers logged. 😎</div>
-        </section>
-        <section id="affirmation-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Daily affirmation">
-            <h2 class="text-2xl font-semibold mb-4">Daily Affirmation ☀️</h2>
-            <p id="affirmation-display" class="text-lg" aria-live="polite">You are enough just as you are. 💖</p>
-        </section>
-        <section id="emotion-wheel-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Emotion wheel">
-            <h2 class="text-2xl font-semibold mb-4">Identify Your Emotions 😊</h2>
-            <div id="emotion-wheel" class="flex flex-wrap gap-2" role="radiogroup" aria-label="Select an emotion">
-                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="happy">Happy 😄</button>
-                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="sad">Sad 😢</button>
-                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="anxious">Anxious 😰</button>
-                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="angry">Angry 😣</button>
-                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="stressed">Stressed 😓</button>
-                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="lonely">Lonely 😔</button>
-                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="overwhelmed">Overwhelmed 😥</button>
-                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="grateful">Grateful 🙏</button>
-                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="confused">Confused 😕</button>
-                <button class="mood-btn p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" data-emotion="hopeful">Hopeful 🌟</button>
-            </div>
-        </section>
-        <section id="cbt-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="CBT exercise">
-            <h2 class="text-2xl font-semibold mb-4">CBT Thought Reframing 🧠</h2>
-            <button id="cbt-exercise" class="p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Start CBT exercise">Start Exercise 🚀</button>
-        </section>
-        <section id="mindfulness-game-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Mindfulness game">
-            <h2 class="text-2xl font-semibold mb-4">Mindfulness Game 🎮</h2>
-            <button id="mindfulness-game" class="p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Start mindfulness game">Play Game 🕹️</button>
-        </section>
-        <section id="anxiety-timer-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Anxiety grounding timer">
-            <h2 class="text-2xl font-semibold mb-4">Anxiety Grounding ⏱️</h2>
-            <div class="relative pt-1">
-                <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-600">
-                    <div id="anxiety-progress-bar" style="width: 0%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500"></div>
-                </div>
-            </div>
-            <p id="anxiety-timer" class="text-lg mb-4" aria-live="polite">5:00</p>
-            <button id="start-anxiety-timer" class="p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600" aria-label="Start 5-minute grounding exercise">Start Timer ⏳</button>
-        </section>
-        <section id="coping-library-section" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Coping strategies">
-            <h2 class="text-2xl font-semibold mb-4">Coping Strategies 🛠️</h2>
-            <div id="coping-library" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
-                    <p>Try a 4-7-8 breathing exercise: inhale for 4 seconds, hold for 7, exhale for 8. 🌬️</p>
-                </article>
-                <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
-                    <p>Use the 5-4-3-2-1 grounding technique: name 5 things you see, 4 you touch, 3 you hear, 2 you smell, 1 you taste. 👀</p>
-                </article>
-                <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
-                    <p>Take a short walk to clear your mind. 🚶</p>
-                </article>
-                <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
-                    <p>Journal your thoughts to process anxiety. ✍️</p>
-                </article>
-                <article class="p-4 bg-gray-800 bg-opacity-50 rounded shadow">
-                    <p>Visualize a calm, safe place like a beach or forest. 🏖️</p>
-                </article>
-            </div>
-        </section>
         <!-- Footer -->
         <footer class="mt-6 text-center text-gray-300" role="contentinfo" aria-label="Footer">
             <p>© 2025 MindAid Pro. All rights reserved.</p>
@@ -408,6 +403,7 @@
             },
             retina_detect: true
         });
+
         // Motivational Quotes
         const quotes = [
             "You are stronger than you know! 💪",
@@ -420,15 +416,7 @@
             document.getElementById('motivational-quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
         }
         updateQuote();
-        // Load responses from JSON
-        let responses = [];
-        fetch('responses.json')
-            .then(response => response.json())
-            .then(data => {
-                responses = data;
-                updateQuickReplies();
-            })
-            .catch(error => console.error('Error loading responses:', error));
+
         // Authentication
         const authContainer = document.getElementById('auth-container');
         const mainApp = document.getElementById('main-app');
@@ -437,38 +425,63 @@
         const toggleToRegister = document.getElementById('toggle-to-register');
         const toggleToLogin = document.getElementById('toggle-to-login');
         const logoutBtn = document.getElementById('logout-btn');
+
         toggleToRegister.addEventListener('click', (e) => {
             e.preventDefault();
             loginForm.classList.add('hidden');
             registerForm.classList.remove('hidden');
         });
+
         toggleToLogin.addEventListener('click', (e) => {
             e.preventDefault();
             registerForm.classList.add('hidden');
             loginForm.classList.remove('hidden');
         });
+
         document.getElementById('login-btn').addEventListener('click', () => {
-            authContainer.classList.add('hidden');
-            mainApp.classList.remove('hidden');
-            updateQuote();
-        });
-        document.getElementById('register-btn').addEventListener('click', () => {
-            const password = document.getElementById('register-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-            if (password === confirmPassword) {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            if (email && password) {
+                localStorage.setItem('isLoggedIn', 'true');
                 authContainer.classList.add('hidden');
                 mainApp.classList.remove('hidden');
                 updateQuote();
+                initializeApp();
             } else {
-                alert('Passwords don’t match, try again! 😅');
+                alert('Please fill in all fields! 😅');
             }
         });
+
+        document.getElementById('register-btn').addEventListener('click', () => {
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            if (email && password === confirmPassword && password.length >= 6) {
+                localStorage.setItem('isLoggedIn', 'true');
+                authContainer.classList.add('hidden');
+                mainApp.classList.remove('hidden');
+                updateQuote();
+                initializeApp();
+            } else {
+                alert('Passwords don’t match or are too short! 😅');
+            }
+        });
+
         logoutBtn.addEventListener('click', () => {
+            localStorage.setItem('isLoggedIn', 'false');
             mainApp.classList.add('hidden');
             authContainer.classList.remove('hidden');
             loginForm.classList.remove('hidden');
             registerForm.classList.add('hidden');
         });
+
+        // Check login state
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            authContainer.classList.add('hidden');
+            mainApp.classList.remove('hidden');
+            initializeApp();
+        }
+
         // Theme Toggle
         document.getElementById('theme-toggle').addEventListener('click', () => {
             document.body.classList.toggle('dark');
@@ -477,6 +490,7 @@
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark');
         }
+
         // Navigation
         const navItems = document.querySelectorAll('.nav-item');
         const tabContents = document.querySelectorAll('.tab-content');
@@ -490,172 +504,681 @@
                 updateQuote();
             });
         });
-        // AI Chat
-        const chatMessages = document.getElementById('chat-messages');
-        const userInput = document.getElementById('user-input');
-        const sendBtn = document.getElementById('send-btn');
-        const quickReplies = document.getElementById('quick-replies');
-        const sentimentStatus = document.getElementById('sentiment-status');
-        // Preset quick reply messages
-        const quickReplyPresets = [
-            "I'm feeling great! 😄",
-            "I'm feeling sad. 😢",
-            "I'm anxious today. 😰",
-            "I'm really angry! 😣",
-            "I'm so stressed out. 😓",
-            "I'm feeling lonely. 😔",
-            "I'm overwhelmed. 😥",
-            "I'm grateful today! 🙏",
-            "I'm really confused. 😕",
-            "I'm feeling hopeful! 🌟"
-        ];
-        function updateQuickReplies() {
-            quickReplies.innerHTML = '';
-            quickReplyPresets.forEach(reply => {
-                const btn = document.createElement('button');
-                btn.className = 'p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600';
-                btn.innerHTML = `${reply}`;
-                btn.addEventListener('click', () => {
-                    userInput.value = reply;
-                    sendMessage();
-                });
-                quickReplies.appendChild(btn);
-            });
+
+        // App Data
+        let conversationHistory = JSON.parse(localStorage.getItem('conversationHistory')) || [];
+        let moodData = JSON.parse(localStorage.getItem('moodData')) || [];
+        let journalData = JSON.parse(localStorage.getItem('journalData')) || [];
+        let gratitudeData = JSON.parse(localStorage.getItem('gratitudeData')) || [];
+        let sleepData = JSON.parse(localStorage.getItem('sleepData')) || [];
+        let goalsData = JSON.parse(localStorage.getItem('goalsData')) || [];
+        let feedbackData = JSON.parse(localStorage.getItem('feedbackData')) || [];
+        let settings = JSON.parse(localStorage.getItem('settings')) || {
+            language: 'english',
+            crisisSensitivity: 50,
+            reminderFrequency: 'none'
+        };
+
+        function initializeApp() {
+            initializeChat();
+            initializeMood();
+            initializeJournal();
+            initializeGratitude();
+            initializeSleep();
+            initializeGoals();
+            initializeStress();
+            initializeMeditation();
+            initializeAffirmation();
+            initializeEmotionWheel();
+            initializeCBT();
+            initializeMindfulnessGame();
+            initializeAnxietyTimer();
+            initializeInsights();
+            initializeFeedback();
+            initializeSettings();
         }
-        async function analyzeEmotion(text) {
-            // Mock emotion analysis API (replace with real API, e.g., xAI API at https://x.ai/api)
-            const emotions = ['happy', 'sad', 'anxious', 'angry', 'stressed', 'lonely', 'overwhelmed', 'grateful', 'confused', 'hopeful'];
-            return emotions[Math.floor(Math.random() * emotions.length)];
-        }
-        async function sendMessage() {
-            const message = userInput.value.trim();
-            if (!message) return;
-            // Display user message
-            const userMsg = document.createElement('div');
-            userMsg.className = 'p-2 bg-pink-500 rounded mb-2 text-right';
-            userMsg.innerHTML = `${message} <span class="emoji">😄</span>`;
-            chatMessages.appendChild(userMsg);
-            // Analyze emotion
-            const emotion = await analyzeEmotion(message);
-            sentimentStatus.textContent = emotion.charAt(0).toUpperCase() + emotion.slice(1);
-            // Get response based on emotion and language
-            const language = document.getElementById('language-selector')?.value || 'english';
-            const response = responses.find(r => r.emotion === emotion && r.language === language) || {
-                empathy: 'I’m here to help. How can I support you? 😊',
-                motivation: 'You’ve got this, one step at a time! 🚀',
-                preventive: 'Try taking a deep breath and sharing what’s on your mind. 🌬️'
-            };
-            // Display full response
-            const botMsg = document.createElement('div');
-            botMsg.className = 'p-2 bg-gray-800 bg-opacity-50 rounded mb-2';
-            botMsg.innerHTML = `<p><strong>${response.empathy}</strong> 😊</p><p>${response.motivation} 💪</p><p><em>${response.preventive}</em> 🌟</p>`;
-            chatMessages.appendChild(botMsg);
-            userInput.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        sendBtn.addEventListener('click', sendMessage);
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-        // Mood Tracking
-        const moodChart = new Chart(document.getElementById('mood-chart'), {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Mood',
-                    data: [],
-                    borderColor: '#ec4899',
-                    backgroundColor: 'rgba(236, 72, 153, 0.2)',
-                    fill: true
-                }]
+
+        // Chatbot
+        const emotions = ['happy', 'sad', 'anxious', 'angry', 'stressed', 'lonely', 'overwhelmed', 'grateful', 'confused', 'hopeful'];
+        const responseTemplates = {
+            english: {
+                happy: [
+                    { empathy: "Wow, you're shining bright—{0}! 😄 That's so awesome!", motivation: "Keep that joyful vibe going strong! 🌟", preventive: "Spread your happiness with someone today! ✨" },
+                    { empathy: "Your happiness is infectious—{0}! 😄 Love it!", motivation: "You’re a positivity powerhouse! 🚀", preventive: "Write down what’s making you happy to savor it! ✍️" }
+                ],
+                sad: [
+                    { empathy: "I hear you’re feeling sad—{0}. 😢 I’m here.", motivation: "You’re stronger than you know, and this will pass. 💪", preventive: "Try listing three things you’re grateful for. 🙏" },
+                    { empathy: "It’s okay to feel down—{0}. 😢 You’re not alone.", motivation: "Small steps will lead to brighter days! 🚶", preventive: "Write down your feelings to let them out. ✍️" }
+                ],
+                anxious: [
+                    { empathy: "Anxiety’s tough—{0}. 😰 Let’s work through it together.", motivation: "You’ve handled worries before—you’re a champ! 🚀", preventive: "Try the 5-4-3-2-1 grounding technique. 🌬️" },
+                    { empathy: "Feeling nervous is okay—{0}. 😰 I’m here to help.", motivation: "You’ve got this—one step at a time! 🌟", preventive: "Take slow, deep breaths to calm your mind. 🌬️" }
+                ],
+                angry: [
+                    { empathy: "I get it—{0} makes you mad. 😣 It’s okay to feel this.", motivation: "You can channel this energy into something great! ⚡", preventive: "Count to 10 slowly to cool down. 🚶" },
+                    { empathy: "Feeling angry is valid—{0}. 😣 Let’s work through it.", motivation: "You’ve got the strength to stay calm! 🌟", preventive: "Breathe deeply to release the tension. 🌬️" }
+                ],
+                stressed: [
+                    { empathy: "Stress is rough—{0}. 😓 I’m here to help you unwind.", motivation: "You’re handling so much—take it one step at a time! 🌈", preventive: "Try a 4-7-8 breathing exercise to relax. 🌬️" },
+                    { empathy: "Feeling stressed is tough—{0}. 😓 You’re not alone.", motivation: "You’ve got the strength to push through! 💪", preventive: "List your tasks to feel more in control. 📝" }
+                ],
+                lonely: [
+                    { empathy: "Feeling lonely is hard—{0}. 😔 You’re not alone, I’m here.", motivation: "Your presence matters—you’ll connect soon! 💖", preventive: "Reach out to a friend for a chat. 👥" },
+                    { empathy: "Loneliness is tough—{0}. 😔 You’ve got me!", motivation: "You’re never truly alone—keep shining! 🚀", preventive: "Join a community you enjoy online. 🌐" }
+                ],
+                overwhelmed: [
+                    { empathy: "I get it—{0} feels like too much. 😥 Let’s break it down.", motivation: "You’re capable of tackling this—one step at a time! 🎯", preventive: "Make a list and focus on one task now. 📝" },
+                    { empathy: "Feeling overwhelmed is heavy—{0}. 😥 I’m here.", motivation: "You’ve got this—small steps add up! 🚶", preventive: "Take a 5-minute break to breathe. 🌬️" }
+                ],
+                grateful: [
+                    { empathy: "Your gratitude is beautiful—{0}! 🙏 It shines so bright!", motivation: "Keep that thankful vibe—it’s powerful! ☀️", preventive: "Write down what you’re grateful for today. ✍️" },
+                    { empathy: "Gratitude looks great on you—{0}! 🙏", motivation: "You’re a beacon of positivity—shine on! 🌈", preventive: "Keep a gratitude journal to stay grounded. 📓" }
+                ],
+                confused: [
+                    { empathy: "Feeling confused is okay—{0}. 😕 Let’s clear it up!", motivation: "You’ll find clarity soon—keep exploring! 💡", preventive: "Write down your thoughts to sort them out. ✍️" },
+                    { empathy: "Confusion’s tough—{0}. 😕 You’re not alone.", motivation: "Clarity is coming—keep at it! 🌟", preventive: "Talk it out with someone you trust. 👥" }
+                ],
+                hopeful: [
+                    { empathy: "Your hope is so uplifting—{0}! 🌟 It’s amazing!", motivation: "Hold onto that optimism—it’ll carry you far! 🚀", preventive: "Set a small goal to keep the hope alive! 🎯" },
+                    { empathy: "Feeling hopeful is powerful—{0}! 🌟 You rock!", motivation: "Your hope lights the way—keep going! 💡", preventive: "Write down your hopes to make them real. ✍️" }
+                ]
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 5,
-                        ticks: { color: '#ffffff' }
-                    },
-                    x: { ticks: { color: '#ffffff' } }
-                },
-                plugins: { legend: { labels: { color: '#ffffff' } } }
+            hinglish: {
+                happy: [
+                    { empathy: "Arre, tu toh full happy mode mein hai—{0}! 😄 Mast hai!", motivation: "Iss positivity ko sab tak le ja! 🌟", preventive: "Kisi se apni khushi share kar! ✨" },
+                    { empathy: "Tu toh khushi se jhhoom raha hai—{0}! 😄 Bohot badhiya!", motivation: "Yeh energy rakh—tu rockstar hai! 🚀", preventive: "Jo tujhe khush rakhta hai, usse likh le! ✍️" }
+                ],
+                sad: [
+                    { empathy: "Bhai, sad feel ho raha hai—{0}. 😢 Main hoon na tere saath.", motivation: "Tu bahut strong hai, yeh pal bhi guzar jayega! 💪", preventive: "Teen cheezein likh jo tujhe khushi deti hain. 🙏" },
+                    { empathy: "Dil udaas hai—{0}. 😢 Tera saath main doonga.", motivation: "Chhote steps se bade din aayenge! 🚶", preventive: "Apne dil ki baat likh le. ✍️" }
+                ],
+                anxious: [
+                    { empathy: "Anxiety ho rahi hai—{0}. 😰 Saath mein sort karenge?", motivation: "Tune pehle bhi tension handle ki—tu boss hai! 🚀", preventive: "5-4-3-2-1 technique try kar. 🌬️" },
+                    { empathy: "Nervous feel ho raha—{0}. 😰 Tu akela nahi hai.", motivation: "Ek ek step le—tu yeh bhi kar lega! 🌟", preventive: "Lamba saans le. 🌬️" }
+                ],
+                angry: [
+                    { empathy: "Gussa aa raha hai—{0}. 😣 Thik hai, isse handle karenge.", motivation: "Tu isse bhi sambhal lega—tu boss hai! ⚡", preventive: "10 tak dheere se gin. 🚶" },
+                    { empathy: "Gussa toh banta hai—{0}. 😣 Saath mein thik karte hain.", motivation: "Tu calm reh sakta hai—tu strong hai! 🌟", preventive: "Lamba saans le. 🌬️" }
+                ],
+                stressed: [
+                    { empathy: "Stress ho raha hai—{0}. 😓 Main hoon relax karne ke liye!", motivation: "Itna sab sambhal raha hai—ek step le! 🌈", preventive: "4-7-8 breathing try kar. 🌬️" },
+                    { empathy: "Stress feel karna tough hai—{0}. 😓 Tu akela nahi.", motivation: "Teri himmat sab handle kar sakti hai! 💪", preventive: "Tasks ki list bana. 📝" }
+                ],
+                lonely: [
+                    { empathy: "Akela feel ho raha hai—{0}. 😔 Tu akela nahi, main hoon!", motivation: "Tu kitna special hai, log jaldi connect karenge! 💖", preventive: "Kisi dost ko call kar. 👥" },
+                    { empathy: "Lonely feel tough hai—{0}. 😔 Tera saath main doonga.", motivation: "Tu kabhi akela nahi—teri roshni chamkegi! 🚀", preventive: "Online koi group join kar. 🌐" }
+                ],
+                overwhelmed: [
+                    { empathy: "Bohot zyada lag raha hai—{0}. 😥 Saath mein easy karenge.", motivation: "Tu yeh bhi kar sakta hai—bas ek step! 🎯", preventive: "List bana aur ek kaam pe focus kar. 📝" },
+                    { empathy: "Sab kuch bohot hai—{0}. 😥 Tu akela nahi hai.", motivation: "Teri himmat yeh sab sambhal legi! 💪", preventive: "5 minute ka break le. 🌬️" }
+                ],
+                grateful: [
+                    { empathy: "Wah, tera thankful vibe—{0}! 🙏 Dil jeet leta hai!", motivation: "Yeh positivity rakho—yeh bohot power hai! ☀️", preventive: "Jo tu grateful hai, usse likh le. ✍️" },
+                    { empathy: "Gratitude tujhpe suit karti hai—{0}! 🙏", motivation: "Tu iss vibe se sab jeet lega! 🌈", preventive: "Gratitude journal start kar. 📓" }
+                ],
+                confused: [
+                    { empathy: "Confused ho raha hai—{0}. 😕 Chalo clear karte hain!", motivation: "Tu jaldi samajh jayega—bas try kar! 💡", preventive: "Apne thoughts likh ke sort kar le. ✍️" },
+                    { empathy: "Confusion tough hai—{0}. 😕 Tu akela nahi.", motivation: "Clarity aayegi—bas thodi mehnat! 🌟", preventive: "Kisi se baat kar ke clear kar le. 👥" }
+                ],
+                hopeful: [
+                    { empathy: "Yeh hopeful vibe—{0}! 🌟 Bohot mast hai!", motivation: "Iss optimism se tu bohot door jayega! 🚀", preventive: "Ek chhota goal set kar. 🎯" },
+                    { empathy: "Hopeful feel karna—{0}! 🌟 Powerful hai!", motivation: "Tera optimism tujhe bohot door le jayega! 🚀", preventive: "Apni hopes likh le. ✍️" }
+                ]
+            },
+            tanglish: {
+                happy: [
+                    { empathy: "Super da, nee romba happy-a irukke—{0}! 😄 Semma feel!", motivation: "Indha positive vibea ellarukum spread pannu! 🌟", preventive: "Yaarukittayavadhu un happy share pannu! ✨" },
+                    { empathy: "Nee full-on santhosham da—{0}! 😄 Kola mass!", motivation: "Nee superstar da—indha energy vitudadha! 🚀", preventive: "Unakku santhosham tharadha ezhuthu! ✍️" }
+                ],
+                sad: [
+                    { empathy: "Sad-a feel pannura—{0}. 😢 Naan un kooda irukken da.", motivation: "Nee romba strong da, indha moment pass agidum! 💪", preventive: "Moonu things ezhuthu unakku santhosham tharadhu. 🙏" },
+                    { empathy: "Manasu kashtama irukku—{0}. 😢 Naan unakku irukken.", motivation: "Chinna steps edutha nalla naal varum! 🚶", preventive: "Un manasula irukradha ezhuthu. ✍️" }
+                ],
+                anxious: [
+                    { empathy: "Anxious-a irukku—{0}. 😰 Saerndhu sort pannalam da?", motivation: "Nee already tension handle pannita—nee hero da! 🚀", preventive: "5-4-3-2-1 technique try pannu. 🌬️" },
+                    { empathy: "Nervous-a irukku—{0}. 😰 Nee thaniya illa da.", motivation: "Oru oru step eduthu paaru—nee pannuva! 🌟", preventive: "Deep-a saans edu. 🌬️" }
+                ],
+                angry: [
+                    { empathy: "Kopam varudhu—{0}. 😣 Okay da, idha handle pannalam.", motivation: "Nee idha control pannuva—nee boss da! ⚡", preventive: "10 varaikkum count pannu. 🚶" },
+                    { empathy: "Kopam irukku okay da—{0}. 😣 Saerndhu paapom.", motivation: "Nee calm-a irukka power irukku da! 🌟", preventive: "Lamba saans edu. 🌬️" }
+                ],
+                stressed: [
+                    { empathy: "Stress-a irukku—{0}. 😓 Naan relax pannava irukken!", motivation: "Evalo pannura—oru step eduthu paaru! 🌈", preventive: "4-7-8 breathing try pannu. 🌬️" },
+                    { empathy: "Stress tough-a irukku—{0}. 😓 Nee thaniya illa.", motivation: "Un balam ellam sambhalum da! 💪", preventive: "Tasks list pannu. 📝" }
+                ],
+                lonely: [
+                    { empathy: "Thaniya feel pannura—{0}. 😔 Nee thaniya illa, naan irukken!", motivation: "Nee special da, jaldi friends connect pannuva! 💖", preventive: "Friend-a call pannu. 👥" },
+                    { empathy: "Thanimai tough da—{0}. 😔 Unakku naan irukken.", motivation: "Nee never thaniya illa—shine pannu! 🚀", preventive: "Online unakku pidicha group join pannu. 🌐" }
+                ],
+                overwhelmed: [
+                    { empathy: "Romba load-a irukku—{0}. 😥 Saerndhu easy pannalam.", motivation: "Nee idha pannuva—oru chinnadhu start pannu! 🎯", preventive: "Tasks list pannu. 📝" },
+                    { empathy: "Ellam romba irukku—{0}. 😥 Nee thaniya illa da.", motivation: "Un balam idha sambhalum da! 💪", preventive: "5 minute break edu. 🌬️" }
+                ],
+                grateful: [
+                    { empathy: "Semma, un grateful heart—{0}! 🙏 Super da!", motivation: "Indha vibe vidadha—idhu powerful da! ☀️", preventive: "Nee grateful-a ezhuthu. ✍️" },
+                    { empathy: "Gratitude unakku semma suit agudhu—{0}! 🙏", motivation: "Indha vibe-oda ellam jeippa da! 🌈", preventive: "Gratitude journal start pannu. 📓" }
+                ],
+                confused: [
+                    { empathy: "Confused-a irukku—{0}. 😕 Saerndhu clear pannalam da!", motivation: "Nee seekiram purinjupuva—try pannu! 💡", preventive: "Un thoughts ezhuthi sort pannu. ✍️" },
+                    { empathy: "Confusion tough da—{0}. 😕 Nee thaniya illa.", motivation: "Clarity varum—konjam porumai! 🌟", preventive: "Yaarukittayavadhu pesi clear pannu. 👥" }
+                ],
+                hopeful: [
+                    { empathy: "Indha hopeful feel—{0}! 🌟 Romba semma da!", motivation: "Indha optimism-oda nee rock pannuva! 🚀", preventive: "Chinna goal set pannu. 🎯" },
+                    { empathy: "Hopeful-a irukku—{0}! 🌟 Powerful da!", motivation: "Un optimism unna rock pannum da! 🚀", preventive: "Un hopes ezhuthu. ✍️" }
+                ]
             }
-        });
-        document.querySelectorAll('.mood-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const mood = btn.dataset.mood;
-                const value = { excellent: 5, good: 4, neutral: 3, poor: 2, terrible: 1 }[mood];
-                moodChart.data.labels.push(new Date().toLocaleDateString());
-                moodChart.data.datasets[0].data.push(value);
-                moodChart.update();
-                updateJournalPrompt(mood);
+        };
+
+        async function analyzeEmotion(input, history, language) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const lowerInput = input.toLowerCase();
+                    let emotion = 'confused';
+                    let intensity = 0.5;
+                    const emotionKeywords = {
+                        happy: ['happy', 'great', 'awesome', 'thrilled', 'joy', 'excited', 'fantastic', 'elated'],
+                        sad: ['sad', 'depressed', 'down', 'upset', 'heartbroken', 'blue', 'gloomy', 'miserable'],
+                        anxious: ['anxious', 'worried', 'nervous', 'tense', 'uneasy', 'jittery', 'scared'],
+                        angry: ['angry', 'mad', 'furious', 'annoyed', 'irritated', 'livid', 'outraged'],
+                        stressed: ['stressed', 'pressured', 'overwhelmed', 'tense', 'frazzled', 'exhausted'],
+                        lonely: ['lonely', 'alone', 'isolated', 'disconnected', 'lonesome', 'abandoned'],
+                        overwhelmed: ['overwhelmed', 'swamped', 'buried', 'drowning', 'bogged'],
+                        grateful: ['grateful', 'thankful', 'appreciative', 'blessed', 'thank'],
+                        confused: ['confused', 'lost', 'puzzled', 'baffled', 'disoriented', 'unsure'],
+                        hopeful: ['hopeful', 'optimistic', 'positive', 'encouraged', 'upbeat']
+                    };
+                    for (const [emo, keywords] of Object.entries(emotionKeywords)) {
+                        if (keywords.some(k => lowerInput.includes(k))) {
+                            emotion = emo;
+                            intensity = lowerInput.includes('really') || lowerInput.includes('so') ? 0.8 : 0.5;
+                            break;
+                        }
+                    }
+                    const recentEmotions = history.slice(-3).map(h => h.emotion);
+                    if (recentEmotions.filter(e => e === emotion).length >= 2) {
+                        intensity += 0.2;
+                    }
+                    if (recentEmotions.includes('sad') && emotion === 'sad' && lowerInput.includes('depressed')) {
+                        intensity = Math.min(0.9, intensity + 0.1);
+                    }
+                    const lang = language || (lowerInput.includes('bhai') || lowerInput.includes('hoon') ? 'hinglish' :
+                                    lowerInput.includes('da') || lowerInput.includes('irukku') ? 'tanglish' : 'english');
+                    const intent = lowerInput.includes('why') || lowerInput.includes('how') ? 'question' :
+                                  lowerInput.includes('feel') || lowerInput.includes('feeling') ? 'emotion' : 'statement';
+                    resolve({ emotion, intensity, language: lang, intent });
+                }, 500);
             });
-        });
-        // Emotion Wheel
-        document.querySelectorAll('#emotion-wheel .mood-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const emotion = btn.dataset.emotion;
-                updateJournalPrompt(emotion);
-            });
-        });
-        // Journal Prompt
-        function updateJournalPrompt(emotion) {
-            const prompts = {
-                excellent: 'What made today so amazing? 🌟',
-                good: 'What’s one thing that made you smile today? 😊',
-                neutral: 'What’s on your mind today? 🤔',
-                poor: 'What’s been challenging for you today? 😔',
-                terrible: 'What’s been tough? Let it out. 😢',
-                happy: 'What’s sparking your joy today? 😄',
-                sad: 'What’s weighing on your heart? 😢',
-                anxious: 'What’s got you feeling uneasy? 😰',
-                angry: 'What’s fired you up today? 😣',
-                stressed: 'What’s stressing you out? 😓',
-                lonely: 'What’s making you feel alone? 😔',
-                overwhelmed: 'What’s feeling like too much? 😥',
-                grateful: 'What are you thankful for today? 🙏',
-                confused: 'What’s got you puzzled? 😕',
-                hopeful: 'What’s giving you hope today? 🌟'
-            };
-            document.getElementById('journal-prompt').textContent = prompts[emotion] || 'What’s on your mind today? 🤔';
         }
-        // Meditation Timer
-        document.getElementById('play-meditation').addEventListener('click', () => {
-            let time = 60;
-            const progress = document.getElementById('meditation-progress');
-            const progressBar = document.getElementById('meditation-progress-bar');
-            const interval = setInterval(() => {
-                time--;
-                const percentage = ((60 - time) / 60) * 100;
-                progressBar.style.width = `${percentage}%`;
-                progress.textContent = `0:${time.toString().padStart(2, '0')}`;
-                if (time <= 0) {
-                    clearInterval(interval);
-                    progress.textContent = 'Meditation Complete! 🌟';
-                    progressBar.style.width = '100%';
+
+        async function generateResponse(input, analysis, history) {
+            const { emotion, intensity, language, intent } = analysis;
+            let empathy, motivation, preventive;
+            const recentEmotions = history.slice(-5).map(h => h.emotion);
+            const isPersistentNegative = recentEmotions.filter(e => ['sad', 'anxious', 'stressed', 'lonely', 'overwhelmed', 'angry'].includes(e)).length >= 3;
+            if (Math.random() < 0.8) {
+                empathy = `I truly understand that you're feeling ${emotion}${intensity > 0.7 ? ' deeply' : ''}—${input}. ${getEmoji(emotion)} Let’s navigate this together.`;
+                motivation = `You’re incredibly resilient${intensity > 0.7 ? ' and capable of overcoming this' : ''}! ${getMotivationalPhrase(emotion, language)}`;
+                preventive = getPreventiveAction(emotion, language);
+                if (isPersistentNegative && settings.crisisSensitivity > 30) {
+                    preventive += ` Since you’ve been feeling this way for a bit, how about trying a mindfulness app or talking to a trusted friend? 💖`;
                 }
-            }, 1000);
-        });
+                if (intent === 'question') {
+                    empathy += ` Let me help clarify things for you.`;
+                }
+            } else {
+                const templates = responseTemplates[language][emotion];
+                const template = templates[Math.floor(Math.random() * templates.length)];
+                empathy = template.empathy.replace('{0}', input);
+                motivation = template.motivation;
+                preventive = template.preventive;
+                if (isPersistentNegative && settings.crisisSensitivity > 30) {
+                    preventive += ` You’ve been feeling low lately—maybe try a relaxing activity or reach out to someone close. 💖`;
+                }
+            }
+            return { empathy, motivation, preventive };
+        }
+
+        function getEmoji(emotion) {
+            const emojis = {
+                happy: '😄', sad: '😢', anxious: '😰', angry: '😣', stressed: '😓',
+                lonely: '😔', overwhelmed: '😥', grateful: '🙏', confused: '😕', hopeful: '🌟'
+            };
+            return emojis[emotion] || '💬';
+        }
+
+        function getMotivationalPhrase(emotion, language) {
+            const phrases = {
+                english: {
+                    happy: 'Keep spreading that joy! 🚀',
+                    sad: 'Brighter days are coming—keep going! 💪',
+                    anxious: 'You’re stronger than your worries! 🌟',
+                    angry: 'Channel that energy into something amazing! ⚡',
+                    stressed: 'One step at a time—you’ve got this! 🌈',
+                    lonely: 'Connections are just around the corner! 💖',
+                    overwhelmed: 'Small steps lead to big wins! 🎯',
+                    grateful: 'Your positivity lights up the world! ☀️',
+                    confused: 'Clarity is on its way—keep exploring! 💡',
+                    hopeful: 'Your optimism is unstoppable! 🚀'
+                },
+                hinglish: {
+                    happy: 'Iss khushi ko duniya tak le ja! 🚀',
+                    sad: 'Bade din aayenge—bas aage chal! 💪',
+                    anxious: 'Tu tension se bada hai! 🌟',
+                    angry: 'Iss energy ko kaam mein laga! ⚡',
+                    stressed: 'Ek ek step le—tu jeetega! 🌈',
+                    lonely: 'Log jaldi connect karenge—tu special hai! 💖',
+                    overwhelmed: 'Chhote steps se bada kaam hoga! 🎯',
+                    grateful: 'Teri positivity duniya roshan karti hai! ☀️',
+                    confused: 'Clarity aayegi—bas try kar! 💡',
+                    hopeful: 'Tera optimism tujhe bohot door le jayega! 🚀'
+                },
+                tanglish: {
+                    happy: 'Indha santhoshattha ellarukum spread pannu! 🚀',
+                    sad: 'Nalla naal varum—munnadi poru! 💪',
+                    anxious: 'Nee tension-uku periya aalu da! 🌟',
+                    angry: 'Indha energy-a use pannu da! ⚡',
+                    stressed: 'Oru oru step eduthu paaru—nee jeippa! 🌈',
+                    lonely: 'Friends jaldi connect pannuvanga—nee special da! 💖',
+                    overwhelmed: 'Chinna steps edutha periya vishayam agum! 🎯',
+                    grateful: 'Un positivity ulagatha aattum da! ☀️',
+                    confused: 'Clarity varum—try pannu da! 💡',
+                    hopeful: 'Un optimism unna rock pannum da! 🚀'
+                }
+            };
+            return phrases[language][emotion];
+        }
+
+        function getPreventiveAction(emotion, language) {
+            const actions = {
+                english: {
+                    happy: 'Share your joy with someone to double it! 😊',
+                    sad: 'Try journaling your feelings or listening to a favorite song. 🎶',
+                    anxious: 'Practice the 5-4-3-2-1 grounding technique. 🌬️',
+                    angry: 'Take a deep breath and count to 10 slowly. 🚶',
+                    stressed: 'Try a 4-7-8 breathing exercise to relax. 🌬️',
+                    lonely: 'Reach out to a friend or join an online community. 👥',
+                    overwhelmed: 'Make a list and tackle one task at a time. 📝',
+                    grateful: 'Write down three things you’re thankful for. ✍️',
+                    confused: 'Talk it out or jot down your thoughts to sort them. 📓',
+                    hopeful: 'Set a small goal to keep this vibe going! 🎯'
+                },
+                hinglish: {
+                    happy: 'Apni khushi kisi se share kar—double ho jayegi! 😊',
+                    sad: 'Apne feelings likh ya pasandida gaana sun. 🎶',
+                    anxious: '5-4-3-2-1 technique try kar, man shant hoga. 🌬️',
+                    angry: 'Lamba saans le aur 10 tak gin. 🚶',
+                    stressed: '4-7-8 breathing kar, tension kam hogi. 🌬️',
+                    lonely: 'Kisi dost ko call kar ya online group join kar. 👥',
+                    overwhelmed: 'List bana aur ek kaam pe focus kar. 📝',
+                    grateful: 'Teen cheezein likh jiske liye tu thankful hai. ✍️',
+                    confused: 'Baat kar ya thoughts likh ke sort kar. 📓',
+                    hopeful: 'Ek chhota goal set kar iss vibe ko rakhne ke liye! 🎯'
+                },
+                tanglish: {
+                    happy: 'Un santhoshattha yaarukku share pannu—double agum! 😊',
+                    sad: 'Un feelings ezhuthu ya favorite paattu kelu. 🎶',
+                    anxious: '5-4-3-2-1 technique try pannu, manasu calm agum. 🌬️',
+                    angry: 'Lamba saans edu, 10 varaikkum count pannu. 🚶',
+                    stressed: '4-7-8 breathing pannu, tension kammi agum. 🌬️',
+                    lonely: 'Friend-a call pannu ya online group join pannu. 👥',
+                    overwhelmed: 'List pannu, oru kaariyam mattum pannu. 📝',
+                    grateful: 'Moonu vishayam ezhuthu nee thankful-a irukradhu. ✍️',
+                    confused: 'Pesi paaru ya thoughts ezhuthi sort pannu. 📓',
+                    hopeful: 'Chinna goal set pannu indha vibe keep pannu! 🎯'
+                }
+            };
+            return actions[language][emotion];
+        }
+
+        function addMessage(text, isBot = false) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `p-2 rounded mb-2 ${isBot ? 'bg-gray-800 bg-opacity-50' : 'bg-pink-500 text-right'}`;
+            messageDiv.innerHTML = `${text} <span class="emoji">${isBot ? getEmoji(conversationHistory[conversationHistory.length-1]?.emotion || 'confused') : ''}</span>`;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        async function handleUserInput(input) {
+            if (!input.trim()) return;
+            addMessage(input);
+            const analysis = await analyzeEmotion(input, conversationHistory, settings.language);
+            conversationHistory.push({ text: input, emotion: analysis.emotion, timestamp: new Date().toISOString() });
+            localStorage.setItem('conversationHistory', JSON.stringify(conversationHistory));
+            const response = await generateResponse(input, analysis, conversationHistory);
+            const responseText = `${response.empathy}<br>${response.motivation}<br>${response.preventive}`;
+            addMessage(responseText, true);
+            if (['sad', 'anxious', 'stressed', 'lonely', 'overwhelmed'].includes(analysis.emotion) && analysis.intensity > 0.7 && settings.crisisSensitivity > 70) {
+                setTimeout(() => {
+                    addMessage('You seem to be struggling—would you like to explore our emergency resources? 🚨 <a href="#" class="text-pink-400 hover:underline" onclick="document.querySelector(\'[data-tab=emergency-tab]\').click()">Click here</a>', true);
+                }, 1000);
+            }
+        }
+
+        function initializeChat() {
+            conversationHistory.forEach(msg => addMessage(msg.text, msg.emotion !== 'user'));
+            document.getElementById('send-btn').addEventListener('click', () => {
+                const input = document.getElementById('user-input');
+                handleUserInput(input.value);
+                input.value = '';
+            });
+            document.getElementById('user-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const input = document.getElementById('user-input');
+                    handleUserInput(input.value);
+                    input.value = '';
+                }
+            });
+            document.querySelectorAll('.quick-reply').forEach(btn => {
+                btn.addEventListener('click', () => handleUserInput(btn.textContent));
+            });
+            document.getElementById('export-chat').addEventListener('click', () => {
+                const chatText = conversationHistory.map(msg => `${new Date(msg.timestamp).toLocaleString()}: ${msg.text}`).join('\n');
+                const blob = new Blob([chatText], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'MindAidPro_Chat.txt';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        // Mood Tracking
+        let moodChart;
+        function initializeMood() {
+            const ctx = document.getElementById('mood-chart').getContext('2d');
+            moodChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: moodData.map(d => new Date(d.timestamp).toLocaleDateString()),
+                    datasets: [{
+                        label: 'Mood',
+                        data: moodData.map(d => ['terrible', 'poor', 'neutral', 'good', 'excellent'].indexOf(d.mood) + 1),
+                        borderColor: '#ec4899',
+                        backgroundColor: 'rgba(236, 72, 153, 0.2)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { min: 0, max: 5, ticks: { stepSize: 1, callback: v => ['Terrible', 'Poor', 'Neutral', 'Good', 'Excellent'][v-1] } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const mood = btn.dataset.mood;
+                    moodData.push({ mood, timestamp: new Date().toISOString() });
+                    localStorage.setItem('moodData', JSON.stringify(moodData));
+                    updateMoodChart();
+                    handleUserInput(`I'm feeling ${mood}!`);
+                });
+            });
+            document.getElementById('export-mood').addEventListener('click', () => {
+                const moodText = moodData.map(m => `${new Date(m.timestamp).toLocaleString()}: ${m.mood}`).join('\n');
+                const blob = new Blob([moodText], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'MindAidPro_Mood.txt';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        function updateMoodChart() {
+            moodChart.data.labels = moodData.map(d => new Date(d.timestamp).toLocaleDateString());
+            moodChart.data.datasets[0].data = moodData.map(d => ['terrible', 'poor', 'neutral', 'good', 'excellent'].indexOf(d.mood) + 1);
+            moodChart.update();
+        }
+
+        // Journal
+        const journalPrompts = {
+            english: ['What’s on your mind today? 🤔', 'What made you smile today? 😊', 'What’s one thing you learned recently? 💡'],
+            hinglish: ['Aaj dil mein kya chal raha hai? 🤔', 'Aaj kisne tujhe hasaya? 😊', 'Naya kya seekha tu? 💡'],
+            tanglish: ['Innikki manasula enna irukku? 🤔', 'Innikki enna unna smile panna vachadhu? 😊', 'Pudhusaa enna kaathukutta? 💡']
+        };
+
+        function initializeJournal() {
+            const historyDiv = document.getElementById('journal-history');
+            journalData.forEach(entry => {
+                const div = document.createElement('div');
+                div.className = 'p-2 bg-gray-800 bg-opacity-50 rounded';
+                div.textContent = `${new Date(entry.timestamp).toLocaleString()}: ${entry.text}`;
+                historyDiv.appendChild(div);
+            });
+            document.getElementById('save-journal').addEventListener('click', () => {
+                const text = document.getElementById('journal-entry').value;
+                if (text.trim()) {
+                    journalData.push({ text, timestamp: new Date().toISOString() });
+                    localStorage.setItem('journalData', JSON.stringify(journalData));
+                    const div = document.createElement('div');
+                    div.className = 'p-2 bg-gray-800 bg-opacity-50 rounded';
+                    div.textContent = `${new Date().toLocaleString()}: ${text}`;
+                    historyDiv.appendChild(div);
+                    document.getElementById('journal-entry').value = '';
+                    document.getElementById('journal-prompt').textContent = journalPrompts[settings.language][Math.floor(Math.random() * journalPrompts[settings.language].length)];
+                }
+            });
+        }
+
+        // Gratitude
+        function initializeGratitude() {
+            const historyDiv = document.getElementById('gratitude-history');
+            gratitudeData.forEach(entry => {
+                const div = document.createElement('div');
+                div.className = 'p-2 bg-gray-800 bg-opacity-50 rounded';
+                div.textContent = `${new Date(entry.timestamp).toLocaleString()}: ${entry.items.join(', ')}`;
+                historyDiv.appendChild(div);
+            });
+            document.getElementById('gratitude-log').addEventListener('click', () => {
+                const items = [
+                    document.getElementById('gratitude-1').value,
+                    document.getElementById('gratitude-2').value,
+                    document.getElementById('gratitude-3').value
+                ].filter(i => i.trim());
+                if (items.length) {
+                    gratitudeData.push({ items, timestamp: new Date().toISOString() });
+                    localStorage.setItem('gratitudeData', JSON.stringify(gratitudeData));
+                    const div = document.createElement('div');
+                    div.className = 'p-2 bg-gray-800 bg-opacity-50 rounded';
+                    div.textContent = `${new Date().toLocaleString()}: ${items.join(', ')}`;
+                    historyDiv.appendChild(div);
+                    ['gratitude-1', 'gratitude-2', 'gratitude-3'].forEach(id => document.getElementById(id).value = '');
+                }
+            });
+        }
+
+        // Sleep
+        function initializeSleep() {
+            document.getElementById('sleep-log').addEventListener('click', () => {
+                const hours = parseFloat(document.getElementById('sleep-hours').value);
+                if (!isNaN(hours) && hours >= 0) {
+                    sleepData.push({ hours, timestamp: new Date().toISOString() });
+                    localStorage.setItem('sleepData', JSON.stringify(sleepData));
+                    document.getElementById('sleep-hours').value = '';
+                    updateSleepAverage();
+                }
+            });
+            updateSleepAverage();
+        }
+
+        function updateSleepAverage() {
+            const avg = sleepData.reduce((sum, d) => sum + d.hours, 0) / (sleepData.length || 1);
+            document.getElementById('sleep-average').textContent = `Average Sleep: ${avg.toFixed(1)} hours per night`;
+        }
+
+        // Goals
+        function initializeGoals() {
+            const goalList = document.getElementById('goal-list');
+            goalsData.forEach((goal, index) => {
+                const div = document.createElement('div');
+                div.className = 'p-2 bg-gray-800 bg-opacity-50 rounded flex justify-between items-center';
+                div.innerHTML = `<span>${goal.text}</span><button class="p-1 bg-red-500 rounded btn-pulse hover:bg-red-600" data-index="${index}" aria-label="Delete goal">🗑️</button>`;
+                goalList.appendChild(div);
+            });
+            document.getElementById('add-goal').addEventListener('click', () => {
+                const text = document.getElementById('new-goal').value;
+                if (text.trim()) {
+                    goalsData.push({ text, timestamp: new Date().toISOString() });
+                    localStorage.setItem('goalsData', JSON.stringify(goalsData));
+                    const div = document.createElement('div');
+                    div.className = 'p-2 bg-gray-800 bg-opacity-50 rounded flex justify-between items-center';
+                    div.innerHTML = `<span>${text}</span><button class="p-1 bg-red-500 rounded btn-pulse hover:bg-red-600" data-index="${goalsData.length-1}" aria-label="Delete goal">🗑️</button>`;
+                    goalList.appendChild(div);
+                    document.getElementById('new-goal').value = '';
+                }
+            });
+            goalList.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const index = e.target.dataset.index;
+                    goalsData.splice(index, 1);
+                    localStorage.setItem('goalsData', JSON.stringify(goalsData));
+                    goalList.innerHTML = '';
+                    initializeGoals();
+                }
+            });
+        }
+
+        // Stress
+        function initializeStress() {
+            const heatmapDiv = document.getElementById('stress-heatmap');
+            const stressLevels = conversationHistory.filter(h => ['stressed', 'overwhelmed', 'anxious'].includes(h.emotion));
+            const days = {};
+            stressLevels.forEach(s => {
+                const date = new Date(s.timestamp).toLocaleDateString();
+                days[date] = (days[date] || 0) + 1;
+            });
+            Object.entries(days).forEach(([date, count]) => {
+                const div = document.createElement('div');
+                div.className = `p-2 bg-pink-500 bg-opacity-${Math.min(count * 20, 100)} rounded`;
+                div.textContent = `${date}: ${count} stress moment${count > 1 ? 's' : ''}`;
+                heatmapDiv.appendChild(div);
+            });
+        }
+
+        // Meditation
+        function initializeMeditation() {
+            let meditationInterval;
+            document.getElementById('play-meditation').addEventListener('click', () => {
+                let timeLeft = 60;
+                const progressBar = document.getElementById('meditation-progress-bar');
+                const progressText = document.getElementById('meditation-progress');
+                if (meditationInterval) clearInterval(meditationInterval);
+                meditationInterval = setInterval(() => {
+                    timeLeft--;
+                    progressBar.style.width = `${(60 - timeLeft) / 60 * 100}%`;
+                    progressText.textContent = `0:${timeLeft.toString().padStart(2, '0')}`;
+                    if (timeLeft <= 0) {
+                        clearInterval(meditationInterval);
+                        progressText.textContent = 'Meditation Complete! 🌟';
+                    }
+                }, 1000);
+            });
+        }
+
+        // Affirmation
+        const affirmations = {
+            english: ['You are enough just as you are! 💖', 'Every day is a fresh start! 🌈', 'You radiate positivity! ☀️'],
+            hinglish: ['Tu waise hi perfect hai! 💖', 'Har din naya chance hai! 🌈', 'Teri positivity chamakti hai! ☀️'],
+            tanglish: ['Nee appadiye semma da! 💖', 'Daily pudhusa start pannu! 🌈', 'Un positivity supera irukku! ☀️']
+        };
+
+        function initializeAffirmation() {
+            document.getElementById('affirmation-display').textContent = affirmations[settings.language][0];
+            document.getElementById('new-affirmation').addEventListener('click', () => {
+                document.getElementById('affirmation-display').textContent = affirmations[settings.language][Math.floor(Math.random() * affirmations[settings.language].length)];
+            });
+        }
+
+        // Emotion Wheel
+        function initializeEmotionWheel() {
+            document.querySelectorAll('#emotion-wheel .mood-btn').forEach(btn => {
+                btn.addEventListener('click', () => handleUserInput(`I'm feeling ${btn.dataset.emotion}!`));
+            });
+        }
+
+        // CBT
+        function initializeCBT() {
+            document.getElementById('cbt-exercise').addEventListener('click', () => {
+                const negative = document.getElementById('cbt-negative').value;
+                const positive = document.getElementById('cbt-positive').value;
+                if (negative.trim() && positive.trim()) {
+                    handleUserInput(`I reframed "${negative}" to "${positive}"`);
+                    document.getElementById('cbt-negative').value = '';
+                    document.getElementById('cbt-positive').value = '';
+                }
+            });
+        }
+
+        // Mindfulness Game
+        function initializeMindfulnessGame() {
+            document.getElementById('mindfulness-game').addEventListener('click', () => {
+                const input = document.getElementById('mindfulness-input').value;
+                if (input.trim()) {
+                    handleUserInput(`Mindfulness game: ${input}`);
+                    document.getElementById('mindfulness-input').value = '';
+                }
+            });
+        }
+
         // Anxiety Timer
-        document.getElementById('start-anxiety-timer').addEventListener('click', () => {
-            let time = 300;
-            const timer = document.getElementById('anxiety-timer');
-            const progressBar = document.getElementById('anxiety-progress-bar');
-            const interval = setInterval(() => {
-                const minutes = Math.floor(time / 60);
-                const seconds = time % 60;
-                const percentage = ((300 - time) / 300) * 100;
-                progressBar.style.width = `${percentage}%`;
-                timer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                time--;
-                if (time < 0) {
-                    clearInterval(interval);
-                    timer.textContent = 'Grounding Complete! 😎';
-                    progressBar.style.width = '100%';
+        function initializeAnxietyTimer() {
+            let anxietyInterval;
+            document.getElementById('start-anxiety-timer').addEventListener('click', () => {
+                let timeLeft = 300;
+                const progressBar = document.getElementById('anxiety-progress-bar');
+                const timerText = document.getElementById('anxiety-timer');
+                if (anxietyInterval) clearInterval(anxietyInterval);
+                anxietyInterval = setInterval(() => {
+                    timeLeft--;
+                    progressBar.style.width = `${(300 - timeLeft) / 300 * 100}%`;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerText.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    if (timeLeft <= 0) {
+                        clearInterval(anxietyInterval);
+                        timerText.textContent = 'Grounding Complete! 🌟';
+                    }
+                }, 1000);
+            });
+        }
+
+        // Insights
+        function initializeInsights() {
+            const moodTrend = moodData.length > 1 ? moodData[moodData.length-1].mood : 'No data yet';
+            document.getElementById('insight-mood').textContent = `Latest Mood: ${moodTrend}`;
+            const sleepAvg = sleepData.reduce((sum, d) => sum + d.hours, 0) / (sleepData.length || 1);
+            document.getElementById('insight-sleep').textContent = `Average Sleep: ${sleepAvg.toFixed(1)} hours`;
+            document.getElementById('insight-journal').textContent = `Journal Entries: ${journalData.length}`;
+        }
+
+        // Feedback
+        function initializeFeedback() {
+            document.getElementById('feedback-btn').addEventListener('click', () => {
+                const text = document.getElementById('feedback-text').value;
+                if (text.trim()) {
+                    feedbackData.push({ text, timestamp: new Date().toISOString() });
+                    localStorage.setItem('feedbackData', JSON.stringify(feedbackData));
+                    document.getElementById('feedback-text').value = '';
+                    alert('Thanks for your feedback! 🌟');
                 }
-            }, 1000);
-        });
-    </script>
-</body>
-</html>
+            });
+        }
+
+        // Settings
+        function initializeSettings() {
+            document.getElementById('language-selector').value = settings.language;
+            document.getElementById('crisis-sensitivity').value = settings.crisisSensitivity;
+            document.getElementById('reminder-frequency').value = settings.reminderFrequency;
+            document.getElementById('save-settings').addEventListener('click', () => {
+                settings.language = document.getElementById('language-selector').value;
+                settings.crisisSensitivity = parseInt(document.getElementById('crisis-sensitivity').value);
+                settings.reminderFrequency = document.getElementById('reminder-frequency').value;
+                localStorage.setItem('settings', JSON.stringify(settings));
+                alert('Settings saved! ⚙️');
+            });
+        }
+    </script></body></html>
