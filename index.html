@@ -3,771 +3,636 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="MindAid Pro - Your mental health first aid assistant">
-    <meta name="author" content="MindAid Team">
-    <title>MindAid Pro - Mental Health First Aid</title>
-    <!-- Boxicons CDN -->
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <!-- Poppins Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Confetti.js -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <title>Mohamed Nizar A R - Professional Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff6f91;
-            --primary-dark: #e05577;
-            --secondary: #a29bfe;
-            --secondary-dark: #7f7bff;
-            --accent: #feca57;
-            --background: #f4e7ff;
-            --card-bg: rgba(255, 255, 255, 0.2);
-            --text: #2d3436;
-            --success: #55efc4;
-            --info: #74c0fc;
-            --container-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
+            --primary: #2dd4bf;
+            --secondary: #1e3a8a;
+            --bg-light: #f9fafb;
+            --text-dark: #4b5563;
+            --text-accent: #ffffff;
+            --card-bg: #ffffff;
+            --glow: #2dd4bf80;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Poppins", sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, var(--background) 0%, #ffdeeb 100%);
+            background: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            position: relative;
             min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        .background-wave {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            opacity: 0.2;
+            animation: waveAnimation 15s ease-in-out infinite;
+        }
+
+        @keyframes waveAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .background-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .equation {
+            position: absolute;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            opacity: 0.25;
+            color: var(--primary);
+            animation: drift 25s infinite linear;
+        }
+
+        .equation:nth-child(even) {
+            color: var(--secondary);
+        }
+
+        .equation:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .equation:nth-child(2) { top: 30%; left: 15%; animation-delay: 5s; }
+        .equation:nth-child(3) { top: 50%; left: 25%; animation-delay: 10s; }
+        .equation:nth-child(4) { top: 70%; left: 35%; animation-delay: 15s; }
+
+        @keyframes drift {
+            0% { transform: translateX(-100%); opacity: 0.25; }
+            50% { opacity: 0.4; }
+            100% { transform: translateX(100%); opacity: 0.25; }
+        }
+
+        .quote {
+            position: absolute;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            opacity: 0.2;
+            color: var(--secondary);
+            animation: fadeDrift 20s infinite linear;
+        }
+
+        .quote:nth-child(odd) {
+            color: var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-weight: 500;
+        }
+
+        .quote:nth-child(5) { top: 15%; left: 10%; animation-delay: 2s; }
+        .quote:nth-child(6) { top: 35%; left: 20%; animation-delay: 6s; }
+        .quote:nth-child(7) { top: 55%; left: 30%; animation-delay: 10s; }
+        .quote:nth-child(8) { top: 75%; left: 40%; animation-delay: 14s; }
+        .quote:nth-child(9) { top: 25%; left: 50%; animation-delay: 18s; }
+
+        @keyframes fadeDrift {
+            0% { transform: translateX(-100%); opacity: 0; }
+            20% { opacity: 0.3; }
+            80% { opacity: 0.3; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        .wavy-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+            opacity: 0.2;
+            animation: waveMove 30s infinite linear;
+        }
+
+        .wavy-line:nth-child(10) { top: 20%; }
+        .wavy-line:nth-child(11) { top: 40%; animation-delay: 5s; }
+        .wavy-line:nth-child(12) { top: 60%; animation-delay: 10s; }
+        .wavy-line:nth-child(13) { top: 80%; animation-delay: 15s; }
+
+        @keyframes waveMove {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: var(--card-bg);
+            padding: 1rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 20px;
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
-        .container, .auth-container {
-            width: 100%;
-            max-width: 1200px;
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: var(--container-shadow);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            overflow: hidden;
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            position: relative;
+            transition: all 0.4s ease;
         }
 
-        .auth-container {
-            max-width: 400px;
-            padding: 40px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .auth-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--text);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .auth-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .auth-form input {
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            font-size: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            transition: var(--transition);
-        }
-
-        .auth-form input:focus {
-            outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(162, 155, 254, 0.2);
-        }
-
-        .auth-form button {
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
             background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(255, 111, 145, 0.3);
+            transition: width 0.4s ease;
         }
 
-        .auth-form button:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
-        .auth-toggle {
-            color: var(--secondary);
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: var(--transition);
+        .nav-links a:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
         }
 
-        .auth-toggle:hover {
-            color: var(--secondary-dark);
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .section {
+            padding: 80px 20px;
+            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            position: relative;
+            z-index: 10;
         }
 
         .container {
-            display: flex;
-            flex-direction: column;
-            height: 95vh;
-        }
-
-        header {
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-icon {
-            background: rgba(255, 255, 255, 0.2);
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .logo-icon i {
-            font-size: 20px;
-        }
-
-        .logo-text h1 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .logo-text .subtitle {
-            font-size: 0.85rem;
-            opacity: 0.8;
-        }
-
-        .user-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .user-btn, .chat-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .chat-btn {
-            background: var(--primary);
-            box-shadow: 0 4px 15px rgba(255, 111, 145, 0.3);
-        }
-
-        .user-btn:hover, .chat-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .chat-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .language-selector {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-
-        .language-selector:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .app-body {
-            display: flex;
             flex: 1;
-            overflow: hidden;
-        }
-
-        .sidebar {
-            width: 240px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
-            padding: 20px 0;
-        }
-
-        .nav-item {
-            display: flex;
             align-items: center;
-            padding: 12px 20px;
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            border-left: 4px solid transparent;
+            justify-content: center;
         }
 
-        .nav-item i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-            font-size: 20px;
+        .section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
             color: var(--secondary);
-        }
-
-        .nav-item.active, .nav-item:hover {
-            background: rgba(162, 155, 254, 0.2);
-            color: var(--secondary-dark);
-            border-left: 4px solid var(--secondary-dark);
-        }
-
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .tab-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .motivational {
-            background: linear-gradient(45deg, var(--success) 0%, #00b894 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-style: italic;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(85, 239, 196, 0.3);
-        }
-
-        .chat-container {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+            margin-bottom: 2rem;
             position: relative;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px var(--glow);
+            text-align: center;
         }
 
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+            transition: width 0.5s ease;
         }
 
-        .message {
-            max-width: 75%;
-            padding: 12px 18px;
-            border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            line-height: 1.5;
-            animation: fadeIn 0.3s ease;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
+        .section:hover h2::after {
+            width: 200px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px var(--glow);
+            z-index: 12;
+            text-align: right;
         }
 
-        .bot-message {
-            background: rgba(162, 155, 254, 0.2);
-            border: 1px solid rgba(162, 155, 254, 0.3);
-            border-bottom-left-radius: 4px;
-            align-self: flex-start;
-        }
-
-        .user-message {
-            background: rgba(255, 111, 145, 0.2);
-            border-bottom-right-radius: 4px;
-            align-self: flex-end;
-        }
-
-        .message-time {
-            font-size: 0.7rem;
-            opacity: 0.6;
-            margin-top: 6px;
-            display: block;
-        }
-
-        .typing-indicator {
-            display: inline-flex;
-            padding: 12px 18px;
-            background: rgba(162, 155, 254, 0.2);
-            border-radius: 15px;
-            border-bottom-left-radius: 4px;
-            align-self: flex-start;
-            border: 1px solid rgba(162, 155, 254, 0.3);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--secondary);
-            border-radius: 50%;
-            margin: 0 3px;
-            animation: typing 1.2s infinite;
-        }
-
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-4px); }
-        }
-
-        .crisis-alert {
-            background: linear-gradient(90deg, #ff7675 0%, #d63031 100%);
-            color: white;
-            border-radius: 12px;
-            padding: 15px;
-            margin: 15px 0;
-            box-shadow: 0 4px 15px rgba(255, 118, 117, 0.3);
-        }
-
-        .resources-card {
-            background: var(--info);
-            color: white;
-            border-radius: 12px;
-            padding: 15px;
-            margin: 15px 0;
-            box-shadow: 0 4px 12px rgba(116, 192, 252, 0.3);
-        }
-
-        .input-container {
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            gap: 10px;
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        #user-input {
-            flex: 1;
-            padding: 12px 18px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            outline: none;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text);
-        }
-
-        #user-input:focus {
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(162, 155, 254, 0.2);
-        }
-
-        .quick-replies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .quick-reply {
-            background: rgba(255, 111, 145, 0.1);
-            color: var(--primary);
-            border: 1px solid rgba(255, 111, 145, 0.3);
-            border-radius: 12px;
-            padding: 8px 12px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-
-        .quick-reply:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 111, 145, 0.3);
-        }
-
-        .tab-title {
-            font-size: 1.6rem;
-            color: var(--text);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .tab-title i {
-            background: var(--secondary);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
+        .gsap-hero-title {
             display: flex;
             justify-content: center;
-            align-items: center;
-            font-size: 20px;
+            flex-wrap: wrap;
+            text-align: center;
+            width: 100%;
+            gap: 0.25em;
+            margin-bottom: 1rem;
         }
 
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 15px;
+        .name-letter {
+            display: inline-block;
+            transition: color 0.3s ease;
+            transition-delay: calc(0.03s * var(--index));
+        }
+
+        .gsap-hero-title:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 15px var(--glow);
+        }
+
+        .gsap-hero-title:hover .name-letter {
+            color: var(--primary);
+        }
+
+        .name-letter:nth-child(1) { --index: 1; }
+        .name-letter:nth-child(2) { --index: 2; }
+        .name-letter:nth-child(3) { --index: 3; }
+        .name-letter:nth-child(4) { --index: 4; }
+        .name-letter:nth-child(5) { --index: 5; }
+        .name-letter:nth-child(6) { --index: 6; }
+        .name-letter:nth-child(7) { --index: 7; }
+        .name-letter:nth-child(8) { --index: 8; }
+        .name-letter:nth-child(9) { --index: 9; }
+        .name-letter:nth-child(10) { --index: 10; }
+        .name-letter:nth-child(11) { --index: 11; }
+        .name-letter:nth-child(12) { --index: 12; }
+        .name-letter:nth-child(13) { --index: 13; }
+        .name-letter:nth-child(14) { --index: 14; }
+        .name-letter:nth-child(15) { --index: 15; }
+        .name-letter:nth-child(16) { --index: 16; }
+        .name-letter:nth-child(17) { --index: 17; }
+
+        .hero h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            max-width: 600px;
+            margin-bottom: 1rem;
+            z-index: 12;
+        }
+
+        .hero-letter {
+            display: inline-block;
+        }
+
+        .hero-space {
+            display: inline-block;
+            width: 0.25em;
+        }
+
+        .hero .about-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            max-width: 800px;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            z-index: 12;
         }
 
         .card {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--container-shadow);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: var(--transition);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--text-dark);
+            width: 100%;
+            max-width: 600px;
+            transition: transform 0.5s ease, box-shadow 0.5s ease, border-color 0.4s ease;
         }
 
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px var(--glow);
+            border-color: var(--secondary);
         }
 
-        .card-header {
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            font-weight: 600;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            width: 100%;
+            max-width: 800px;
+            justify-items: center;
+            perspective: 1000px;
         }
 
-        .card-header i {
-            color: var(--primary);
-            font-size: 18px;
+        .skill-badge {
+            background: var(--primary);
+            color: var(--text-accent);
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+            text-align: center;
+            transform-style: preserve-3d;
         }
 
-        .card-body {
-            padding: 15px;
+        .skill-badge:hover {
+            transform: rotateY(180deg) scale(1.1);
+            box-shadow: 0 4px 10px var(--glow);
+            background: var(--secondary);
+            animation: pulse 1s infinite;
         }
 
-        .resource-item {
-            display: flex;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        @keyframes pulse {
+            0% { transform: rotateY(180deg) scale(1.1); }
+            50% { transform: rotateY(180deg) scale(1.15); }
+            100% { transform: rotateY(180deg) scale(1.1); }
         }
 
-        .resource-item:last-child {
-            border-bottom: none;
-        }
-
-        .resource-icon {
-            background: rgba(85, 239, 196, 0.2);
-            color: var(--success);
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-
-        .resource-content h3 {
-            font-size: 1rem;
-            margin-bottom: 4px;
-            color: var(--text);
-        }
-
-        .resource-content p {
-            font-size: 0.9rem;
-            color: var(--text);
-            opacity: 0.8;
-            margin-bottom: 6px;
-        }
-
-        .resource-content a {
+        .project-card h3 a {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
             color: var(--secondary);
             text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
+            transition: color 0.4s ease;
         }
 
-        .resource-content a:hover {
-            text-decoration: underline;
-        }
-
-        .chart-container {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: var(--container-shadow);
-            margin-top: 15px;
-            height: 320px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .mood-selector {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .mood-btn {
-            flex: 1;
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-        }
-
-        .mood-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .mood-btn.selected {
-            border-color: var(--secondary);
-            background: rgba(162, 155, 254, 0.2);
-            box-shadow: 0 4px 15px rgba(162, 155, 254, 0.3);
-        }
-
-        .mood-btn i {
-            font-size: 28px;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .mood-btn span {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--text);
-            opacity: 0.8;
-            margin-top: 6px;
-        }
-
-        .action-plan {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: var(--container-shadow);
-            margin-top: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .action-plan h3 {
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .action-plan h3 i {
+        .project-card h3 a:hover {
             color: var(--primary);
-            font-size: 18px;
         }
 
-        .action-item {
-            display: flex;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .action-item:last-child {
-            border-bottom: none;
-        }
-
-        .action-check {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-shrink: 0;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .action-check.checked {
-            background: var(--success);
-            border-color: var(--success);
-            color: white;
-        }
-
-        .action-text h4 {
-            margin-bottom: 4px;
-            color: var(--text);
-        }
-
-        .action-text p {
-            color: var(--text);
-            opacity: 0.8;
-            font-size: 0.9rem;
-        }
-
-        .feedback-form {
-            max-width: 500px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .feedback-form textarea {
-            width: 100%;
-            min-height: 120px;
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            resize: vertical;
-            font-size: 0.9rem;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            transition: var(--transition);
-        }
-
-        .feedback-form textarea:focus {
-            outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(162, 155, 254, 0.2);
-        }
-
-        .feedback-form button {
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
             background: var(--primary);
-            color: white;
+            color: var(--text-accent);
+            border-radius: 6px;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        /* Project section styles */
+        .projects-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .projects-container {
+            width: 100%;
+            overflow-x: hidden; /* Changed to hidden to prevent scrollbar */
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            padding: 1rem;
+            scroll-snap-type: x mandatory;
+        }
+
+        .project-card {
+            flex: 0 0 auto;
+            width: 300px;
+            scroll-snap-align: center;
+        }
+
+        .project-card.explore-more {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 1.5rem;
+        }
+
+        /* Arrow navigation styles */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: var(--text-accent);
             border: none;
-            padding: 10px 20px;
-            border-radius: 12px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px var(--glow);
+            transition: all 0.3s ease;
+            z-index: 15;
+        }
+
+        .nav-arrow:hover {
+            background: var(--secondary);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-arrow.left {
+            left: -50px;
+        }
+
+        .nav-arrow.right {
+            right: -50px;
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 360px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            border: 1px solid var(--primary);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .chatbot-container.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chatbot-header {
+            background: var(--primary);
+            color: var(--text-accent);
+            padding: 1rem;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            transition: background 0.4s ease;
+        }
+
+        .chatbot-header:hover {
+            background: var(--secondary);
+        }
+
+        .chatbot-body {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #f3f4f6;
+        }
+
+        .chatbot-input {
+            padding: 1rem;
+            display: flex;
+            border-top: 1px solid var(--text-dark);
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 0.7rem;
+            border: 1px solid var(--text-dark);
+            border-radius: 6px;
+            background: var(--card-bg);
+            color: var(--text-dark);
+            transition: border-color 0.4s ease, transform 0.3s ease;
+        }
+
+        .chatbot-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        .chatbot-input button {
+            padding: 0.7rem 1.5rem;
+            margin-left: 0.5rem;
+            background: var(--primary);
+            color: var(--text-accent);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .chatbot-input button:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .message {
+            margin: 0.7rem 0;
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
             font-size: 0.9rem;
-            font-weight: 500;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(255, 111, 145, 0.3);
+            max-width: 80%;
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
-        .feedback-form button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 111, 145, 0.4);
+        .user-message {
+            background: var(--primary);
+            color: var(--text-accent);
+            margin-left: auto;
+            transform: translateX(20px);
         }
 
-        footer {
-            text-align: center;
-            padding: 15px;
-            font-size: 0.8rem;
-            color: var(--text);
-            opacity: 0.8;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        .bot-message {
+            background: #e5e7eb;
+            color: var(--text-dark);
+            margin-right: auto;
+            transform: translateX(-20px);
         }
 
-        .disclaimer {
-            background: rgba(255, 118, 117, 0.1);
-            border: 1px solid rgba(255, 118, 117, 0.2);
-            border-radius: 12px;
-            padding: 12px;
-            margin-top: 15px;
-            font-size: 0.85rem;
-            color: var(--text);
-            opacity: 0.8;
+        .typing-indicator {
+            display: none;
+            padding: 0.7rem;
+            color: var(--text-dark);
+            font-style: italic;
         }
 
-        .emoji-burst {
-            position: absolute;
-            font-size: 20px;
-            animation: emojiPop 1s ease forwards;
+        .typing-indicator.active {
+            display: block;
         }
 
-        @keyframes emojiPop {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.5); opacity: 1; }
-            100% { transform: scale(1); opacity: 0; }
+        #toggleChatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: var(--text-accent);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px var(--glow);
+            transition: all 0.4s ease;
+            z-index: 1000;
         }
 
-        .mascot {
-            position: absolute;
+        #toggleChatbot:hover {
+            transform: scale(1.2) rotate(360deg);
+            background: var(--secondary);
+        }
+
+        .chatbot-assistance {
+            position: fixed;
             bottom: 80px;
-            left: 20px;
-            width: 60px;
-            height: 60px;
-            background: url("https://img.icons8.com/emoji/48/000000/smiling-face-with-heart-eyes.png") no-repeat center;
-            background-size: contain;
+            right: 20px;
+            background: var(--primary);
+            color: var(--text-accent);
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
             animation: float 3s ease-in-out infinite;
+            z-index: 999;
+            box-shadow: 0 0 8px var(--glow);
+            transition: opacity 0.5s ease;
         }
 
         @keyframes float {
@@ -775,1583 +640,683 @@
             50% { transform: translateY(-10px); }
         }
 
+        .custom-cursor {
+            position: fixed;
+            width: 16px;
+            height: 16px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#2dd4bf" opacity="0.8"/><circle cx="4" cy="4" r="2" fill="#1e3a8a" opacity="0.5"/><circle cx="12" cy="4" r="2" fill="#1e3a8a" opacity="0.5"/><circle cx="8" cy="12" r="2" fill="#1e3a8a" opacity="0.5"/></svg>') no-repeat center;
+            background-size: cover;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: all 0.2s ease;
+            z-index: 1001;
+        }
+
+        .custom-cursor.click {
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+
+        .custom-cursor.hover {
+            transform: translate(-50%, -50%) scale(1.4);
+        }
+
+        .contact-info p, .contact-info a {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: 0.7rem;
+            transition: color 0.4s ease;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover, .contact-info p:hover {
+            color: var(--primary);
+        }
+
+        .skills-content {
+            margin-bottom: 3rem;
+        }
+
+        .section-end-card {
+            position: relative;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+        }
+
+        .section-end-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+        }
+
+        .section-end-card h3 {
+            font-size: 0.95rem;
+            font-family: 'Fira Code', monospace;
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+
+        .section-end-card h3 a.btn {
+            padding: 0.4rem 0.8rem;
+        }
+
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: var(--text-accent);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px var(--glow);
+            transition: all 0.4s ease;
+            z-index: 1000;
+            opacity: 0;
+        }
+
+        #backToTop.visible {
+            opacity: 1;
+        }
+
+        #backToTop:hover {
+            transform: scale(1.2);
+            background: var(--secondary);
+        }
+
         @media (max-width: 768px) {
-            .container, .auth-container {
-                height: 100vh;
-                border-radius: 0;
-            }
+            .hero h1 { font-size: 3rem; }
+            .hero h3, .hero .about-text { font-size: 1rem; }
+            .nav-links { gap: 0.75rem; }
+            .nav-links a { font-size: 1rem; }
+            .chatbot-container { width: 90%; bottom: 80px; right: 10px; }
+            .section h2 { font-size: 2rem; }
+            .section { padding: 60px 15px; }
+            .card { padding: 1.5rem; max-width: 90%; }
+            .btn { padding: 0.6rem 1.5rem; font-size: 0.9rem; }
+            .skill-badge { padding: 0.5rem 1rem; font-size: 0.9rem; }
+            .project-card h3 a { font-size: 1.3rem; }
+            .skills-content { margin-bottom: 2rem; }
+            .section-end-card { margin-top: 1.5rem; padding-top: 1rem; }
+            .section-end-card::before { width: 70%; }
+            .section-end-card h3 { font-size: 0.9rem; }
+            .section-end-card h3 a.btn { padding: 0.3rem 0.6rem; }
+            .equation, .quote { font-size: 0.8rem; }
+            .project-card { width: 280px; }
+            .nav-arrow.left { left: 10px; }
+            .nav-arrow.right { right: 10px; }
+        }
 
-            .sidebar {
-                width: 60px;
-            }
-
-            .nav-item span {
-                display: none;
-            }
-
-            .nav-item i {
-                margin-right: 0;
-                font-size: 22px;
-            }
-
-            .message {
-                max-width: 85%;
-            }
-
-            .card-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .mood-selector {
-                flex-direction: column;
-            }
-
-            .language-selector {
-                font-size: 0.8rem;
-                padding: 6px 8px;
-            }
-
-            .mascot {
-                width: 40px;
-                height: 40px;
-            }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero h3 { font-size: 0.9rem; }
+            .hero .about-text { font-size: 0.85rem; }
+            .nav-links a { font-size: 0.9rem; }
+            .section h2 { font-size: 1.8rem; }
+            .section { padding: 40px 10px; }
+            .card { padding: 1rem; max-width: 95%; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.8rem; }
+            .skill-badge { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+            .project-card h3 a { font-size: 1.1rem; }
+            .contact-info p, .contact-info a { font-size: 0.95rem; }
+            .skills-content { margin-bottom: 1.5rem; }
+            .section-end-card { margin-top: 1rem; padding-top: 0.75rem; }
+            .section-end-card::before { width: 80%; }
+            .section-end-card h3 { font-size: 0.8rem; }
+            .section-end-card h3 a.btn { padding: 0.2rem 0.5rem; }
+            .equation, .quote { font-size: 0.7rem; }
+            .project-card { width: 250px; }
+            .nav-arrow { width: 35px; height: 35px; font-size: 1rem; }
+            .nav-arrow.left { left: 5px; }
+            .nav-arrow.right { right: 5px; }
         }
     </style>
 </head>
 <body>
-    <div class="auth-container" id="auth-container">
-        <h2 class="auth-title">Welcome to MindAid Pro</h2>
-        <div class="auth-form" id="login-form">
-            <input type="email" id="login-email" placeholder="Email" required aria-label="Email">
-            <input type="password" id="login-password" placeholder="Password" required aria-label="Password">
-            <button id="login-btn">Login</button>
-            <div class="auth-toggle" id="toggle-to-register">Don't have an account? Register</div>
+    <div class="background-wave"></div>
+    <div class="background-elements">
+        <div class="equation">e<sup>iπ</sup> + 1 = 0</div>
+        <div class="equation">a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup></div>
+        <div class="equation">x = (-b ± √(b<sup>2</sup> - 4ac)) / 2a</div>
+        <div class="equation">P(A|B) = P(B|A)·P(A) / P(B)</div>
+        <div class="quote">“Data is the new oil.” – Clive Humby</div>
+        <div class="quote">Stay curious, keep learning.</div>
+        <div class="quote">Innovate fearlessly.</div>
+        <div class="quote">AI shapes the future.</div>
+        <div class="quote">Code your dreams.</div>
+        <div class="wavy-line"></div>
+        <div class="wavy-line"></div>
+        <div class="wavy-line"></div>
+        <div class="wavy-line"></div>
+    </div>
+    <div class="custom-cursor" id="cursor"></div>
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="#home" class="nav-link active">Home</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#education" class="nav-link">Education</a>
+            <a href="#contact" class="nav-link">Contact</a>
         </div>
-        <div class="auth-form" id="register-form" style="display: none;">
-            <input type="email" id="register-email" placeholder="Email" required aria-label="Email">
-            <input type="password" id="register-password" placeholder="Password" required aria-label="Password">
-            <input type="password" id="confirm-password" placeholder="Confirm Password" required aria-label="Confirm Password">
-            <button id="register-btn">Register</button>
-            <div class="auth-toggle" id="toggle-to-login">Already have an account? Login</div>
+    </nav>
+
+    <section id="home" class="section hero">
+        <div class="container">
+            <h2 class="gsap-hero-title">
+                <span class="name-letter">M</span><span class="name-letter">o</span><span class="name-letter">h</span><span class="name-letter">a</span><span class="name-letter">m</span><span class="name-letter">e</span><span class="name-letter">d</span>
+                <span class="name-letter"> </span>
+                <span class="name-letter"> </span>
+                <span class="name-letter">N</span><span class="name-letter">i</span><span class="name-letter">z</span><span class="name-letter">a</span><span class="name-letter">r</span>
+                <span class="name-letter"> </span>
+                <span class="name-letter">A</span>
+                <span class="name-letter"> </span>
+                <span class="name-letter">R</span>
+            </h2>
+            <h3 class="gsap-hero-text" id="hero-text"></h3>
+            <p class="about-text">Final-year undergraduate specializing in Artificial Intelligence and Data Science with strong foundational knowledge and growing expertise in applying AI to real-world challenges. Experienced in data analysis, statistical modeling, and developing intelligent systems using tools like Python, SQL, and Power BI. Passionate about building impactful, data-driven solutions and continuously enhancing technical capabilities through hands-on projects and internships.</p>
+            <a href="#projects" class="btn">Discover My Work</a>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="gsap-section-title">Technical Skills</h2>
+            <div class="skills-content">
+                <div class="skills-grid">
+                    <div class="skill-badge gsap-skill">Python, R</div>
+                    <div class="skill-badge gsap-skill">Java</div>
+                    <div class="skill-badge gsap-skill">HTML, CSS</div>
+                    <div class="skill-badge gsap-skill">SQL, MySQL</div>
+                    <div class="skill-badge gsap-skill">Statistical Analysis</div>
+                    <div class="skill-badge gsap-skill">Data Visualization</div>
+                    <div class="skill-badge gsap-skill">Data Mining</div>
+                    <div class="skill-badge gsap-skill">Power BI, Tableau</div>
+                    <div class="skill-badge gsap-skill">Excel, Streamlit</div>
+                    <div class="skill-badge gsap-skill">Game Theory</div>
+                    <div class="skill-badge gsap-skill">Critical Thinking</div>
+                    <div class="skill-badge gsap-skill">Collaborative working</div>
+                </div>
+            </div>
+            <div class="card gsap-project-card project-card section-end-card">
+                <h3>View my certifications on <a href="https://github.com/mohamednizar17/Certificates" class="btn" target="_blank">click here</a></h3>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="gsap-section-title">Projects</h2>
+            <div class="projects-wrapper">
+                <button class="nav-arrow left" id="projectLeftArrow" aria-label="Previous Project">←</button>
+                <div class="projects-container" id="projectsContainer">
+                    <div class="card gsap-project-card project-card">
+                        <h3><a href="https://mohamednizar17.github.io/AI-Powered_data_insight_portal/" target="_blank">Healthy Train - Real-Time Train Health Dashboard</a></h3>
+                        <p>Built a real-time dashboard to monitor railway train health using multi-sensor input streams. Achieved 87% early detection accuracy on anomalies like overheating and excess vibration, reducing risk in pilot tests. Integrated Node.js back-end with THI algorithms and live Plotly.js visualizations for intuitive user experience.</p>
+                        <a href="https://mohamednizar17.github.io/AI-Powered_data_insight_portal/" class="btn" target="_blank">View Live Demo</a>
+                    </div>
+                    <div class="card gsap-project-card project-card">
+                        <h3><a href="https://mohamednizar17.github.io/AetheriumAnalyzer/" target="_blank">AetheriumAnalyzer</a></h3>
+                        <p>Developed an AI-powered web tool for script analysis, scoring scripts (0-100) and providing suggestions for plot, characters, and dialogue. Features file upload support, a chatbot assistant, and a responsive neon-themed UI.</p>
+                        <a href="https://mohamednizar17.github.io/AetheriumAnalyzer/" class="btn" target="_blank">View Live Demo</a>
+                    </div>
+                    <div class="card gsap-project-card project-card">
+                        <h3><a href="https://mohamednizar17.github.io/AI-Powered_data_insight_portal/" target="_blank">AI-Powered Data Insight Portal</a></h3>
+                        <p>Built a web app for analyzing and visualizing CSV data with AI-driven insights. Offers interactive data preparation and multiple chart types for enhanced user experience.</p>
+                        <a href="https://mohamednizar17.github.io/AI-Powered_data_insight_portal/" class="btn" target="_blank">View Live Demo</a>
+                    </div>
+                    <div class="card gsap-project-card project-card">
+                        <h3><a href="https://mohamednizar17.github.io/MindAidPro/" target="_blank">MindAidPro</a></h3>
+                        <p>Developed an AI-driven mental health chatbot leveraging NLP models to deliver personalized coping strategies and resource recommendations. Integrated sentiment analysis with a responsive Streamlit interface, achieving 85% user satisfaction in beta testing.</p>
+                        <a href="https://mohamednizar17.github.io/MindAidPro/" class="btn" target="_blank">View Live Demo</a>
+                    </div>
+                </div>
+                <button class="nav-arrow right" id="projectRightArrow" aria-label="Next Project">→</button>
+            </div>
+            <div class="card gsap-project-card project-card explore-more">
+                <h3>Explore more of my work on <a href="https://github.com/mohamednizar17" class="btn" target="_blank">more</a></h3>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="section">
+        <div class="container">
+            <h2 class="gsap-section-title">Professional Experience</h2>
+            <div class="card gsap-experience-card">
+                <h3 style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.25rem;">Data Analytics Intern - Plasmid Innovations</h3>
+                <p class="text-sm mb-2">Jul 2024 - Aug 2024</p>
+                <p>Created Power BI dashboards and visual reports to support data-driven decisions. Analyzed datasets to identify key trends and actionable insights.</p>
+            </div>
+            <div class="card gsap-experience-card">
+                <h3 style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.25rem;">Marketing Intern - Skill Vertex</h3>
+                <p class="text-sm mb-2">Aug 2023 - Sep 2023</p>
+                <p>Assisted in executing marketing strategies, boosting brand engagement. Conducted market research to enhance campaign targeting.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="section">
+        <div class="container">
+            <h2 class="gsap-section-title">Education</h2>
+            <div class="card gsap-education-card">
+                <h3 style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.25rem;">B.Tech in Artificial Intelligence and Data Science</h3>
+                <p>BSA Crescent Institute of Science and Technology, Chennai</p>
+                <p class="text-sm">2022 - 2026 | CGPA: 9.3</p>
+            </div>
+            <div class="card gsap-education-card">
+                <h3 style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.25rem;">Higher Secondary Certificate (HSC)</h3>
+                <p>St. Joseph AMHS School, Kallakurichi</p>
+                <p class="text-sm">93% | 2022</p>
+            </div>
+            <div class="card gsap-education-card">
+                <h3 style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.25rem;">Secondary School Leaving Certificate (SSLC)</h3>
+                <p>St. Joseph AMHS School, Kallakurichi</p>
+                <p class="text-sm">98% | 2020</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="gsap-section-title">Contact</h2>
+            <div class="card gsap-contact-card">
+                <div class="contact-info">
+                    <p><strong>Email:</strong> <a href="mailto:arnizz077@gmail.com">arnizz077@gmail.com</a></p>
+                    <p><strong>Phone:</strong> +919786083250</p>
+                    <p><strong>GitHub:</strong> <a href="https://github.com/mohamednizar17" target="_blank">mohamednizar17</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="chatbot-assistance">For Assistance</div>
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-header">
+            <h3 class="text-sm">Nizar's AI Assistant</h3>
+            <button id="closeChatbot" class="text-white text-sm">✖</button>
+        </div>
+        <div class="chatbot-body" id="chatbotBody">
+            <div class="typing-indicator" id="typingIndicator">AI Assistant is typing...</div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Ask about Nizar's projects..." autocomplete="off">
+            <button id="sendMessage">Send</button>
         </div>
     </div>
-
-    <div class="container" id="main-app" style="display: none;">
-        <header>
-            <div class="logo">
-                <div class="logo-icon">
-                    <i class="bx bx-heart"></i>
-                </div>
-                <div class="logo-text">
-                    <h1>MindAid Pro</h1>
-                    <div class="subtitle">Mental Health First Aid Assistant</div>
-                </div>
-            </div>
-            <div class="user-controls">
-                <select class="language-selector" id="language-selector" aria-label="Select Language">
-                    <option value="english">English</option>
-                    <option value="hinglish">Hinglish</option>
-                    <option value="tanglish">Tanglish</option>
-                </select>
-                <button class="user-btn" title="Notifications" aria-label="Notifications">
-                    <i class="bx bx-bell"></i>
-                </button>
-                <button class="user-btn" title="Settings" aria-label="Settings">
-                    <i class="bx bx-cog"></i>
-                </button>
-                <button class="user-btn" title="User Profile" aria-label="User Profile">
-                    <i class="bx bx-user"></i>
-                </button>
-                <button class="user-btn" id="logout-btn" title="Logout" aria-label="Logout">
-                    <i class="bx bx-log-out"></i>
-                </button>
-            </div>
-        </header>
-
-        <div class="app-body">
-            <nav class="sidebar">
-                <a href="#" class="nav-item active" data-tab="chat" aria-label="Chat Support">
-                    <i class="bx bx-message-dots"></i>
-                    <span>Chat Support</span>
-                </a>
-                <a href="#" class="nav-item" data-tab="mood" aria-label="Mood Tracker">
-                    <i class="bx bx-line-chart"></i>
-                    <span>Mood Tracker</span>
-                </a>
-                <a href="#" class="nav-item" data-tab="resources" aria-label="Resources">
-                    <i class="bx bx-book"></i>
-                    <span>Resources</span>
-                </a>
-                <a href="#" class="nav-item" data-tab="plan" aria-label="Action Plan">
-                    <i class="bx bx-task"></i>
-                    <span>Action Plan</span>
-                </a>
-                <a href="#" class="nav-item" data-tab="emergency" aria-label="Emergency">
-                    <i class="bx bx-shield"></i>
-                    <span>Emergency</span>
-                </a>
-                <a href="#" class="nav-item" data-tab="feedback" aria-label="Feedback">
-                    <i class="bx bx-comment"></i>
-                    <span>Feedback</span>
-                </a>
-            </nav>
-
-            <div class="main-content">
-                <!-- Chat Support Tab -->
-                <section class="tab-content active" id="chat-tab">
-                    <h2 class="tab-title"><i class="bx bx-message-dots"></i> Mental Health Support</h2>
-                    <div class="motivational">"You are stronger than you know, and every step counts! 🌟"</div>
-                    <p>Chat with MindAid to get immediate support, coping strategies, and resources tailored to your needs.</p>
-
-                    <div class="chat-container">
-                        <div class="chat-messages" id="chat-messages">
-                            <div class="message bot-message" id="initial-message">
-                                <span class="message-time">Today, 02:38 PM</span>
-                            </div>
-                            <div class="quick-replies" id="quick-replies"></div>
-                        </div>
-                        <div class="mascot"></div>
-                        <div class="input-container">
-                            <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off" aria-label="Type your message">
-                            <button class="chat-btn" id="send-btn" aria-label="Send Message">
-                                <i class="bx bx-send"></i>
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Mood Tracker Tab -->
-                <section class="tab-content" id="mood-tab">
-                    <h2 class="tab-title"><i class="bx bx-line-chart"></i> Mood Tracker</h2>
-                    <div class="motivational">"Every day is a new opportunity to nurture your inner peace! 🌈"</div>
-                    <p>Track your emotional well-being over time to identify patterns and triggers.</p>
-
-                    <div class="mood-selector">
-                        <button class="mood-btn" data-mood="excellent" aria-label="Mood: Excellent">
-                            <i class="bx bx-happy-alt"></i>
-                            Excellent
-                            <span>Feeling great!</span>
-                        </button>
-                        <button class="mood-btn" data-mood="good" aria-label="Mood: Good">
-                            <i class="bx bx-smile"></i>
-                            Good
-                            <span>Pretty good day</span>
-                        </button>
-                        <button class="mood-btn" data-mood="neutral" aria-label="Mood: Neutral">
-                            <i class="bx bx-meh"></i>
-                            Neutral
-                            <span>Just okay</span>
-                        </button>
-                        <button class="mood-btn" data-mood="poor" aria-label="Mood: Poor">
-                            <i class="bx bx-sad"></i>
-                            Poor
-                            <span>Not feeling great</span>
-                        </button>
-                        <button class="mood-btn" data-mood="terrible" aria-label="Mood: Terrible">
-                            <i class="bx bx-sad"></i>
-                            Terrible
-                            <span>Really struggling</span>
-                        </button>
-                    </div>
-
-                    <div class="chart-container">
-                        <canvas id="mood-chart" aria-label="Mood Chart"></canvas>
-                    </div>
-                </section>
-
-                <!-- Resources Tab -->
-                <section class="tab-content" id="resources-tab">
-                    <h2 class="tab-title"><i class="bx bx-book"></i> Mental Health Resources</h2>
-                    <div class="motivational">"You are never alone in your journey! 🤝"</div>
-                    <p>Access curated resources, tools, and professional support options.</p>
-
-                    <div class="card-grid">
-                        <div class="card">
-                            <div class="card-header">
-                                <i class="bx bx-support"></i>
-                                Crisis Support
-                            </div>
-                            <div class="card-body">
-                                <div class="resource-item">
-                                    <div class="resource-icon">
-                                        <i class="bx bx-phone"></i>
-                                    </div>
-                                    <div class="resource-content">
-                                        <h3>Vandrevala Foundation</h3>
-                                        <p>24/7 mental health helpline</p>
-                                        <a href="#" aria-label="Call Vandrevala Foundation">Call 9999666555 <i class="bx bx-right-arrow-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="resource-item">
-                                    <div class="resource-icon">
-                                        <i class="bx bx-message"></i>
-                                    </div>
-                                    <div class="resource-content">
-                                        <h3>AASRA Suicide Prevention</h3>
-                                        <p>24/7 crisis support</p>
-                                        <a href="#" aria-label="Call AASRA Suicide Prevention">Call +91-9820466726 <i class="bx bx-right-arrow-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="resource-item">
-                                    <div class="resource-icon">
-                                        <i class="bx bx-globe"></i>
-                                    </div>
-                                    <div class="resource-content">
-                                        <h3>iCall Helpline</h3>
-                                        <p>Psychological support by TISS</p>
-                                        <a href="#" aria-label="Call iCall Helpline">Call +91-9152987821 <i class="bx bx-right-arrow-alt"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <i class="bx bx-book-open"></i>
-                                Self-Help Resources
-                            </div>
-                            <div class="card-body">
-                                <div class="resource-item">
-                                    <div class="resource-icon">
-                                        <i class="bx bx-file"></i>
-                                    </div>
-                                    <div class="resource-content">
-                                        <h3>CBT Thought Diary</h3>
-                                        <p>Track thoughts and challenge cognitive distortions</p>
-                                        <a href="#" aria-label="Download CBT Thought Diary">Download Template <i class="bx bx-right-arrow-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="resource-item">
-                                    <div class="resource-icon">
-                                        <i class="bx bx-headphone"></i>
-                                    </div>
-                                    <div class="resource-content">
-                                        <h3>Guided Meditations</h3>
-                                        <p>Mindfulness and relaxation exercises</p>
-                                        <a href="#" aria-label="Listen to Guided Meditations">Listen Now <i class="bx bx-right-arrow-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="resource-item">
-                                    <div class="resource-icon">
-                                        <i class="bx bx-video"></i>
-                                    </div>
-                                    <div class="resource-content">
-                                        <h3>Mental Health Webinars</h3>
-                                        <p>Free educational sessions from experts</p>
-                                        <a href="#" aria-label="View Mental Health Webinars Schedule">View Schedule <i class="bx bx-right-arrow-alt"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <i class="bx bx-health"></i>
-                                Professional Help
-                            </div>
-                            <div class="card-body">
-                                <div class="resource-item">
-                                    <div class="resource-icon">
-                                        <i class="bx bx-search"></i>
-                                    </div>
-                                    <div class="resource-content">
-                                        <h3>Therapist Directory</h3>
-                                        <p>Find licensed professionals near you</p>
-                                        <a href="#" aria-label="Search Therapist Directory">Search Now <i class="bx bx-right-arrow-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="resource-item">
-                                    <div class="resource-icon">
-                                        <i class="bx bx-laptop"></i>
-                                    </div>
-                                    <div class="resource-content">
-                                        <h3>Online Therapy</h3>
-                                        <p>Connect with therapists remotely</p>
-                                        <a href="#" aria-label="Start Online Therapy">Get Started <i class="bx bx-right-arrow-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="resource-item">
-                                    <div class="resource-icon">
-                                        <i class="bx bx-group"></i>
-                                    </div>
-                                    <div class="resource-content">
-                                        <h3>Support Groups</h3>
-                                        <p>Connect with others facing similar challenges</p>
-                                        <a href="#" aria-label="Find Support Groups">Find Groups <i class="bx bx-right-arrow-alt"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Action Plan Tab -->
-                <section class="tab-content" id="plan-tab">
-                    <h2 class="tab-title"><i class="bx bx-task"></i> Personalized Action Plan</h2>
-                    <div class="motivational">"Small steps today lead to big victories tomorrow! 🚀"</div>
-                    <p>Your step-by-step plan to improve mental wellness based on our conversations.</p>
-
-                    <div class="action-plan">
-                        <h3><i class="bx bx-task"></i> This Week's Goals</h3>
-                        <div class="action-item">
-                            <div class="action-check" aria-label="Mark as completed">
-                                <i class="bx bx-check"></i>
-                            </div>
-                            <div class="action-text">
-                                <h4>Practice deep breathing</h4>
-                                <p>5 minutes of mindful breathing each morning</p>
-                            </div>
-                        </div>
-                        <div class="action-item">
-                            <div class="action-check" aria-label="Mark as completed">
-                                <i class="bx bx-check"></i>
-                            </div>
-                            <div class="action-text">
-                                <h4>Connect with a friend</h4>
-                                <p>Reach out to someone you trust this week</p>
-                            </div>
-                        </div>
-                        <div class="action-item">
-                            <div class="action-check" aria-label="Mark as completed">
-                                <i class="bx bx-check"></i>
-                            </div>
-                            <div class="action-text">
-                                <h4>Physical activity</h4>
-                                <p>20 minutes of movement at least 3 times this week</p>
-                            </div>
-                        </div>
-                        <div class="action-item">
-                            <div class="action-check" aria-label="Mark as completed">
-                                <i class="bx bx-check"></i>
-                            </div>
-                            <div class="action-text">
-                                <h4>Gratitude journal</h4>
-                                <p>Write down 3 things you're grateful for each evening</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="action-plan">
-                        <h3><i class="bx bx-book-open"></i> Recommended Resources</h3>
-                        <div class="resource-item">
-                            <div class="resource-icon">
-                                <i class="bx bx-book"></i>
-                            </div>
-                            <div class="resource-content">
-                                <h3>"Feeling Good" by Dr. David Burns</h3>
-                                <p>Cognitive behavioral therapy techniques for depression</p>
-                            </div>
-                        </div>
-                        <div class="resource-item">
-                            <div class="resource-icon">
-                                <i class="bx bx-headphone"></i>
-                            </div>
-                            <div class="resource-content">
-                                <h3>Anxiety Relief Meditation</h3>
-                                <p>15-minute guided session for immediate calm</p>
-                                <a href="#" aria-label="Listen to Anxiety Relief Meditation">Listen Now <i class="bx bx-right-arrow-alt"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Emergency Tab -->
-                <section class="tab-content" id="emergency-tab">
-                    <h2 class="tab-title"><i class="bx bx-shield"></i> Emergency Support</h2>
-                    <div class="motivational">"You are enough, and help is always available! 💖"</div>
-                    <p>Immediate resources and contacts for crisis situations.</p>
-
-                    <div class="crisis-alert">
-                        <h3>If you're in immediate danger:</h3>
-                        <p>Call 112 or go to your nearest emergency room</p>
-                    </div>
-
-                    <div class="card-grid">
-                        <div class="card">
-                            <div class="card-header">
-                                <i class="bx bx-phone"></i>
-                                Emergency Contacts
-                            </div>
-                            <div class="card-body">
-                                <div class="resource-item">
-                                    <div class="resource-content">
-                                        <h3>Vandrevala Foundation</h3>
-                                        <p>Call 9999666555</p>
-                                        <a href="#" aria-label="Visit Vandrevala Foundation">vandrevalafoundation.com</a>
-                                    </div>
-                                </div>
-                                <div class="resource-item">
-                                    <div class="resource-content">
-                                        <h3>AASRA Suicide Prevention</h3>
-                                        <p>Call +91-9820466726</p>
-                                        <a href="#" aria-label="Visit AASRA">aasra.info</a>
-                                    </div>
-                                </div>
-                                <div class="resource-item">
-                                    <div class="resource-content">
-                                        <h3>iCall Helpline</h3>
-                                        <p>Call +91-9152987821</p>
-                                        <a href="#" aria-label="Visit iCall Helpline">icallhelpline.org</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <i class="bx bx-globe"></i>
-                                Additional Resources
-                            </div>
-                            <div class="card-body">
-                                <div class="resource-item">
-                                    <div class="resource-content">
-                                        <h3>Sangath</h3>
-                                        <p>Mental health support services</p>
-                                        <a href="#" aria-label="Visit Sangath">sangath.in</a>
-                                    </div>
-                                </div>
-                                <div class="resource-item">
-                                    <div class="resource-content">
-                                        <h3>Mpower Helpline</h3>
-                                        <p>Call 1800-120-820050</p>
-                                        <a href="#" aria-label="Visit Mpower">mpower.org.in</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="disclaimer">
-                        <p><strong>Important:</strong> MindAid is not a substitute for professional mental health care. In crisis situations, please contact emergency services or a crisis hotline immediately.</p>
-                    </div>
-                </section>
-
-                <!-- Feedback Tab -->
-                <section class="tab-content" id="feedback-tab">
-                    <h2 class="tab-title"><i class="bx bx-comment"></i> Feedback</h2>
-                    <div class="motivational">"Your feedback helps us grow and serve you better! 📝"</div>
-                    <p>We value your input to improve MindAid Pro. Please share your thoughts below.</p>
-
-                    <div class="feedback-form">
-                        <textarea id="feedback-text" placeholder="Share your feedback or suggestions..." required aria-label="Feedback"></textarea>
-                        <button id="feedback-btn" aria-label="Submit Feedback">Submit Feedback</button>
-                    </div>
-                </section>
-            </div>
-        </div>
-
-        <footer>
-            <p>MindAid Pro - Mental Health First Aid Assistant | This is a demonstration project only</p>
-            <p>Note: Conversations are not stored or monitored. In real crisis situations, please contact professionals immediately.</p>
-        </footer>
-    </div>
+    <button id="toggleChatbot" aria-label="Toggle Chatbot">🧠</button>
+    <button id="backToTop" aria-label="Back to Top">↑</button>
 
     <script>
-     (function () {
-    // State Management
-    let state = {
-        isAuthenticated: false,
-        currentUser: null,
-        currentLanguage: localStorage.getItem("language") || "english",
-        users: JSON.parse(localStorage.getItem("users")) || {},
-        moodData: JSON.parse(localStorage.getItem("moodData")) || {},
-        moodChart: null,
-        conversationHistory: [],
-        userPreferences: JSON.parse(localStorage.getItem("userPreferences")) || {},
-        comfortLevel: 0,
-        streakCount: 0,
-        lastResponseType: null,
-    };
-
-    // Language Data (Empathetic, professional tone, updated for June 12, 2025, 12:39 AM IST)
-    const languageData = {
-        english: {
-            initialMessages: [
-                "Hello, my friend! I’m EmpowerAI, your companion for mental wellness. How are you holding up ?",
-                "I’m here to listen and support you. Feel free to share how you’re feeling, or choose an option below—I’m all ears.",
-            ],
-            quickReplies: [
-                { text: "I’m feeling anxious 😰", value: "anxiety" },
-                { text: "I’m feeling low 😔", value: "depression" },
-                { text: "I’m stressed 😥", value: "stress" },
-                { text: "I can’t sleep 🌙", value: "sleep" },
-                { text: "I need comfort 🤗", value: "need_hug" },
-                { text: "Please reassure me 💖", value: "reassurance" },
-            ],
-            crisisResponse: "I’m deeply concerned about how you’re feeling—it’s late, and you’re not alone. Here are some resources to help you right now:",
-            copingStrategies: {
-                anxiety: [
-                    "I hear how anxious you’re feeling—let’s work through it together. Try this breathing exercise: inhale for 4 seconds, hold for 4, exhale for 4, pause for 4. Repeat 5 times. Ready to give it a go?",
-                    "Let’s ground ourselves with the 5-4-3-2-1 technique: name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, and 1 you taste. Want to try it now?",
-                    "A short walk can do wonders, even just around your space. Fresh air might help clear your mind. Shall we plan a quick step outside?",
-                    "Writing down your worries can lighten the load. Want to journal for 5 minutes? I can suggest a prompt if you’d like.",
-                ],
-                depression: [
-                    "I’m so sorry you’re feeling low—it’s tough, and I’m here for you. Reaching out to a friend or loved one can lift your spirits. Who might you connect with tonight?",
-                    "Doing something small you enjoy, like listening to music or sketching, can help. What’s one thing that brings you joy?",
-                    "You are enough, just as you are. Try saying this: ‘I am worthy of care.’ How does that feel? Let’s explore it together.",
-                    "A warm drink can be comforting at this hour. How about making some herbal tea or hot cocoa? I’ll guide you if you’d like.",
-                ],
-                stress: [
-                    "Stress can feel overwhelming, but we’ll tackle it together. What’s the biggest source of stress for you right now? Let’s break it down.",
-                    "Try a quick body scan: tense and release your shoulders, arms, and legs. It can help release tension. Want to do it step-by-step?",
-                    "Reflecting on small wins can shift your perspective. Can you name 3 things you accomplished today, no matter how small?",
-                    "A soothing tea, like chamomile, can help you unwind. Would you like to prepare one together?",
-                ],
-                sleep: [
-                    "It’s 12:39 AM—let’s help you get some rest. A short bedtime routine, like reading or gentle stretching, can help. When do you want to sleep?",
-                    "A cool room, around 60-67°F, is ideal for sleep. Can we make your space cozy and ready for rest?",
-                    "Caffeine might be keeping you up. Did you have any tea or coffee this evening? Let’s check.",
-                    "Calming sounds, like rain or ocean waves, can ease you into sleep. Would you like me to recommend a track?",
-                ],
-                relationships: [
-                    "Relationships can be challenging—I’m here to help. Active listening, like paraphrasing what someone says, can strengthen bonds. Want to practice?",
-                    "Expressing your feelings clearly can help. Try this: ‘I feel… when… because…’ Shall we work on it together?",
-                    "Spending quality time, like sharing a meal, can rebuild connections. Could we plan something small for you?",
-                    "If something’s troubling you, let’s approach it calmly. What’s on your mind, and how can I support you?",
-                ],
-            },
-            comfortRituals: {
-                bedtime: [
-                    "Let’s create a calming bedtime routine. Start by dimming the lights—soft lighting helps signal rest. Done that?",
-                    "Take 3 deep breaths with me: inhale through your nose, exhale through your mouth. Ready to try?",
-                    "Imagine a peaceful place, like a quiet beach or a cozy cabin. What do you see there?",
-                    "You’re doing great. Now settle into bed, feel your pillow’s comfort, and let’s ease into rest together.",
-                ],
-            },
-            responses: {
-                anxiety: "I hear how anxious you’re feeling, and I’m here to help you find calm. Let’s try something to ease your mind. What do you think?",
-                depression: "I’m so sorry you’re feeling this way—it’s hard, and I’m here for you. Let’s find a small step to lift your spirits. Okay?",
-                stress: "Stress can weigh heavily, but you’re not alone. Let’s explore what’s on your mind and find some relief together.",
-                sleep: "Struggling to sleep at this hour is tough—I’m here to help you rest. What’s keeping you awake tonight?",
-                relationships: "Relationships can be complex, and I’m here to listen. What’s happening? Let’s sort it out together.",
-                need_hug: "Here’s a warm virtual embrace for you—you’re not alone. Want to share more? I’m listening.",
-                reassurance: "You’re stronger than you know, and everything will work out. I’m here for you—want to talk about what’s on your mind?",
-                coping: "I’ve got some practical ideas to help you feel better tonight. Let’s try them together, shall we?",
-                thanks: "You’re so welcome—I’m always here to support you. Want to keep exploring ways to feel better?",
-                thanksFollowUp: "I’m glad I could help. What’s next? Maybe we can try another strategy or just chat.",
-                generic: [
-                    "Thank you for sharing—I’m here to listen. How’s this affecting you tonight?",
-                    "I’m right here for you. Want to dive deeper into what’s on your mind?",
-                    "Let’s focus on what’s most important to you right now. What would help you feel supported?",
-                    "That sounds like a lot to carry. What can we do to make tonight feel a bit lighter?",
-                    "Let’s take a small step together—what feels manageable for you right now?",
-                ],
-                positiveSentiment: [
-                    "It’s wonderful to hear you’re feeling brighter! What’s sparking that joy tonight?",
-                    "Your positivity is infectious! What’s been going well for you?",
-                ],
-                negativeSentiment: {
-                    mild: "I can tell things are tough right now—I’m here to help. Want to share more?",
-                    severe: "I’m really worried about you—it’s tough to feel this way. Let’s find a way to ease this together, okay?",
-                },
-                followUp: {
-                    anxiety: "Did that help calm things down a bit? Or shall we try another approach?",
-                    depression: "How are you feeling now? Want to try another small step together?",
-                    stress: "Is the stress feeling any lighter? Let’s explore another way to relax if needed.",
-                    sleep: "Are you feeling sleepier now? Or should we try something else to help you rest?",
-                    relationships: "Did that help at all? Want to dive deeper into what’s going on?",
-                    need_hug: "Did that comfort help? I’ve got more support if you need it.",
-                    reassurance: "Feeling a bit steadier now? I’m here if you need more reassurance.",
-                    generic: "How are you doing now? I’m here if you want to talk more or try something new.",
-                },
-                proactive: {
-                    anxiety: "I’ve noticed anxiety has been tough for you lately. Shall we try a new strategy to find some calm tonight?",
-                    depression: "You’ve been feeling low recently—I’m here to help. Let’s find something to brighten your evening, okay?",
-                    stress: "Stress has been weighing on you. Want to try a fresh approach to unwind tonight?",
-                    sleep: "I know sleep has been tricky lately. Let’s explore a new way to help you rest tonight.",
-                    relationships: "Relationships have been on your mind before. Want to talk more about what’s happening?",
-                },
-                clarification: [
-                    "I want to understand you better—can you share a bit more about how you’re feeling?",
-                    "I’m here to help, but I need a little more context. What’s on your mind?",
-                    "Let’s dive deeper—what’s weighing on you right now?",
-                ],
-            },
-        },
-        hinglish: {
-            initialMessages: [
-                "Namaste! Main hoon EmpowerAI, aapka mental wellness saathi. Raat ke 12:39 ho gaye, Thursday hai—bohot late hai! Aap kaise hain aaj?",
-                "Main yahan hoon aapko support karne ke liye. Apna mood share karein ya neeche option chunein—main sun raha hoon.",
-            ],
-            quickReplies: [
-                { text: "Mujhe anxiety ho rahi hai 😰", value: "anxiety" },
-                { text: "Main udaas hoon 😔", value: "depression" },
-                { text: "Bohot stress hai 😥", value: "stress" },
-                { text: "Neend nahi aa rahi 🌙", value: "sleep" },
-                { text: "Mujhe comfort chahiye 🤗", value: "need_hug" },
-                { text: "Mujhe reassure karein 💖", value: "reassurance" },
-            ],
-            crisisResponse: "Main aapke liye bohot chintit hoon—itni raat mein aap akele nahi hain. Yahan kuch resources hain jo abhi madad kar sakte hain:",
-            copingStrategies: {
-                anxiety: [
-                    "Anxiety bohot tough hai—main saath hoon. Saans ka exercise karein: 4 sec saans lein, 4 hold, 4 chhodein, 4 pause. 5 baar try karein?",
-                    "5-4-3-2-1 technique se calm karein: 5 cheezein dekhein, 4 chhuyein, 3 sunein, 2 smell karein, 1 taste karein. Shuru karein?",
-                    "Thodi walk karein, ghar ke paas bhi chalega. Hawa dil ko halka karegi. Chalein?",
-                    "Chinta likhna help karta hai. 5 minute journal karein? Main prompt de sakta hoon.",
-                ],
-                depression: [
-                    "Udaas feel karna mushkil hai—main yahan hoon. Kisi dost se baat karein? Kisse connect karna chahenge?",
-                    "Kuch pasand ka karein—gaana sunna ya drawing. Kya aapko khushi deta hai?",
-                    "Aap kaafi hain. Yeh bolo: ‘Main pyar ke layak hoon.’ Kaisa laga? Saath mein explore karein?",
-                    "Garam chai ya cocoa dil ko sukoon de sakta hai. Banayein saath mein?",
-                ],
-                stress: [
-                    "Stress bohot heavy hai—saath mein solve karein. Sabse bada tension kya hai abhi?",
-                    "Body scan karein: shoulders tight karke chhodein, arms, legs. Tension kam hoga. Try karein?",
-                    "Aaj ke 3 chhote wins sochein—kuch bhi chalega. Kya share karenge?",
-                    "Chamomile chai sukoon deti hai. Raat ke liye banayein?",
-                ],
-                sleep: [
-                    "12:39 AM hai—neend ke liye ready karein. Thodi reading ya stretching? Kab sona hai?",
-                    "Thanda kamra, 16-20°C, neend ke liye best hai. Bed cozy karein?",
-                    "Shaam mein chai/coffee piya? Yeh neend rok sakta hai. Check karein?",
-                    "Barish ya samundar ki awaaz sukoon deti hai. Track suggest karun?",
-                ],
-                relationships: [
-                    "Rishte mushkil ho sakte hain—main sun raha hoon. Doosre ki baat repeat karke suno, bond strong hoga. Practice karein?",
-                    "Apne feelings clear bolo: ‘Mujhe aisa lagta hai jab… kyunki…’ Try karein?",
-                    "Saath mein khana ya time spend karna help karta hai. Kuch plan karein?",
-                    "Jo pareshan kar raha hai, usse calmly solve karein. Kya baat hai?",
-                ],
-            },
-            comfortRituals: {
-                bedtime: [
-                    "Raat ke liye sukoon bhara routine banayein. Lights dim karein—soft light neend laati hai. Ho gaya?",
-                    "3 gehri saans lein: naak se saans, muh se chhodein. Shuru karein?",
-                    "Ek peaceful jagah sochein—samundar ya cozy ghar. Kya dikhta hai?",
-                    "Aap bohot acha kar rahe hain. Bed mein let jaiye, takiya feel karein, aur rest karein.",
-                ],
-            },
-            responses: {
-                anxiety: "Anxiety feel karna mushkil hai—main aapko sukoon dene ke liye yahan hoon. Kuch try karein?",
-                depression: "Udaas hona bohot tough hai—main yahan hoon. Thodi si khushi dhoondhein saath mein?",
-                stress: "Stress ka bojh bhaari hai—main saath hoon. Kya baat dil pe hai, share karein?",
-                sleep: "Iss waqt neend na aana mushkil hai—main madad karunga. Kya pareshan kar raha hai?",
-                relationships: "Rishte dil ko chhute hain—main sun raha hoon. Kya ho raha hai, batayein?",
-                need_hug: "Yeh lo, ek bada virtual jhappi! Aap akele nahi—aur kuch batana hai?",
-                reassurance: "Aap bohot strong hain, aur sab theek hoga. Main yahan hoon—kya baat hai?",
-                coping: "Main kuch practical ideas deta hoon jo aaj raat help karenge. Saath mein try karein?",
-                thanks: "Aapka swagat hai—main hamesha yahan hoon. Aur kya karein?",
-                thanksFollowUp: "Mujhe khushi hai ki madad kar paya. Ab kya—kuch aur try karein?",
-                generic: [
-                    "Shukriya baat karne ke liye—main sun raha hoon. Aaj raat kaisa lag raha hai?",
-                    "Main yahan hoon—dil mein kya hai, aur batayein?",
-                    "Abhi kya sabse important hai—main kaise madad kar sakta hoon?",
-                    "Bohot kuch lag raha hai—rahat ke liye kya karein?",
-                    "Ek chhota kadam saath mein le—kya theek lagega?",
-                ],
-                positiveSentiment: [
-                    "Aapka mood thoda bright hai—bohot acha! Kya khushi de raha hai?",
-                    "Aapki positivity dil chhuti hai! Kya achha chal raha hai?",
-                ],
-                negativeSentiment: {
-                    mild: "Lagta hai thoda tough hai—main yahan hoon. Aur batayein?",
-                    severe: "Main bohot chintit hoon—aisa feel karna mushkil hai. Saath mein kuch karein?",
-                },
-                followUp: {
-                    anxiety: "Thoda sukoon mila? Ya kuch aur try karein?",
-                    depression: "Ab kaisa lag raha hai? Ek aur kadam saath mein lein?",
-                    stress: "Stress thoda kam hua? Aur kuch try karein?",
-                    sleep: "Neend aa rahi hai ab? Ya aur madad chahiye?",
-                    relationships: "Kuch farak pada? Aur baat karein rishte ke bare mein?",
-                    need_hug: "Comfort mila? Aur support chahiye toh bolo.",
-                    reassurance: "Thoda behtar laga? Aur reassurance chahiye?",
-                    generic: "Ab kaisa lag raha hai? Aur baat karni hai ya kuch try karein?",
-                },
-                proactive: {
-                    anxiety: "Pehle bhi anxiety ka zikr tha—main chintit hoon. Kuch naya try karein aaj raat?",
-                    depression: "Aap udaas feel kar rahe the—main khushi dhoondhne mein madad karunga. Kuch karein?",
-                    stress: "Stress pehle bhi bola tha—kuch naya try karein sukoon ke liye?",
-                    sleep: "Neend pehle bhi mushkil thi—main aaj raat madad karunga. Kya karein?",
-                    relationships: "Rishte pehle bhi baat hui—ab kya chal raha hai, batayein?",
-                },
-                clarification: [
-                    "Main aapko behtar samajhna chahta hoon—thoda aur batayein?",
-                    "Main yahan hoon, par thoda confuse hoon—dil mein kya hai?",
-                    "Dil se kya bolna chahte hain—main sun raha hoon.",
-                ],
-            },
-        },
-        tanglish: {
-            initialMessages: [
-                "Vanakkam! Naan EmpowerAI, un mental wellness companion. Raatri 12:39 aagudhu, Thursday—romba late aayiduchu! Nee eppadi irukke?",
-                "Naan unna ketkuren—un feelings share pannu illa neeche option eduthukko. Naan irukken.",
-            ],
-            quickReplies: [
-                { text: "Enakku anxiety aagudhu 😰", value: "anxiety" },
-                { text: "Manasu downa irukku 😔", value: "depression" },
-                { text: "Romba stress aa irukku 😥", value: "stress" },
-                { text: "Thoongamudiyala 🌙", value: "sleep" },
-                { text: "Enakku comfort venum 🤗", value: "need_hug" },
-                { text: "Ellam nalla irukum nu sollu 💖", value: "reassurance" },
-            ],
-            crisisResponse: "Nee ipdi feel pannuradhu pathu naan romba bayapaduren—nee thaniya illa. Indha resources unakku help pannum:",
-            copingStrategies: {
-                anxiety: [
-                    "Anxiety romba kashtam—naan un kooda irukken. Saans exercise pannuvom: 4 sec saans edu, 4 hold, 4 vidu, 4 pause. 5 thadava pannuviya?",
-                    "5-4-3-2-1 method try pannu: 5 paaru, 4 thottu, 3 kelu, 2 smell pannu, 1 taste pannu. Start pannuvoma?",
-                    "Konjam nadanthu vaa—veedu pakkathula kooda okay. Hawa nalla irukum. Varuviya?",
-                    "Pareshani ezhuthina manasu free aagum. 5 minute journal pannuviya? Naan prompt tharen.",
-                ],
-                depression: [
-                    "Manasu downa irukku—naan irukken da. Friend-a message pannuviya? Yaaru kitta pesuviya?",
-                    "Unakku pudicha vishayam pannu—paattu kekkuriya illa drawing pannuviya? Enna pannalam?",
-                    "Nee podhum, love pannapadure. Sollu: ‘Naan worthy.’ Eppadi irukku? Saathu pannuvom?",
-                    "Garam paal ya tea nalla feel tharum. Saathu pannuviya?",
-                ],
-                stress: [
-                    "Stress romba irukku—naan saathu solve pannuren. Enna pareshan paduthudhu, sollu?",
-                    "Body scan pannu: shoulders tight pannitu release pannu, arms, legs. Tension poidum. Pannuviya?",
-                    "Innaiku pannina 3 chhote wins sollu—edhu pannirukke? Share pannuviya?",
-                    "Chamomile tea nalla irukum raathiri. Saathu pannuviya?",
-                ],
-                sleep: [
-                    "12:39 AM—thoongaradhu ready pannuvom. Book padichu illa stretching pannuviya? Eppo thoonguviya?",
-                    "Cool room, 16-20°C, thoongaradhu nalla irukum. Bed cozy pannuviya?",
-                    "Evening coffee/tea kudichiya? Adhu thoongamudiyathaakum. Check pannuviya?",
-                    "Rain sound ya samundar sound nalla irukum. Track suggest pannuren?",
-                ],
-                relationships: [
-                    "Rishte kashtama irukku—naan ketkuren. Avan solradha repeat pannu, bond strong aagum. Practice pannuviya?",
-                    "Un feelings clear-a sollu: ‘Enakku ippadi thonudhu appadiyae…’ Try pannuviya?",
-                    "Saathu sapadu share pannina rishte nalla irukum. Plan pannuviya?",
-                    "Pareshani calmly solve pannuvom—enna problem, sollu?",
-                ],
-            },
-            comfortRituals: {
-                bedtime: [
-                    "Raathiri sukoonama thoonguvom. Lights dim pannu—soft light nalla irukum. Pannitiya?",
-                    "3 deep saans eduppom: naakula saans, vaaya vidu. Ready?",
-                    "Peaceful jagah imagine pannu—samundar illa cozy veedu. Enna paakure?",
-                    "Nee nalla pannure—bed-la padu, takiya feel pannu, rest pannu.",
-                ],
-            },
-            responses: {
-                anxiety: "Anxiety kashtama irukku—naan unna sukoonama pannuren. Edhu try pannalam?",
-                depression: "Manasu downa irukku—naan irukken. Konjam santhosham pannuvoma?",
-                stress: "Stress bhaariya irukku—naan saathu irukken. Enna pareshan paduthudhu?",
-                sleep: "Ippo thoongamudiyala—naan thoongavaikkuren. Enna pareshan paduthudhu?",
-                relationships: "Rishte manasula irukku—naan ketkuren. Enna nadakkudhu, sollu?",
-                need_hug: "Idhu oru tight virtual hug! Nee thaniya illa—innum solluviya?",
-                reassurance: "Nee romba strong, ellam nalla irukum. Naan irukken—enna solluviya?",
-                coping: "Raatri unakku nalla ideas irukku—saathu try pannuvoma?",
-                thanks: "Nandri—naan hamesha irukken. Innum enna pannalam?",
-                thanksFollowUp: "Madad pannina santhosham—ippo enna pannuviya?",
-                generic: [
-                    "Nandri sollu—naan ketkuren. Ippo raathiri eppadi irukku?",
-                    "Naan irukken—innum enna solluviya?",
-                    "Ippo unakku enna mukkiyam—eppad madad pannuren?",
-                    "Romba irukku—raathiri enna pannalam?",
-                    "Chhota step eduppom—enna okay irukku?",
-                ],
-                positiveSentiment: [
-                    "Nee happy-a irukke—super! Enna santhoshama irukku?",
-                    "Un happy vibe nalla irukku! Enna nalla nadakkudhu?",
-                ],
-                negativeSentiment: {
-                    mild: "Konjam kashtama irukku—naan irukken. Innum solluviya?",
-                    severe: "Romba kashtama irukku—naan paathukuren. Saathu pannuvoma?",
-                },
-                followUp: {
-                    anxiety: "Konjam sukoon aacha? Illa vera pannuviya?",
-                    depression: "Ippo konjam nalla irukka? Innum pannuvoma?",
-                    stress: "Stress konjam kammi aacha? Vera pannuviya?",
-                    sleep: "Thoongaradhu nalla irukka? Innum madad venuma?",
-                    relationships: "Konjam help aacha? Innum pesuviya?",
-                    need_hug: "Comfort aacha? Innum venuma?",
-                    reassurance: "Konjam nalla irukka? Innum support venuma?",
-                    generic: "Ippo eppadi irukke? Innum pesuviya illa try pannuviya?",
-                },
-                proactive: {
-                    anxiety: "Munnadi anxiety pathi sonniya—naan chintit. Innaiku raathiri vera pannuvoma?",
-                    depression: "Munnadi down-nu sonniya—santhosham pannuvoma?",
-                    stress: "Stress munnadiyum irundhuchu—raathiri relax pannuviya?",
-                    sleep: "Thoongala nu munnadi sonniya—naan thoongavaikkuren. Enna pannuviya?",
-                    relationships: "Rishte pathi munnadi pesinom—ippo enna nadakkudhu?",
-                },
-                clarification: [
-                    "Naan unna nalla purinjukkanum—innum konjam solluviya?",
-                    "Naan irukken—konjam confuse aaguren. Enna solluviya?",
-                    "Manasula enna irukku—innum sollu, naan ketkuren.",
-                ],
-            },
-        },
-    };
-
-    // Crisis Detection Configuration
-    const crisisConfig = {
-        keywords: [
-            "suicide", "kill myself", "end my life", "want to die", "harm myself",
-            "self-harm", "hopeless", "no point", "give up", "cannot go on", "worthless",
-            "khud ko nuksaan", "jeene ka mann nahi", "bebas", "thakk gaya", "marna chahta hoon",
-            "thanjan", "mudiyala", "vaazhkai poratam", "naan saguren", "porukala",
-        ],
-        resources: [
-            "Vandrevala Foundation: <strong>Call 9999666555</strong>",
-            "AASRA Suicide Prevention: <strong>Call +91-9820466726</strong>",
-            "iCall Helpline: <strong>Call +91-9152987821</strong>",
-            "Mpower Emergency: <strong>Call 1800-120-820050</strong>",
-            "Emergency Services: <strong>112</strong>",
-        ],
-    };
-
-    // NLP Configuration
-    const nlpConfig = {
-        sentimentThresholds: {
-            positive: 0.4,
-            negativeMild: -0.4,
-            negativeSevere: -0.8,
-        },
-        intents: {
-            greeting: ["hi", "hello", "hey", "namaste", "vanakkam"],
-            thanks: ["thanks", "thank you", "shukriya", "nandri"],
-            goodbye: ["bye", "goodbye", "see you", "chalta hoon", "poitu varen"],
-            coping: ["coping", "tips", "ideas", "help me", "what can i do", "venum", "madad", "upay"],
-            moodCheck: ["how am i", "my mood", "feeling", "lag raha", "irukku"],
-            need_hug: ["hug", "jhappi", "hug venum", "comfort"],
-            reassurance: ["okay", "fine", "better", "theek", "nalla irukum"],
-            goalSetting: ["goal", "plan", "achieve", "target", "lakshya", "plan pannu"],
-            mindfulness: ["meditate", "mindfulness", "calm", "dhyan", "shanti"],
-        },
-        emotionKeywords: {
-            anxiety: ["anxious", "worried", "nervous", "scared", "ghabrahat", "bayama", "tension"],
-            depression: ["sad", "down", "depressed", "low", "lonely", "udaas", "downa", "manasu kashtam"],
-            stress: ["stressed", "pressure", "overwhelmed", "tense", "tension", "stress aa"],
-            sleep: ["sleep", "insomnia", "can’t sleep", "awake", "neend", "thoongala"],
-            relationships: ["relationship", "friend", "family", "partner", "rishton", "vishayam"],
-            productivity: ["work", "focus", "productive", "task", "kaam", "velai"],
-        },
-    };
-
-    // Utility Functions
-    const utils = {
-        formatTime: (date) => date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        triggerConfetti: () => confetti({
-            particleCount: 120,
-            spread: 80,
-            origin: { y: 0.6 },
-            colors: ["#60a5fa", "#a3e635", "#f472b6"],
-        }),
-        triggerEmojiBurst: (container, emojis) => {
-            for (let i = 0; i < 6; i++) {
-                const emoji = document.createElement("span");
-                emoji.classList.add("emoji-burst");
-                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                emoji.style.left = `${Math.random() * 100}%`;
-                emoji.style.top = `${Math.random() * 100}%`;
-                container.appendChild(emoji);
-                setTimeout(() => emoji.remove(), 1000);
-            }
-        },
-        addMessage: (text, isUser = false) => {
-            const messageDiv = document.createElement("div");
-            messageDiv.classList.add("message", isUser ? "user-message" : "bot-message");
-            const now = new Date();
-            messageDiv.innerHTML = `${text}<span class="message-time">${utils.formatTime(now)}</span>`;
-            elements.chatContainer.appendChild(messageDiv);
-            elements.chatContainer.scrollTop = elements.chatContainer.scrollHeight;
-        },
-        showTyping: () => {
-            const typingDiv = document.createElement("div");
-            typingDiv.classList.add("typing-indicator");
-            typingDiv.id = "typing-indicator";
-            typingDiv.innerHTML = `
-                <span class="typing-dot"></span>
-                <span class="typing-dot"></span>
-                <span class="typing-dot"></span>
-            `;
-            elements.chatContainer.appendChild(typingDiv);
-            elements.chatContainer.scrollTop = elements.chatContainer.scrollHeight;
-            return typingDiv;
-        },
-        hideTyping: () => {
-            const typingIndicator = document.getElementById("typing-indicator");
-            if (typingIndicator) typingIndicator.remove();
-        },
-        calculateStreak: (moodData) => {
-            const today = new Date();
-            let streak = 0;
-            for (let i = 0; i < 7; i++) {
-                const date = new Date(today);
-                date.setDate(today.getDate() - i);
-                const dateStr = date.toISOString().split("T")[0];
-                const hasMood = moodData.some(entry => entry.date === dateStr);
-                if (!hasMood) break;
-                streak++;
-            }
-            return streak;
-        },
-        fetchWebResources: async (emotion) => {
-            // Placeholder for real-time web search (simulated for now)
-            const resources = {
-                anxiety: ["Online CBT tools: www.anxietybc.com", "Mindfulness apps: Headspace or Calm"],
-                depression: ["Support groups: www.mentalhealthindia.org", "CBT resources: www.getselfhelp.co.uk"],
-                stress: ["Stress management: www.mind.org.uk", "Relaxation techniques: www.stress.org"],
-                sleep: ["Sleep hygiene tips: www.sleepfoundation.org", "Guided sleep meditation: www.calm.com"],
-                relationships: ["Relationship advice: www.relate.org.uk", "Communication tips: www.psychologytoday.com"],
-            };
-            return resources[emotion] || ["General support: www.mentalhealth.gov"];
-        },
-    };
-
-    // DOM Elements
-    const elements = {
-        authContainer: document.getElementById("auth-container"),
-        mainApp: document.getElementById("main-app"),
-        loginForm: document.getElementById("login-form"),
-        registerForm: document.getElementById("register-form"),
-        toggleToRegister: document.getElementById("toggle-to-register"),
-        toggleToLogin: document.getElementById("toggle-to-login"),
-        logoutBtn: document.getElementById("logout-btn"),
-        languageSelector: document.getElementById("language-selector"),
-        chatContainer: document.getElementById("chat-messages"),
-        quickRepliesContainer: document.getElementById("quick-replies"),
-        userInput: document.getElementById("user-input"),
-        sendBtn: document.getElementById("send-btn"),
-        tabLinks: document.querySelectorAll(".nav-item"),
-        tabContents: document.querySelectorAll(".tab-content"),
-        moodButtons: document.querySelectorAll(".mood-btn"),
-        actionChecks: document.querySelectorAll(".action-check"),
-        feedbackBtn: document.getElementById("feedback-btn"),
-        feedbackText: document.getElementById("feedback-text"),
-    };
-
-    // NLP Engine (Enhanced with deeper sentiment analysis)
-    const nlp = {
-        analyzeSentiment: (message) => {
-            const positiveWords = ["good", "great", "happy", "awesome", "nice", "okay", "khush", "nalla", "super"];
-            const negativeWords = ["bad", "sad", "terrible", "awful", "down", "scared", "udaas", "kashtam", "pareshan"];
-            const lowerMsg = message.toLowerCase();
-            let score = 0;
-
-            positiveWords.forEach(word => {
-                if (lowerMsg.includes(word)) score += 0.6;
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.getElementById('cursor');
+            document.addEventListener('mousemove', (e) => {
+                gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
             });
-            negativeWords.forEach(word => {
-                if (lowerMsg.includes(word)) score -= 0.6;
+            document.addEventListener('mousedown', () => cursor.classList.add('click'));
+            document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+            document.querySelectorAll('a, button, .skill-badge, .card').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
             });
 
-            // Contextual intensity
-            if (lowerMsg.includes("really") || lowerMsg.includes("bohot")) score *= 1.2;
-            if (lowerMsg.includes("not") || lowerMsg.includes("nahi")) score *= -0.8;
-
-            if (score >= nlpConfig.sentimentThresholds.positive) return "positive";
-            if (score <= nlpConfig.sentimentThresholds.negativeSevere) return "negativeSevere";
-            if (score <= nlpConfig.sentimentThresholds.negativeMild) return "negativeMild";
-            return "neutral";
-        },
-        detectIntent: (message) => {
-            const lowerMsg = message.toLowerCase();
-            for (const [intent, keywords] of Object.entries(nlpConfig.intents)) {
-                if (keywords.some(keyword => lowerMsg.includes(keyword))) {
-                    return intent;
-                }
-            }
-            return "unknown";
-        },
-        detectEmotion: (message) => {
-            const lowerMsg = message.toLowerCase();
-            for (const [emotion, keywords] of Object.entries(nlpConfig.emotionKeywords)) {
-                if (keywords.some(keyword => lowerMsg.includes(keyword))) {
-                    return emotion;
-                }
-            }
-            return null;
-        },
-        scoreResponse: (message, userMoodTrend, timeOfDay, comfortLevel) => {
-            const emotion = nlp.detectEmotion(message) || "generic";
-            const sentiment = nlp.analyzeSentiment(message);
-            const intent = nlp.detectIntent(message);
-            let score = 0;
-
-            if (emotion !== "generic") score += 5;
-            if (timeOfDay === "night" && emotion === "sleep") score += 4;
-            if (sentiment === "positive") score += 2;
-            if (sentiment === "negativeSevere") score += 4;
-            if (sentiment === "negativeMild") score += 3;
-            if (["coping", "goalSetting", "mindfulness"].includes(intent)) score += 4;
-            if (intent === "thanks") score += 1;
-            if (["need_hug", "reassurance"].includes(intent)) score += 3;
-            if (userMoodTrend === "negative" && ["anxiety", "depression", "stress"].includes(emotion)) score += 3;
-            if (comfortLevel < 5) score += 2;
-
-            return { emotion, sentiment, intent, score };
-        },
-        updateComfortLevel: (sentiment, intent) => {
-            if (sentiment === "positive" || intent === "thanks") state.comfortLevel = Math.min(state.comfortLevel + 3, 10);
-            if (sentiment === "negativeSevere") state.comfortLevel = Math.max(state.comfortLevel - 3, 0);
-            if (["need_hug", "reassurance", "coping"].includes(intent)) state.comfortLevel = Math.min(state.comfortLevel + 2, 10);
-        },
-    };
-
-    // Recommendation Engine (Enhanced with web integration)
-    const recommender = {
-        getPersonalizedTips: async (emotion, userMoodTrend) => {
-            const lang = languageData[state.currentLanguage];
-            const allTips = lang.copingStrategies[emotion] || [];
-            const userMoods = state.moodData[state.currentUser] || [];
-            const recentMoods = userMoods.slice(-3).map(m => m.value);
-            const userPrefs = state.userPreferences[state.currentUser] || {};
-
-            // Fetch external resources
-            const webResources = await utils.fetchWebResources(emotion);
-            const personalizedTips = allTips.slice(0, 2).concat(webResources);
-
-            if (emotion === "sleep" && recentMoods.every(m => m <= 3)) {
-                return personalizedTips.filter(tip => tip.includes("routine") || tip.includes("sounds") || tip.includes("sleepfoundation"));
-            }
-            if (emotion === "depression" && userMoodTrend === "negative") {
-                return personalizedTips.filter(tip => tip.includes("connecting") || tip.includes("self-compassion") || tip.includes("support groups"));
-            }
-            if (userPrefs.favoriteTip && personalizedTips.includes(userPrefs.favoriteTip)) {
-                return [userPrefs.favoriteTip, ...personalizedTips.filter(tip => tip !== userPrefs.favoriteTip).slice(0, 2)];
-            }
-            return personalizedTips.sort(() => 0.5 - Math.random()).slice(0, 3);
-        },
-        getUserMoodTrend: () => {
-            const userMoods = state.moodData[state.currentUser] || [];
-            const recentMoods = userMoods.slice(-5).map(m => m.value);
-            if (recentMoods.length < 3) return "neutral";
-            const averageMood = recentMoods.reduce((a, b) => a + b, 0) / recentMoods.length;
-            return averageMood < 3 ? "negative" : averageMood > 3 ? "positive" : "neutral";
-        },
-        saveUserPreference: (tip) => {
-            if (!state.userPreferences[state.currentUser]) {
-                state.userPreferences[state.currentUser] = {};
-            }
-            state.userPreferences[state.currentUser].favoriteTip = tip;
-            localStorage.setItem("userPreferences", JSON.stringify(state.userPreferences));
-        },
-        suggestGoal: (emotion) => {
-            const goals = {
-                anxiety: "Try 5 minutes of deep breathing daily for a week.",
-                depression: "Connect with one person you care about this week.",
-                stress: "Set aside 10 minutes for a relaxing activity tomorrow.",
-                sleep: "Create a consistent bedtime routine for 3 days.",
-                relationships: "Have an open conversation with someone close this week.",
-            };
-            return goals[emotion] || "Set a small, achievable goal for tomorrow.";
-        },
-    };
-
-    // Authentication
-    const auth = {
-        initialize: () => {
-            try {
-                if (localStorage.getItem("currentUser")) {
-                    state.isAuthenticated = true;
-                    state.currentUser = localStorage.getItem("currentUser");
-                    elements.authContainer.style.display = "none";
-                    elements.mainApp.style.display = "flex";
-                    utils.triggerConfetti();
-                    app.initializeMoodChart();
-                    app.updateChatLanguage();
-                } else {
-                    elements.authContainer.style.display = "flex";
-                    elements.mainApp.style.display = "none";
-                }
-            } catch (error) {
-                console.error("Auth initialization failed:", error);
-            }
-        },
-        login: () => {
-            const email = document.getElementById("login-email").value;
-            const password = document.getElementById("login-password").value;
-            if (!email || !password) {
-                alert("Please enter both email and password.");
-                return;
-            }
-            if (state.users[email] && state.users[email].password === password) {
-                state.isAuthenticated = true;
-                state.currentUser = email;
-                localStorage.setItem("currentUser", email);
-                elements.authContainer.style.display = "none";
-                elements.mainApp.style.display = "flex";
-                app.initializeMoodChart();
-                app.updateChatLanguage();
-                utils.triggerConfetti();
-            } else {
-                alert("Invalid email or password. Please try again.");
-            }
-        },
-        register: () => {
-            const email = document.getElementById("register-email").value;
-            const password = document.getElementById("register-password").value;
-            const confirmPassword = document.getElementById("confirm-password").value;
-            if (!email || !password || !confirmPassword) {
-                alert("Please fill in all fields.");
-                return;
-            }
-            if (password !== confirmPassword) {
-                alert("Passwords don’t match. Please try again.");
-                return;
-            }
-            if (state.users[email]) {
-                alert("This email is already registered. Try logging in.");
-                return;
-            }
-            state.users[email] = { password, moods: [] };
-            localStorage.setItem("users", JSON.stringify(state.users));
-            alert("Registration successful! Please log in.");
-            elements.loginForm.style.display = "flex";
-            elements.registerForm.style.display = "none";
-        },
-        logout: () => {
-            state.isAuthenticated = false;
-            state.currentUser = null;
-            state.conversationHistory = [];
-            state.comfortLevel = 0;
-            localStorage.removeItem("currentUser");
-            elements.authContainer.style.display = "flex";
-            elements.mainApp.style.display = "none";
-            elements.loginForm.style.display = "flex";
-            elements.registerForm.style.display = "none";
-        },
-    };
-
-    // Main App Logic
-    const app = {
-        initializeMoodChart: () => {
-            try {
-                const moodCtx = document.getElementById("mood-chart").getContext("2d");
-                const userMoods = state.moodData[state.currentUser] || [];
-                const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-                const data = Array(7).fill(null);
-
-                userMoods.forEach((mood) => {
-                    const date = new Date(mood.date);
-                    const dayIndex = date.getDay() === 0 ? 6 : date.getDay() - 1;
-                    data[dayIndex] = mood.value;
-                });
-
-                state.moodChart = new Chart(moodCtx, {
-                    type: "line",
-                    data: {
-                        labels,
-                        datasets: [{
-                            label: "Mood Level",
-                            data,
-                            borderColor: "#60a5fa",
-                            backgroundColor: "rgba(96, 165, 250, 0.1)",
-                            borderWidth: 3,
-                            pointRadius: 6,
-                            pointBackgroundColor: "#60a5fa",
-                            tension: 0.3,
-                            fill: true,
-                        }],
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                min: 1,
-                                max: 5,
-                                ticks: {
-                                    callback: (value) => {
-                                        const moods = ["Terrible", "Poor", "Neutral", "Good", "Excellent"];
-                                        return moods[value - 1];
-                                    },
-                                },
-                            },
-                        },
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    label: (context) => {
-                                        const moods = ["Terrible", "Poor", "Neutral", "Good", "Excellent"];
-                                        return context.parsed.y ? moods[context.parsed.y - 1] : "No data";
-                                    },
-                                },
-                            },
-                        },
-                    },
-                });
-            } catch (error) {
-                console.error("Mood chart initialization failed:", error);
-            }
-        },
-        updateChatLanguage: () => {
-            const lang = languageData[state.currentLanguage];
-            app.updateQuickReplies(lang.quickReplies);
-            const initialMessageDiv = document.getElementById("initial-message");
-            const now = new Date();
-            initialMessageDiv.innerHTML = `${lang.initialMessages[0]}<span class="message-time">${utils.formatTime(now)}</span>`;
-        },
-        updateQuickReplies: (replies) => {
-            elements.quickRepliesContainer.innerHTML = "";
-            replies.forEach((reply) => {
-                const button = document.createElement("button");
-                button.classList.add("quick-reply");
-                button.setAttribute("data-reply", reply.value);
-                button.textContent = reply.text;
-                button.setAttribute("aria-label", reply.text);
-                elements.quickRepliesContainer.appendChild(button);
-                button.addEventListener("click", () => {
-                    const replyText = button.textContent;
-                    const replyValue = button.getAttribute("data-reply");
-                    utils.addMessage(replyText, true);
-                    state.conversationHistory.push({ user: replyText, intent: replyValue });
-                    const typingIndicator = utils.showTyping();
-                    chat.generateResponse(replyText);
-                    utils.triggerEmojiBurst(elements.chatContainer, ["😊", "🌟", "💖"]);
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const id = link.getAttribute('href').slice(1);
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    const section = document.getElementById(id);
+                    section.scrollIntoView({ behavior: 'smooth' });
                 });
             });
-        },
-        updateDynamicQuickReplies: (context) => {
-            const lang = languageData[state.currentLanguage];
-            let dynamicReplies = [
-                { text: lang.quickReplies.find(r => r.value === "need_hug").text, value: "need_hug" },
-                { text: lang.quickReplies.find(r => r.value === "reassurance").text, value: "reassurance" },
-                { text: "Set a goal for me", value: "goalSetting" },
-                { text: "Suggest a mindfulness exercise", value: "mindfulness" },
+
+            const backToTop = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                backToTop.classList.toggle('visible', window.scrollY > 300);
+            });
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            const heroText = document.getElementById('hero-text');
+            const phrases = [
+                "AI Innovator Crafting Data-Driven Futures",
+                "Building Tomorrow’s AI Solutions",
+                "Transforming Data into Insights",
+                "Pioneering AI for a Better Future"
             ];
 
-            if (context === "sleep") {
-                dynamicReplies = [
-                    { text: "Let’s try a bedtime routine 🛌", value: "bedtime_ritual" },
-                    { text: "I had caffeine earlier ☕", value: "sleep_caffeine" },
-                    { text: "Suggest calming sounds 🎶", value: "sleep_sounds" },
-                    ...dynamicReplies,
-                ];
-            } else if (context === "thanks") {
-                dynamicReplies = [
-                    { text: "More strategies, please! 📚", value: "more_ideas" },
-                    { text: "I’m okay now 😊", value: "goodbye" },
-                    ...dynamicReplies,
-                ];
-            } else if (context === "emotion") {
-                dynamicReplies = [
-                    { text: "That helped, thank you! 🌟", value: "thanks" },
-                    { text: "Try something else? 🤔", value: "more_ideas" },
-                    ...dynamicReplies,
-                ];
-            }
-            app.updateQuickReplies(dynamicReplies);
-        },
-    };
+            let currentPhraseIndex = 0;
 
-    // Chat Logic
-    const chat = {
-        generateResponse: async (userMessage) => {
-            const lowerMsg = userMessage.toLowerCase();
-            const lang = languageData[state.currentLanguage];
-            const hasCrisis = crisisConfig.keywords.some(keyword => lowerMsg.includes(keyword));
-
-            state.conversationHistory.push({ user: userMessage });
-
-            if (hasCrisis) {
-                setTimeout(() => {
-                    utils.hideTyping();
-                    const alertDiv = document.createElement("div");
-                    alertDiv.classList.add("crisis-alert");
-                    alertDiv.innerHTML = `
-                        <strong>⚠️ Urgent Support Needed</strong><br>
-                        Your message suggests you’re in distress. Please reach out to these resources immediately:
-                    `;
-                    const resourcesDiv = document.createElement("div");
-                    resourcesDiv.classList.add("resources-card");
-                    resourcesDiv.innerHTML = crisisConfig.resources.join("<br />");
-                    elements.chatContainer.appendChild(alertDiv);
-                    elements.chatContainer.appendChild(resourcesDiv);
-                    elements.chatContainer.scrollTop = elements.chatContainer.scrollHeight;
-
-                    setTimeout(() => {
-                        utils.addMessage(lang.crisisResponse);
-                        app.updateDynamicQuickReplies("crisis");
-                    }, 1000);
-                }, 1500);
-                return;
-            }
-
-            setTimeout(async () => {
-                utils.hideTyping();
-                const userMoodTrend = recommender.getUserMoodTrend();
-                const timeOfDay = new Date().getHours() >= 18 ? "night" : "day";
-                const { emotion, sentiment, intent, score } = nlp.scoreResponse(userMessage, userMoodTrend, timeOfDay, state.comfortLevel);
-                nlp.updateComfortLevel(sentiment, intent);
-
-                // Intent-based responses
-                if (intent === "greeting") {
-                    utils.addMessage(lang.initialMessages[1]);
-                    state.lastResponseType = "greeting";
-                    return;
-                }
-                if (intent === "thanks") {
-                    utils.addMessage(lang.responses.thanks);
-                    setTimeout(() => {
-                        utils.addMessage(lang.responses.thanksFollowUp);
-                        app.updateDynamicQuickReplies("thanks");
-                    }, 1000);
-                    state.lastResponseType = "thanks";
-                    return;
-                }
-                if (intent === "goodbye") {
-                    utils.addMessage("Take care and rest well—I’m here whenever you need me. Goodnight!");
-                    state.lastResponseType = "goodbye";
-                    return;
-                }
-                if (intent === "moodCheck") {
-                    const trend = recommender.getUserMoodTrend();
-                    utils.addMessage(`I’ve noticed your mood has been ${trend} lately. Let’s find ways to support you tonight. What’s on your mind?`);
-                    state.lastResponseType = "moodCheck";
-                    return;
-                }
-                if (intent === "need_hug") {
-                    utils.addMessage(lang.responses.need_hug);
-                    state.lastResponseType = "need_hug";
-                    app.updateDynamicQuickReplies("emotion");
-                    return;
-                }
-                if (intent === "reassurance") {
-                    utils.addMessage(lang.responses.reassurance);
-                    state.lastResponseType = "reassurance";
-                    app.updateDynamicQuickReplies("emotion");
-                    return;
-                }
-                if (intent === "more_ideas") {
-                    const lastEmotion = state.conversationHistory.slice(-2, -1)[0]?.intent || "generic";
-                    const newTips = await recommender.getPersonalizedTips(lastEmotion, userMoodTrend);
-                    utils.addMessage("Here are some more ideas to help you feel better:");
-                    chat.sendCopingTips(newTips, lang.responses);
-                    state.lastResponseType = "more_ideas";
-                    app.updateDynamicQuickReplies("emotion");
-                    return;
-                }
-                if (intent === "bedtime_ritual") {
-                    utils.addMessage("Let’s create a calming bedtime routine to help you rest. Ready?");
-                    chat.sendComfortRitual(lang.comfortRituals.bedtime);
-                    state.lastResponseType = "bedtime_ritual";
-                    app.updateDynamicQuickReplies("sleep");
-                    return;
-                }
-                if (intent === "goalSetting") {
-                    const lastEmotion = state.conversationHistory.slice(-2, -1)[0]?.intent || "generic";
-                    const goal = recommender.suggestGoal(lastEmotion);
-                    utils.addMessage(`Here’s a goal to try: ${goal} Want to break it down into steps or track it with me?`);
-                    state.lastResponseType = "goalSetting";
-                    app.updateDynamicQuickReplies("emotion");
-                    return;
-                }
-                if (intent === "mindfulness") {
-                    utils.addMessage("Let’s do a quick mindfulness exercise. Close your eyes, focus on your breath for 1 minute, noticing each inhale and exhale. Want to try it now?");
-                    state.lastResponseType = "mindfulness";
-                    app.updateDynamicQuickReplies("emotion");
-                    return;
-                }
-
-                // Emotion-based responses
-                if (emotion !== "generic") {
-                    const responseKey = emotion;
-                    const proactiveCheck = state.conversationHistory.filter(h => h.intent === emotion).length > 2;
-                    if (proactiveCheck && state.lastResponseType !== "proactive") {
-                        utils.addMessage(lang.responses.proactive[emotion]);
-                        state.lastResponseType = "proactive";
-                    } else {
-                        utils.addMessage(lang.responses[responseKey]);
-                        const personalizedTips = await recommender.getPersonalizedTips(emotion, userMoodTrend);
-                        chat.sendCopingTips(personalizedTips, lang.responses);
-                        state.lastResponseType = "emotion";
+            function wrapLetters(text) {
+                return text.split('').map((char, index) => {
+                    if (char === ' ') {
+                        return `<span class="hero-letter hero-space" style="--letter-index: ${index}"> </span>`;
                     }
-                    app.updateDynamicQuickReplies(emotion);
-                    return;
-                }
+                    return `<span class="hero-letter" style="--letter-index: ${index}">${char}</span>`;
+                }).join('');
+            }
 
-                // Sentiment-based responses
-                if (sentiment === "positive" && state.lastResponseType !== "positiveSentiment") {
-                    const randomResponse = lang.responses.positiveSentiment[Math.floor(Math.random() * lang.responses.positiveSentiment.length)];
-                    utils.addMessage(randomResponse);
-                    state.lastResponseType = "positiveSentiment";
-                    return;
-                }
-                if (sentiment === "negativeMild" || sentiment === "negativeSevere") {
-                    const responseKey = sentiment === "negativeMild" ? "mild" : "severe";
-                    utils.addMessage(lang.responses.negativeSentiment[responseKey]);
-                    state.lastResponseType = "negativeSentiment";
-                    app.updateDynamicQuickReplies("emotion");
-                    return;
-                }
+            function animatePhrase() {
+                const currentPhrase = phrases[currentPhraseIndex];
+                heroText.innerHTML = wrapLetters(currentPhrase);
 
-                // Clarification if context is unclear
-                if (intent === "unknown" && state.lastResponseType !== "clarification") {
-                    const randomClarification = lang.responses.clarification[Math.floor(Math.random() * lang.responses.clarification.length)];
-                    utils.addMessage(randomClarification);
-                    state.lastResponseType = "clarification";
-                    return;
-                }
+                const letters = heroText.querySelectorAll('.hero-letter');
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        gsap.to(heroText, {
+                            opacity: 0,
+                            duration: 0.5,
+                            delay: 2,
+                            onComplete: () => {
+                                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                                animatePhrase();
+                            }
+                        });
+                    }
+                });
 
-                // Fallback to generic response
-                const randomResponse = lang.responses.generic[Math.floor(Math.random() * lang.responses.generic.length)];
-                utils.addMessage(randomResponse);
-                state.lastResponseType = "generic";
-                app.updateDynamicQuickReplies("emotion");
+                tl.to(heroText, { opacity: 1, duration: 0.5 });
+                tl.fromTo(
+                    letters,
+                    { opacity: 0, y: 20 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.03,
+                        stagger: { each: 0.05, from: "start" },
+                        ease: 'power2.out'
+                    },
+                    "-=0.3"
+                );
+            }
 
-                // Proactive late-night check-in
-                if (timeOfDay === "night" && state.conversationHistory.length === 1) {
-                    setTimeout(() => {
-                        utils.addMessage("It’s quite late at 12:39 AM—have you had a moment to unwind? I’m here to help you relax if you need it.");
-                    }, 3000);
+            heroText.style.opacity = 0;
+            animatePhrase();
+
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.from('.background-wave', {
+                opacity: 0,
+                scale: 1.2,
+                duration: 2,
+                ease: 'power4.out'
+            });
+            gsap.from('.gsap-hero-title', {
+                x: -200,
+                letterSpacing: '0px',
+                opacity: 0,
+                duration: 1.5,
+                ease: 'power4.out',
+                delay: 0.5,
+                onUpdate: function() {
+                    this.targets()[0].style.textShadow = `0 0 ${20 * this.ratio}px var(--glow)`;
                 }
-            }, 1500);
-        },
-        sendCopingTips: (tips, responses) => {
-            tips.forEach((tip, index) => {
-                setTimeout(() => {
-                    utils.addMessage(tip);
-                    if (index === tips.length - 1) {
+            });
+            gsap.from('.about-text', {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out',
+                delay: 1.5
+            });
+            gsap.from('.btn', {
+                scale: 0,
+                opacity: 0,
+                duration: 1.5,
+                ease: 'elastic.out(1.5, 0.3)',
+                delay: 2
+            });
+
+            gsap.utils.toArray('.gsap-skill').forEach((el, i) => {
+                gsap.from(el, {
+                    scrollTrigger: { trigger: el, start: 'top 80%' },
+                    rotationY: 360,
+                    opacity: 0,
+                    duration: 1,
+                    delay: i * 0.1,
+                    ease: 'power3.out'
+                });
+            });
+
+            gsap.utils.toArray('.gsap-project-card').forEach((el, i) => {
+                gsap.from(el, {
+                    scrollTrigger: { trigger: el, start: 'top 80%' },
+                    x: 200,
+                    opacity: 0,
+                    duration: 1.2,
+                    delay: i * 0.2,
+                    ease: 'power3.out'
+                });
+            });
+
+            gsap.utils.toArray('.gsap-experience-card').forEach((el, i) => {
+                gsap.from(el, {
+                    scrollTrigger: { trigger: el, start: 'top 80%' },
+                    scale: 0,
+                    opacity: 0,
+                    duration: 1,
+                    delay: i * 0.3,
+                    ease: 'back.out(1.7)',
+                    onStart: () => {
+                        gsap.to(el, {
+                            boxShadow: `0 0 30px var(--glow)`,
+                            duration: 1,
+                            repeat: 1,
+                            yoyo: true
+                        });
+                    }
+                });
+            });
+
+            gsap.utils.toArray('.gsap-education-card').forEach((el, i) => {
+                gsap.from(el, {
+                    scrollTrigger: { trigger: el, start: 'top 80%' },
+                    rotation: 360,
+                    scale: 0,
+                    opacity: 0,
+                    duration: 1.5,
+                    delay: i * 0.2,
+                    ease: 'power3.out'
+                });
+            });
+
+            gsap.utils.toArray('.gsap-contact-card').forEach((el, i) => {
+                gsap.from(el, {
+                    scrollTrigger: { trigger: el, start: 'top 80%' },
+                    y: 100,
+                    opacity: 0,
+                    duration: 1,
+                    delay: i * 0.2,
+                    ease: 'power3.out',
+                    onUpdate: function() {
+                        if (Math.random() > 0.8) {
+                            this.targets()[0].style.transform += `translateX(${Math.random() * 10 - 5}px)`;
+                        }
+                    }
+                });
+            });
+
+            gsap.utils.toArray('.gsap-section-title').forEach(el => {
+                gsap.from(el, {
+                    scrollTrigger: { trigger: el, start: 'top 85%' },
+                    x: -60,
+                    opacity: 0,
+                    duration: 1,
+                    ease: 'power3.out'
+                });
+            });
+
+            // Arrow navigation for projects
+            const projectsContainer = document.getElementById('projectsContainer');
+            const leftArrow = document.getElementById('projectLeftArrow');
+            const rightArrow = document.getElementById('projectRightArrow');
+            const cardWidth = 300 + 24; // Card width (300px) + gap (1.5rem = 24px)
+            let currentScrollPosition = 0;
+
+            function updateArrowState() {
+                const maxScroll = projectsContainer.scrollWidth - projectsContainer.clientWidth;
+                leftArrow.disabled = currentScrollPosition <= 0;
+                rightArrow.disabled = currentScrollPosition >= maxScroll - 10; // Small buffer
+            }
+
+            leftArrow.addEventListener('click', () => {
+                currentScrollPosition -= cardWidth;
+                if (currentScrollPosition < 0) currentScrollPosition = 0;
+                gsap.to(projectsContainer, {
+                    scrollLeft: currentScrollPosition,
+                    duration: 0.5,
+                    ease: 'power2.out',
+                    onComplete: updateArrowState
+                });
+            });
+
+            rightArrow.addEventListener('click', () => {
+                const maxScroll = projectsContainer.scrollWidth - projectsContainer.clientWidth;
+                currentScrollPosition += cardWidth;
+                if (currentScrollPosition > maxScroll) currentScrollPosition = maxScroll;
+                gsap.to(projectsContainer, {
+                    scrollLeft: currentScrollPosition,
+                    duration: 0.5,
+                    ease: 'power2.out',
+                    onComplete: updateArrowState
+                });
+            });
+
+            // Initialize arrow states on load and resize
+            projectsContainer.addEventListener('scroll', updateArrowState);
+            window.addEventListener('resize', () => {
+                updateArrowState();
+                // Adjust currentScrollPosition if window size changes
+                const maxScroll = projectsContainer.scrollWidth - projectsContainer.clientWidth;
+                if (currentScrollPosition > maxScroll) {
+                    currentScrollPosition = maxScroll;
+                    projectsContainer.scrollLeft = currentScrollPosition;
+                }
+            });
+            updateArrowState();
+
+            // Chatbot functionality
+            const chatbot = document.getElementById('chatbot');
+            const toggleChatbot = document.getElementById('toggleChatbot');
+            const closeChatbot = document.getElementById('closeChatbot');
+            const chatInput = document.getElementById('chatInput');
+            const sendMessage = document.getElementById('sendMessage');
+            const chatbotBody = document.getElementById('chatbotBody');
+            const typingIndicator = document.getElementById('typingIndicator');
+
+            toggleChatbot.addEventListener('click', () => {
+                chatbot.classList.toggle('active');
+                toggleChatbot.style.display = chatbot.classList.contains('active') ? 'none' : 'block';
+                if (chatbot.classList.contains('active')) {
+                    chatInput.focus();
+                    gsap.fromTo(chatbot, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' });
+                }
+            });
+
+            closeChatbot.addEventListener('click', () => {
+                gsap.to(chatbot, {
+                    y: 60,
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: 'power3.in',
+                    onComplete: () => {
+                        chatbot.classList.remove('active');
+                        toggleChatbot.style.display = 'block';
+                    }
+                });
+            });
+
+            // Fetch chatbot responses from JSON
+            fetch('chatbot_responses.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to load chatbot responses');
+                    return response.json();
+                })
+                .then(data => {
+                    const responses = data;
+
+                    function addMessage(text, type) {
+                        const message = document.createElement('div');
+                        message.classList.add('message', type);
+                        message.textContent = text;
+                        chatbotBody.appendChild(message);
+                        gsap.from(message, { y: 30, opacity: 0, duration: 0.5, ease: 'power3.out' });
+                        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+                    }
+
+                    function handleChatInput() {
+                        const input = chatInput.value.trim().toLowerCase();
+                        if (!input) return;
+
+                        addMessage(input, 'user-message');
+                        typingIndicator.classList.add('active');
+
                         setTimeout(() => {
-                            utils.addMessage(responses.followUp.generic);
+                            typingIndicator.classList.remove('active');
+                            let selectedResponse = null;
+                            let maxPriority = -1;
+
+                            // Find the best matching category based on keywords
+                            for (const key in responses) {
+                                const category = responses[key];
+                                const matched = category.keywords.some(keyword => input.includes(keyword.toLowerCase()));
+                                if (matched) {
+                                    const responseOptions = category.responses;
+                                    const response = responseOptions[Math.floor(Math.random() * responseOptions.length)];
+                                    if (response.priority > maxPriority) {
+                                        selectedResponse = response.text;
+                                        maxPriority = response.priority;
+                                    }
+                                }
+                            }
+
+                            // Fallback to a random default response
+                            if (!selectedResponse) {
+                                const defaultResponses = responses['default'].responses;
+                                selectedResponse = defaultResponses[Math.floor(Math.random() * defaultResponses.length)].text;
+                            }
+
+                            addMessage(selectedResponse, 'bot-message');
                         }, 1000);
+                        chatInput.value = '';
                     }
-                }, index * 1500);
-            });
-        },
-        sendComfortRitual: (ritualSteps) => {
-            ritualSteps.forEach((step, index) => {
-                setTimeout(() => {
-                    utils.addMessage(step);
-                    if (index === ritualSteps.length - 1) {
-                        setTimeout(() => {
-                            utils.addMessage("You’re doing wonderfully—feeling ready to rest now?");
-                        }, 1500);
-                    }
-                }, index * 2000);
-            });
-        },
-    };
 
-    // Event Listeners
-    const setupEventListeners = () => {
-        elements.toggleToRegister.addEventListener("click", () => {
-            elements.loginForm.style.display = "none";
-            elements.registerForm.style.display = "flex";
-        });
+                    sendMessage.addEventListener('click', handleChatInput);
+                    chatInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') handleChatInput();
+                    });
 
-        elements.toggleToLogin.addEventListener("click", () => {
-            elements.loginForm.style.display = "flex";
-            elements.registerForm.style.display = "none";
-        });
-
-        document.getElementById("register-btn").addEventListener("click", auth.register);
-        document.getElementById("login-btn").addEventListener("click", auth.login);
-        elements.logoutBtn.addEventListener("click", auth.logout);
-
-        elements.languageSelector.addEventListener("change", () => {
-            state.currentLanguage = elements.languageSelector.value;
-            localStorage.setItem("language", state.currentLanguage);
-            app.updateChatLanguage();
-        });
-
-        elements.tabLinks.forEach((link) => {
-            link.addEventListener("click", (e) => {
-                e.preventDefault();
-                if (link.getAttribute("data-tab") === "mood" && !state.isAuthenticated) {
-                    alert("Please log in to access the Mood Tracker.");
-                    return;
-                }
-                elements.tabLinks.forEach((l) => l.classList.remove("active"));
-                link.classList.add("active");
-                elements.tabContents.forEach((c) => c.classList.remove("active"));
-                document.getElementById(`${link.getAttribute("data-tab")}-tab`).classList.add("active");
-            });
-        });
-
-        elements.moodButtons.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                elements.moodButtons.forEach((b) => b.classList.remove("selected"));
-                btn.classList.add("selected");
-
-                const mood = btn.getAttribute("data-mood");
-                const moodValues = {
-                    excellent: 5,
-                    good: 4,
-                    neutral: 3,
-                    poor: 2,
-                    terrible: 1,
-                };
-                const moodValue = moodValues[mood];
-                const today = new Date().toISOString().split("T")[0];
-
-                if (!state.moodData[state.currentUser]) {
-                    state.moodData[state.currentUser] = [];
-                }
-
-                const existingMood = state.moodData[state.currentUser].find((entry) => entry.date === today);
-                if (existingMood) {
-                    existingMood.value = moodValue;
-                } else {
-                    state.moodData[state.currentUser].push({ date: today, value: moodValue });
-                }
-
-                localStorage.setItem("moodData", JSON.stringify(state.moodData));
-                state.moodChart.destroy();
-                app.initializeMoodChart();
-
-                state.streakCount = utils.calculateStreak(state.moodData[state.currentUser]);
-                utils.triggerConfetti();
-                const lang = languageData[state.currentLanguage];
-                alert(`Great job tracking your mood! You’re on a ${state.streakCount}-day streak—keep it up!`);
-                if (moodValue <= 2) {
+                    // Initial greeting
                     setTimeout(() => {
-                        utils.addMessage(lang.responses.negativeSentiment.mild);
-                        app.updateDynamicQuickReplies("emotion");
-                    }, 1000);
-                }
-            });
+                        const greetingResponses = responses['greeting'].responses;
+                        const greeting = greetingResponses[Math.floor(Math.random() * greetingResponses.length)].text;
+                        addMessage(greeting, 'bot-message');
+                    }, 500);
+                })
+                .catch(error => {
+                    console.error('Error loading chatbot responses:', error);
+                    // Fallback to a basic response if JSON fails to load
+                    function addMessage(text, type) {
+                        const message = document.createElement('div');
+                        message.classList.add('message', type);
+                        message.textContent = text;
+                        chatbotBody.appendChild(message);
+                        gsap.from(message, { y: 30, opacity: 0, duration: 0.5, ease: 'power3.out' });
+                        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+                    }
+
+                    addMessage('Oops, I couldn’t load my responses. Please ask about Nizar’s projects or skills, and I’ll do my best!', 'bot-message');
+                });
         });
-
-        elements.actionChecks.forEach((check) => {
-            check.addEventListener("click", () => {
-                check.classList.toggle("checked");
-                if (check.classList.contains("checked")) {
-                    utils.triggerConfetti();
-                    const emojiContainer = check.closest(".action-item");
-                    utils.triggerEmojiBurst(emojiContainer, ["🎉", "✅", "🌟"]);
-                    const lang = languageData[state.currentLanguage];
-                    utils.addMessage("Amazing work completing that action! You’re making great progress—keep it up!");
-                }
-            });
-        });
-
-        elements.feedbackBtn.addEventListener("click", () => {
-            const feedback = elements.feedbackText.value.trim();
-            if (!feedback) {
-                alert("Please share your thoughts—I’d love to hear how I can improve.");
-                return;
-            }
-            alert("Thank you for your feedback! It’ll help me support you even better.");
-            elements.feedbackText.value = "";
-            utils.triggerConfetti();
-        });
-
-        elements.sendBtn.addEventListener("click", () => {
-            const userMessage = elements.userInput.value.trim();
-            if (!userMessage) return;
-            utils.addMessage(userMessage, true);
-            elements.userInput.value = "";
-            const typingIndicator = utils.showTyping();
-            chat.generateResponse(userMessage);
-            utils.triggerEmojiBurst(elements.chatContainer, ["😊", "🌟", "💖"]);
-        });
-
-        elements.userInput.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") {
-                elements.sendBtn.click();
-            }
-        });
-    };
-
-    // Initialize
-    const init = () => {
-        elements.languageSelector.value = state.currentLanguage;
-        auth.initialize();
-        app.updateChatLanguage();
-        setupEventListeners();
-    };
-
-    init();
-})();</script>
+    </script>
 </body>
 </html>
