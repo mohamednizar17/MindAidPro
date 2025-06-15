@@ -1,0 +1,329 @@
+{
+    "greeting": {
+        "category": "general",
+        "keywords": [
+            "hello",
+            "hi",
+            "hey",
+            "greetings",
+            "start"
+        ],
+        "responses": [
+            {
+                "text": "Hi there! I'm Nizar\u2019s AI Assistant, here to answer your questions about his skills, projects, or anything else you\u2019re curious about!",
+                "priority": 1
+            },
+            {
+                "text": "Hello! Welcome to Nizar\u2019s portfolio. Ask me about his AI projects, technical skills, or career aspirations!",
+                "priority": 1
+            }
+        ]
+    },
+    "skills": {
+        "category": "technical",
+        "keywords": [
+            "skill",
+            "skills",
+            "expertise",
+            "abilities",
+            "tech",
+            "technology",
+            "proficient",
+            "knowledge"
+        ],
+        "responses": [
+            {
+                "text": "Nizar is proficient in Python, R, Java, C, HTML, CSS, JavaScript, SQL, MySQL, and Streamlit. He excels in statistical analysis, data visualization, data mining, and tools like Power BI and Tableau. His soft skills include problem-solving, critical thinking, and collaboration.",
+                "priority": 1
+            },
+            {
+                "text": "Nizar\u2019s technical toolkit includes programming (Python, R, Java, C), web development (HTML, CSS, JavaScript), database management (SQL, MySQL), and data analytics (Power BI, Tableau, Streamlit). He\u2019s also strong in statistical modeling and teamwork.",
+                "priority": 1
+            }
+        ]
+    },
+    "projects": {
+        "category": "technical",
+        "keywords": [
+            "project",
+            "projects",
+            "portfolio",
+            "work",
+            "demo",
+            "application",
+            "app"
+        ],
+        "responses": [
+            {
+                "text": "Nizar\u2019s projects include Healthy Train (real-time train health dashboard), AetheriumAnalyzer (AI script analysis tool), AI-Powered Data Insight Portal (data visualization web app), and MindAidPro (AI mental health chatbot). Check them out in the Projects section!",
+                "priority": 1
+            },
+            {
+                "text": "Nizar has built innovative projects like Healthy Train, AetheriumAnalyzer, AI-Powered Data Insight Portal, and MindAidPro. Each showcases his AI and data science expertise. Want details on a specific one?",
+                "priority": 1
+            }
+        ]
+    },
+    "project_healthy_train": {
+        "category": "technical",
+        "keywords": [
+            "healthy train",
+            "train dashboard",
+            "train health",
+            "real-time dashboard"
+        ],
+        "responses": [
+            {
+                "text": "Healthy Train is a real-time dashboard monitoring railway train health using multi-sensor inputs. It achieves 87% anomaly detection accuracy for issues like overheating and vibration, using Node.js and Plotly.js for live visualizations.",
+                "priority": 2
+            }
+        ]
+    },
+    "project_aetherium": {
+        "category": "technical",
+        "keywords": [
+            "aetheriumanalyzer",
+            "script analysis",
+            "aetherium"
+        ],
+        "responses": [
+            {
+                "text": "AetheriumAnalyzer is an AI-powered web tool for script analysis, scoring scripts (0-100) and suggesting improvements for plot, characters, and dialogue. It features file upload support and a responsive neon-themed UI.",
+                "priority": 2
+            }
+        ]
+    },
+    "project_data_insight": {
+        "category": "technical",
+        "keywords": [
+            "data insight",
+            "ai-powered data",
+            "data portal",
+            "visualization portal"
+        ],
+        "responses": [
+            {
+                "text": "The AI-Powered Data Insight Portal is a web app for analyzing and visualizing CSV data with AI-driven insights, offering interactive data preparation and multiple chart types for enhanced user experience.",
+                "priority": 2
+            }
+        ]
+    },
+    "project_mindaidpro": {
+        "category": "technical",
+        "keywords": [
+            "mindaidpro",
+            "mental health",
+            "chatbot",
+            "mind aid"
+        ],
+        "responses": [
+            {
+                "text": "MindAidPro is an AI-driven mental health chatbot using NLP models to provide personalized coping strategies and resource recommendations. Built with a Streamlit interface, it achieved 85% user satisfaction in beta testing.",
+                "priority": 2
+            }
+        ]
+    },
+    "experience": {
+        "category": "professional",
+        "keywords": [
+            "experience",
+            "intern",
+            "internship",
+            "work history",
+            "job",
+            "professional"
+        ],
+        "responses": [
+            {
+                "text": "Nizar interned as a Data Analytics Intern at Plasmid Innovations (Jul-Aug 2024), developing Power BI dashboards, and as a Marketing Intern at Skill Vertex (Aug-Sep 2023), enhancing campaign strategies.",
+                "priority": 1
+            },
+            {
+                "text": "Nizar\u2019s professional experience includes a Data Analytics Internship at Plasmid Innovations and a Marketing Internship at Skill Vertex, where he honed his data analysis and strategic skills.",
+                "priority": 1
+            }
+        ]
+    },
+    "education": {
+        "category": "academic",
+        "keywords": [
+            "education",
+            "study",
+            "studies",
+            "degree",
+            "school",
+            "academic",
+            "university"
+        ],
+        "responses": [
+            {
+                "text": "Nizar is pursuing a B.Tech in AI and Data Science at BSA Crescent Institute (2022-2026, CGPA: 9.3). He scored 93% in HSC (2022) and 98% in SSLC (2020) at St. Joseph AMHS School, Kallakurichi.",
+                "priority": 1
+            }
+        ]
+    },
+    "certifications": {
+        "category": "academic",
+        "keywords": [
+            "certification",
+            "certifications",
+            "certificate",
+            "credentials",
+            "courses"
+        ],
+        "responses": [
+            {
+                "text": "Nizar holds certifications in Responsive Web Design (freeCodeCamp), Game AI and Reinforcement Learning (Kaggle), Feature Engineering (Kaggle), Foundations of Cybersecurity (Coursera), and Campus Executive (Skill Vertex). See them in the Education section!",
+                "priority": 1
+            }
+        ]
+    },
+    "contact": {
+        "category": "general",
+        "keywords": [
+            "contact",
+            "email",
+            "phone",
+            "github",
+            "reach",
+            "connect"
+        ],
+        "responses": [
+            {
+                "text": "Reach Nizar at arnizz077@gmail.com, +919786083250, or on GitHub at mohamednizar17.",
+                "priority": 1
+            }
+        ]
+    },
+    "suitable": {
+        "category": "professional",
+        "keywords": [
+            "suitable",
+            "role",
+            "position",
+            "fit",
+            "candidate",
+            "job fit"
+        ],
+        "responses": [
+            {
+                "text": "Nizar is ideal for AI, data science, and analytics roles, with strong technical skills and hands-on project experience in building innovative AI solutions.",
+                "priority": 1
+            }
+        ]
+    },
+    "hire": {
+        "category": "professional",
+        "keywords": [
+            "hire",
+            "about nizar",
+            "recruit",
+            "employ",
+            "nizar\u2019s background"
+        ],
+        "responses": [
+            {
+                "text": "Nizar, a third-year AI and Data Science student with a 9.3 CGPA, excels in Python, SQL, Power BI, and more. His projects demonstrate his ability to deliver impactful results, making him a top candidate for AI roles.",
+                "priority": 1
+            }
+        ]
+    },
+    "interests": {
+        "category": "personal",
+        "keywords": [
+            "interest",
+            "hobbies",
+            "passion",
+            "personal",
+            "likes"
+        ],
+        "responses": [
+            {
+                "text": "Nizar is passionate about AI innovation, data-driven solutions, and exploring new technologies. Outside tech, he enjoys reading about advancements in AI and solving complex problems.",
+                "priority": 1
+            }
+        ]
+    },
+    "career_goals": {
+        "category": "professional",
+        "keywords": [
+            "career",
+            "goals",
+            "aspirations",
+            "future",
+            "plans"
+        ],
+        "responses": [
+            {
+                "text": "Nizar aims to advance AI and data science by developing scalable, impactful solutions for real-world challenges, particularly in healthcare and transportation.",
+                "priority": 1
+            }
+        ]
+    },
+    "tools": {
+        "category": "technical",
+        "keywords": [
+            "tool",
+            "tools",
+            "software",
+            "technology",
+            "platform"
+        ],
+        "responses": [
+            {
+                "text": "Nizar works with tools like Python, R, Java, SQL, MySQL, Power BI, Tableau, Streamlit, and Plotly.js. He\u2019s adept at leveraging these for data analysis, visualization, and AI development.",
+                "priority": 1
+            }
+        ]
+    },
+    "ai_expertise": {
+        "category": "technical",
+        "keywords": [
+            "ai",
+            "artificial intelligence",
+            "machine learning",
+            "nlp",
+            "data science"
+        ],
+        "responses": [
+            {
+                "text": "Nizar\u2019s AI expertise includes natural language processing (NLP), machine learning, and statistical modeling. His projects like MindAidPro and AetheriumAnalyzer showcase his ability to apply AI effectively.",
+                "priority": 1
+            }
+        ]
+    },
+    "availability": {
+        "category": "professional",
+        "keywords": [
+            "available",
+            "availability",
+            "work",
+            "job",
+            "internship"
+        ],
+        "responses": [
+            {
+                "text": "Nizar is a final-year student open to internship and project opportunities in AI and data science. Contact him at arnizz077@gmail.com to discuss potential collaborations!",
+                "priority": 1
+            }
+        ]
+    },
+    "default": {
+        "category": "general",
+        "keywords": [],
+        "responses": [
+            {
+                "text": "I\u2019m not sure I caught that! Could you ask about Nizar\u2019s skills, projects, or career goals? I\u2019m here to help!",
+                "priority": 0
+            },
+            {
+                "text": "Hmm, I didn\u2019t quite get that. Try asking about Nizar\u2019s AI projects, technical skills, or how to reach him!",
+                "priority": 0
+            },
+            {
+                "text": "Oops, I might\u2019ve missed something. Ask me about Nizar\u2019s experience, education, or anything specific you\u2019re curious about!",
+                "priority": 0
+            }
+        ]
+    }
+}
