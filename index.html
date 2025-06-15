@@ -104,7 +104,7 @@
                     <a href="#" class="nav-item pl-6 py-1 block text-white hover:bg-pink-500 hover:bg-opacity-50 rounded" data-tab="journal-section">Journal ✍️</a>
                     <a href="#" class="nav-item pl-6 py-1 block text-white hover:bg-pink-500 hover:bg-opacity-50 rounded" data-tab="gratitude-section">Gratitude 🙏</a>
                     <a href="#" class="nav-item pl-6 py-1 block text-white hover:bg-pink-500 hover:bg-opacity-50 rounded" data-tab="sleep-section">Sleep 🌙</a>
-                    <a href="#" class="nav-item Pla pl-6 py-1 block text-white hover:bg-pink-500 hover:bg-opacity-50 rounded" data-tab="goals-section">Goals 🎯</a>
+                    <a href="#" class="nav-item pl-6 py-1 block text-white hover:bg-pink-500 hover:bg-opacity-50 rounded" data-tab="goals-section">Goals 🎯</a>
                     <a href="#" class="nav-item pl-6 py-1 block text-white hover:bg-pink-500 hover:bg-opacity-50 rounded" data-tab="stress-section">Stress 📈</a>
                 </details>
                 <details class="group">
@@ -283,7 +283,7 @@
                 <div>
                     <label for="crisis-sensitivity" class="block mb-1">Crisis Sensitivity (0-100)</label>
                     <input type="range" id="crisis-sensitivity" min="0" max="100" value="50" aria-label="Adjust crisis detection sensitivity" class="w-full">
-                </ div>
+                </div>
                 <div>
                     <label for="reminder-frequency" class="block mb-1">Reminder Frequency</label>
                     <select id="reminder-frequency" aria-label="Select reminder frequency" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white">
@@ -426,7 +426,7 @@
             .then(response => response.json())
             .then(data => {
                 responses = data;
-                updateQuickReplies('neutral', 'english');
+                updateQuickReplies();
             })
             .catch(error => console.error('Error loading responses:', error));
         // Authentication
@@ -496,15 +496,25 @@
         const sendBtn = document.getElementById('send-btn');
         const quickReplies = document.getElementById('quick-replies');
         const sentimentStatus = document.getElementById('sentiment-status');
-        function updateQuickReplies(emotion, language) {
+        // Preset quick reply messages
+        const quickReplyPresets = [
+            "I'm feeling great! 😄",
+            "I'm feeling sad. 😢",
+            "I'm anxious today. 😰",
+            "I'm really angry! 😣",
+            "I'm so stressed out. 😓",
+            "I'm feeling lonely. 😔",
+            "I'm overwhelmed. 😥",
+            "I'm grateful today! 🙏",
+            "I'm really confused. 😕",
+            "I'm feeling hopeful! 🌟"
+        ];
+        function updateQuickReplies() {
             quickReplies.innerHTML = '';
-            const replies = responses.filter(r => r.emotion === emotion && r.language === language)
-                .slice(0, 5)
-                .map(r => r.empathy);
-            replies.forEach(reply => {
+            quickReplyPresets.forEach(reply => {
                 const btn = document.createElement('button');
                 btn.className = 'p-2 bg-pink-500 rounded btn-pulse hover:bg-pink-600';
-                btn.innerHTML = `${reply} <span class="emoji">😊</span>`;
+                btn.innerHTML = `${reply}`;
                 btn.addEventListener('click', () => {
                     userInput.value = reply;
                     sendMessage();
@@ -540,8 +550,6 @@
             botMsg.className = 'p-2 bg-gray-800 bg-opacity-50 rounded mb-2';
             botMsg.innerHTML = `<p><strong>${response.empathy}</strong> 😊</p><p>${response.motivation} 💪</p><p><em>${response.preventive}</em> 🌟</p>`;
             chatMessages.appendChild(botMsg);
-            // Update quick replies
-            updateQuickReplies(emotion, language);
             userInput.value = '';
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
@@ -581,7 +589,6 @@
                 moodChart.data.labels.push(new Date().toLocaleDateString());
                 moodChart.data.datasets[0].data.push(value);
                 moodChart.update();
-                updateQuickReplies(mood, document.getElementById('language-selector')?.value || 'english');
                 updateJournalPrompt(mood);
             });
         });
@@ -589,7 +596,6 @@
         document.querySelectorAll('#emotion-wheel .mood-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const emotion = btn.dataset.emotion;
-                updateQuickReplies(emotion, document.getElementById('language-selector')?.value || 'english');
                 updateJournalPrompt(emotion);
             });
         });
