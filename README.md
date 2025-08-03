@@ -43,7 +43,7 @@ Accessibility: ARIA attributes for improved accessibility
 
 Installation
 
-Clone the repository:git clone https://github.com/your-username/mindaid-pro.git
+Clone the repository:git clone https://github.com/mohamednizar17/mindaid-pro.git
 
 
 Navigate to the project directory:cd mindaid-pro
