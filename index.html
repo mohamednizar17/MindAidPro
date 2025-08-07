@@ -354,12 +354,39 @@
         <section id="settings-tab" class="tab-content hidden bg-black bg-opacity-50 backdrop-blur-lg p-6 rounded-lg shadow" role="region" aria-label="Settings">
             <h2 class="text-2xl font-semibold mb-4">Settings ⚙️</h2>
             <div class="space-y-4">
+                <!-- API Configuration -->
+                <div class="border border-gray-600 p-4 rounded-lg bg-gray-800 bg-opacity-30">
+                    <h3 class="text-lg font-semibold mb-3">AI API Configuration 🤖</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label for="api-provider" class="block mb-1">API Provider</label>
+                            <select id="api-provider" aria-label="Select API provider" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white">
+                                <option value="OPENAI">OpenAI/OpenRouter (GPT-3.5/GPT-4)</option>
+                                <option value="HUGGING_FACE">Hugging Face</option>
+                                <option value="COHERE">Cohere</option>
+                                <option value="GOOGLE_AI">Google AI (Gemini)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="api-key-input" class="block mb-1">API Key</label>
+                            <input type="password" id="api-key-input" placeholder="Enter your API key here..." aria-label="Enter API key" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white">
+                            <p class="text-xs text-gray-400 mt-1">Your API key is stored locally and never sent to our servers.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button id="test-api" class="flex-1 p-2 bg-blue-500 rounded btn-pulse hover:bg-blue-600" aria-label="Test API connection">Test API 🧪</button>
+                            <button id="clear-api" class="flex-1 p-2 bg-red-500 rounded btn-pulse hover:bg-red-600" aria-label="Clear API settings">Clear 🗑️</button>
+                        </div>
+                        <div id="api-status" class="text-sm p-2 rounded hidden"></div>
+                    </div>
+                </div>
+                
+                <!-- Language Settings -->
                 <div>
                     <label for="language-selector" class="block mb-1">Language</label>
                     <select id="language-selector" aria-label="Select language" class="w-full p-2 border rounded bg-gray-800 bg-opacity-50 border-gray-600 text-white">
-                        <option value="english">English</option>
-                        <option value="hinglish">Hinglish</option>
-                        <option value="tanglish">Tanglish</option>
+                        <option value="english">English (AI-Powered)</option>
+                        <option value="hinglish">Hinglish (Static Responses)</option>
+                        <option value="tanglish">Tanglish (Static Responses)</option>
                     </select>
                 </div>
                 <div>
