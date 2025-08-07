@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindAidPro - API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .chat-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .user-message {
+            background: #007bff;
+            color: white;
+            text-align: right;
+        }
+        .bot-message {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .development-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+        .api-info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>MindAidPro - AI API Test</h1>
+    
+    <div class="api-info">
+        <h3>🤖 API Information</h3>
+        <p><strong>Using:</strong> Hugging Face Inference API (Free)</p>
+        <p><strong>Model:</strong> microsoft/DialoGPT-medium</p>
+        <p><strong>Status:</strong> <span id="api-status">Testing...</span></p>
+        <p><strong>Note:</strong> First request may take 10-20 seconds as the model loads</p>
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="message bot-message">
+            Hi! I'm your AI-powered mental health support companion. How are you feeling today? 😊
+        </div>
+    </div>
+
+    <div class="input-container">
+        <input type="text" id="userInput" placeholder="Type your message here..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_CONFIG = {
+            HUGGING_FACE: {
+                url: 'https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
+        };
+
+        // Generate AI Response
+        async function generateAIResponse(userMessage, mood = null) {
+            try {
+                const systemPrompt = `You are a compassionate, empathetic mental health support assistant. Respond as a caring friend who:
+                - Provides emotional support and validation
+                - Offers practical coping strategies
+                - Uses warm, encouraging language
+                - Keeps responses concise (2-3 sentences max)
+                - Avoids giving medical advice
+                - Focuses on immediate comfort and practical help
+                
+                User's current mood: ${mood || 'not specified'}
+                User says: "${userMessage}"
+                
+                Respond with empathy and helpful suggestions:`;
+
+                document.getElementById('api-status').textContent = 'Loading...';
+                
+                const response = await fetch(API_CONFIG.HUGGING_FACE.url, {
+                    method: 'POST',
+                    headers: API_CONFIG.HUGGING_FACE.headers,
+                    body: JSON.stringify({
+                        inputs: systemPrompt,
+                        parameters: {
+                            max_length: 100,
+                            temperature: 0.7,
+                            do_sample: true,
+                            return_full_text: false
+                        }
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    console.log('API temporarily unavailable:', data.error);
+                    document.getElementById('api-status').textContent = 'API Loading - Using fallback';
+                    return getFallbackResponse(mood);
+                }
+
+                document.getElementById('api-status').textContent = 'Connected ✅';
+                
+                let aiResponse = data.generated_text || data[0]?.generated_text || '';
+                aiResponse = aiResponse.trim();
+                
+                if (aiResponse.length > 200) {
+                    aiResponse = aiResponse.substring(0, 197) + '...';
+                }
+
+                return aiResponse || getFallbackResponse(mood);
+                
+            } catch (error) {
+                console.log('AI API error:', error);
+                document.getElementById('api-status').textContent = 'Error - Using fallback';
+                return getFallbackResponse(mood);
+            }
+        }
+
+        function getFallbackResponse(mood) {
+            const fallbacks = {
+                anxiety: "I hear how anxious you're feeling—let's find some calm together. Try taking three deep breaths with me.",
+                depression: "I'm sorry you're feeling low—I'm here for you. Sometimes small steps can help lift our spirits.",
+                stress: "Stress can feel overwhelming. Let's break it down into smaller pieces together.",
+                sleep: "Trouble sleeping is difficult. Let's work on some relaxation techniques to help you rest.",
+                positive: "I love hearing your positive energy! What's been bringing you joy today?",
+                neutral: "Thanks for sharing how you're feeling. I'm here to listen and support you."
+            };
+            
+            return fallbacks[mood] || "I'm here to listen and support you. Tell me more about what's on your mind.";
+        }
+
+        function addMessage(text, isUser = false) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.innerHTML = text;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, true);
+            input.value = '';
+            
+            // Show loading
+            addMessage('<span class="loading">Thinking...</span>');
+            
+            // Determine mood from message
+            let mood = 'neutral';
+            const lowerMessage = message.toLowerCase();
+            if (lowerMessage.includes('anxious') || lowerMessage.includes('nervous')) mood = 'anxiety';
+            else if (lowerMessage.includes('sad') || lowerMessage.includes('depressed')) mood = 'depression';
+            else if (lowerMessage.includes('stressed')) mood = 'stress';
+            else if (lowerMessage.includes('happy') || lowerMessage.includes('great')) mood = 'positive';
+            
+            try {
+                const response = await generateAIResponse(message, mood);
+                
+                // Remove loading message
+                const messages = document.querySelectorAll('.message');
+                const lastMessage = messages[messages.length - 1];
+                if (lastMessage.querySelector('.loading')) {
+                    lastMessage.remove();
+                }
+                
+                // Add AI response
+                addMessage(response);
+            } catch (error) {
+                const messages = document.querySelectorAll('.message');
+                const lastMessage = messages[messages.length - 1];
+                if (lastMessage.querySelector('.loading')) {
+                    lastMessage.remove();
+                }
+                addMessage('Sorry, I encountered an error. Please try again.');
+            }
+        }
+
+        // Allow Enter key to send message
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Test API on load
+        window.addEventListener('load', async () => {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            try {
+                await generateAIResponse('Hello', 'neutral');
+            } catch (error) {
+                document.getElementById('api-status').textContent = 'API Test Failed - Will use fallbacks';
+            }
+        });
+    </script>
+</body>
+</html>
