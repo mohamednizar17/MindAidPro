@@ -1717,4 +1717,5 @@
     };
 
     initAdditionalFeatures();
+
 })();
